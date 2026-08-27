@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-银龄AI助手 Custom Tools
+晚晴 Custom Tools
 提供任务管理、备忘管理的 REST API
 """
 
@@ -12,7 +12,7 @@ from typing import Optional
 from contextlib import contextmanager
 
 # 数据库路径
-DB_PATH = os.path.expanduser("~/.roro/silver-age.db")
+DB_PATH = os.path.expanduser("~/.roro/wanqing.db")
 
 # 初始化数据库
 def init_db():

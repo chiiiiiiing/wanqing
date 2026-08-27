@@ -1,5 +1,5 @@
 """
-银龄AI助手 — Database Models and Operations
+晚晴 — Database Models and Operations
 SQLite-based storage for Tasks, Notes, and Reminders.
 """
 import sqlite3
@@ -9,7 +9,7 @@ from datetime import datetime, timezone, timedelta
 from typing import Optional, List
 from contextlib import contextmanager
 
-DB_PATH = os.environ.get("SILVER_AGE_DB", os.path.join(os.path.dirname(__file__), "..", "silver_age.db"))
+DB_PATH = os.environ.get("WANQING_DB", os.path.join(os.path.dirname(__file__), "..", "wanqing.db"))
 CST = timezone(timedelta(hours=8))
 
 

@@ -1,7 +1,7 @@
 {
-  "name": "silver-age-tools",
-  "displayName": "银龄助手工具包",
-  "description": "银龄AI助手的任务和备忘管理工具。支持创建任务、创建备忘、查询事项、完成任务、延期任务。",
+  "name": "wanqing-tools",
+  "displayName": "晚晴工具包",
+  "description": "晚晴的任务和备忘管理工具。支持创建任务、创建备忘、查询事项、完成任务、延期任务。",
   "version": 1,
   "entry": "index.mjs",
   "allowedHosts": [
@@ -11,7 +11,7 @@
     {
       "env": "BACKEND_URL",
       "label": "后端服务地址",
-      "description": "银龄助手后端 API 的完整 URL（如 https://example.com）"
+      "description": "晚晴后端 API 的完整 URL（如 https://example.com）"
     }
   ],
   "tools": [

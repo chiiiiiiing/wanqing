@@ -1,5 +1,5 @@
 """
-银龄AI助手 — FastAPI Backend
+晚晴 — FastAPI Backend
 REST API for Task/Note management and Scheduler integration.
 """
 import os
@@ -31,8 +31,8 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(
-    title="银龄AI助手 API",
-    description="Task, Note and Reminder management for Silver Age AI Assistant",
+    title="晚晴 API",
+    description="Task, Note and Reminder management for WanQing AI Assistant",
     version="0.1.0",
     lifespan=lifespan,
 )

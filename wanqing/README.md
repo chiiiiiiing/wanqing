@@ -1,4 +1,4 @@
-# 银龄AI助手 (Silver Age AI Assistant)
+# 晚晴 — 老年人的随身 AI 管家
 
 AI assistant for elderly people, built on TiDB Agent Stack with MCP tool integration.
 
@@ -7,7 +7,7 @@ AI assistant for elderly people, built on TiDB Agent Stack with MCP tool integra
 ```
 老人说话 → 板卡D(录音) → BLE → ROROLEE App → Agent Stack
                                                     ├── Audio Turn (ASR)
-                                                    ├── 银龄AI Agent (NLU + Scheduler)
+                                                    ├── 晚晴 Agent (NLU + Scheduler)
                                                     │     └── MCP Tools → Our Backend → SQLite
                                                     └── NDJSON流式回复
                                                         → App → BLE → 板卡D (TTS+震动+屏幕)
@@ -16,7 +16,7 @@ AI assistant for elderly people, built on TiDB Agent Stack with MCP tool integra
 ## Project Structure
 
 ```
-silver-age-agent/
+wanqing/
 ├── prompts/
 │   └── system_prompt.md          # Agent system prompt (需手动设置到 MEMORY.md)
 ├── backend/
@@ -25,9 +25,9 @@ silver-age-agent/
 │   ├── api/
 │   │   └── server.py            # FastAPI REST API (port 8100)
 │   ├── mcp_server.py            # MCP Server (port 8200) - 5 tools
-│   └── silver_age.db            # SQLite database file
+│   └── wanqing.db               # SQLite database file
 ├── tools/
-│   └── silver-age-tools/        # Custom Tool package (备用方案)
+│   └── wanqing-tools/           # Custom Tool package (备用方案)
 │       ├── manifest.json
 │       └── index.mjs
 ├── tests/
@@ -64,7 +64,7 @@ All 5 tools are exposed via MCP (Model Context Protocol) at `http://localhost:82
 
 ### 1. Start the MCP server
 ```bash
-cd silver-age-agent
+cd wanqing
 source .venv/bin/activate
 python backend/mcp_server.py
 # MCP server running on http://0.0.0.0:8200
@@ -88,7 +88,7 @@ ssh -T -o StrictHostKeyChecking=no -R 80:localhost:8200 serveo.net
 curl -X POST "https://ventured-agent-stack.pingcap.cn/api/mcp/servers" \
   -H "Authorization: Bearer $API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"displayName":"银龄助手工具包","endpointUrl":"https://YOUR_TUNNEL/mcp","transport":"streamable_http","scope":{"kind":"agent","agentId":"agent_cc0aa5c6ff600adf4d6c31718e3fc9bb"}}'
+  -d '{"displayName":"晚晴工具包","endpointUrl":"https://YOUR_TUNNEL/mcp","transport":"streamable_http","scope":{"kind":"agent","agentId":"agent_cc0aa5c6ff600adf4d6c31718e3fc9bb"}}'
 
 # Set credential to none
 curl -X PUT "https://ventured-agent-stack.pingcap.cn/api/mcp/servers/$SERVER_ID/credential" \

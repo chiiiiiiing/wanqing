@@ -152,7 +152,7 @@ def run_test(test_file, limit=None, delay=1.0):
         tests = tests[:limit]
 
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S %A")
-    print(f"=== 银龄AI助手 Action-Based Intent Test ===")
+    print(f"=== 晚晴 Action-Based Intent Test ===")
     print(f"Time: {now}")
     print(f"Tests: {len(tests)}")
     print()

@@ -1,4 +1,4 @@
-# 银龄 AI 助手 — BLE 下行/上行消息协议 v1.0
+# 晚晴 — BLE 下行/上行消息协议 v1.0
 
 > **适用范围**：App ↔ ESP32 设备端（基于 agent_link SDK）
 > **传输层**：BLE GATT + L2CAP CoC
@@ -239,7 +239,7 @@ Payload 为 UTF-8 JSON，不含 BOM。
 #### 唤醒词检测
 
 ```json
-{"action": "wakeup", "keyword": "小银龄"}
+{"action": "wakeup", "keyword": "小晚晴"}
 ```
 
 #### 任务操作
@@ -301,7 +301,7 @@ Payload 为 UTF-8 JSON，不含 BOM。
 
 ## 7. 真实测试数据
 
-以下每条消息均通过 Agent Stack 银龄助手实际生成，可直接用于联调：
+以下每条消息均通过 Agent Stack 晚晴实际生成，可直接用于联调：
 
 ### 下行测试
 

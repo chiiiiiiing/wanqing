@@ -1,4 +1,4 @@
--- 银龄AI助手数据库 schema
+-- 晚晴数据库 schema
 
 -- 任务表
 CREATE TABLE IF NOT EXISTS tasks (

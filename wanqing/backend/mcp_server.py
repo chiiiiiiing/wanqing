@@ -1,5 +1,5 @@
 """
-银龄AI助手 — MCP Server
+晚晴 — MCP Server
 Exposes Task/Note management tools via MCP (Model Context Protocol)
 for the Agent Stack to consume.
 
@@ -38,8 +38,8 @@ CST = timezone(timedelta(hours=8))
 
 # Create MCP server
 mcp = MCPServer(
-    name="silver-age-tools",
-    description="银龄AI助手的任务和备忘管理工具",
+    name="wanqing-tools",
+    description="晚晴的任务和备忘管理工具",
     version="0.1.0",
 )
 

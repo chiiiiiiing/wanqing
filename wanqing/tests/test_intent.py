@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-银龄AI助手 — 意图解析自动化测试
+晚晴 — 意图解析自动化测试
 通过 Agent Stack API 批量测试意图识别能力
 """
 
@@ -119,7 +119,7 @@ def create_session() -> str:
 def run_tests(test_file: str, start: int = 1, end: int = 100, delay: float = 1.0):
     """运行测试"""
     print(f"=" * 60)
-    print(f"银龄AI助手 — 意图解析测试")
+    print(f"晚晴 — 意图解析测试")
     print(f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"=" * 60)
     
@@ -218,7 +218,7 @@ def run_tests(test_file: str, start: int = 1, end: int = 100, delay: float = 1.0
 if __name__ == "__main__":
     import argparse
     
-    parser = argparse.ArgumentParser(description="银龄AI助手意图解析测试")
+    parser = argparse.ArgumentParser(description="晚晴意图解析测试")
     parser.add_argument('--start', type=int, default=1, help='起始测试编号')
     parser.add_argument('--end', type=int, default=10, help='结束测试编号')
     parser.add_argument('--delay', type=float, default=1.0, help='测试间隔(秒)')

@@ -1,7 +1,7 @@
 /**
- * 银龄助手工具包 — Custom Tool Entry Point
+ * 晚晴工具包 — Custom Tool Entry Point
  *
- * Provides 5 tools for the Silver Age AI Assistant:
+ * Provides 5 tools for WanQing (AI Assistant for the Elderly):
  *   create_task, create_note, query_tasks, complete_task, delay_task
  *
  * Each tool calls the FastAPI backend using the BACKEND_URL credential.

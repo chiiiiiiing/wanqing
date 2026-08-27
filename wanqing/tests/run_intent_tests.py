@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Intent parsing test runner for 银龄AI助手.
+Intent parsing test runner for 晚晴.
 Sends test sentences to Agent Stack and evaluates responses.
 """
 import json
@@ -21,7 +21,7 @@ HEADERS = {
     "Content-Type": "application/json",
 }
 
-SYSTEM_CONTEXT = """你是一个专门为老年人设计的AI助手（银龄助手）。
+SYSTEM_CONTEXT = """你是一个专门为老年人设计的AI助手（晚晴）。
 当前时间：{now}（北京时间 UTC+8）
 
 你的职责是帮老人管理日常事务。对每句话，你需要：
@@ -118,7 +118,7 @@ def run_test(test_file, limit=None, delay=1.0):
         tests = tests[:limit]
 
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S %A")
-    print(f"=== 银龄AI助手 Intent Parsing Test ===")
+    print(f"=== 晚晴 Intent Parsing Test ===")
     print(f"Time: {now}")
     print(f"Tests: {len(tests)}")
     print(f"Agent: {AGENT_ID}")

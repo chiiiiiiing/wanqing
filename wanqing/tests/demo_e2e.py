@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-银龄AI助手 — End-to-End Demo & Validation Script
+晚晴 — End-to-End Demo & Validation Script
 
 Tests the full stack:
 1. Agent Stack NLU (intent parsing via text turns)
@@ -335,14 +335,14 @@ def test_scheduler_integration():
 
 
 def main():
-    parser = argparse.ArgumentParser(description="银龄AI助手 E2E Demo")
+    parser = argparse.ArgumentParser(description="晚晴 E2E Demo")
     parser.add_argument("--skip-agent", action="store_true", help="Skip Agent NLU tests")
     parser.add_argument("--skip-mcp", action="store_true", help="Skip MCP tool tests")
     parser.add_argument("--skip-scheduler", action="store_true", help="Skip Scheduler tests")
     args = parser.parse_args()
 
     print(f"{BOLD}{'='*60}{RESET}")
-    print(f"{BOLD}  银龄AI助手 — End-to-End Demo{RESET}")
+    print(f"{BOLD}  晚晴 — End-to-End Demo{RESET}")
     print(f"{BOLD}  {datetime.now(CST).strftime('%Y-%m-%d %H:%M:%S CST')}{RESET}")
     print(f"{BOLD}{'='*60}{RESET}")
 

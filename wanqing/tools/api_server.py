@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-银龄AI助手 Custom Tools - FastAPI 服务
+晚晴 Custom Tools - FastAPI 服务
 可部署为 Agent Stack 的 Custom Tool 后端
 """
 
@@ -14,7 +14,7 @@ from custom_tools import (
 )
 
 app = FastAPI(
-    title="银龄AI助手 Tools API",
+    title="晚晴 Tools API",
     description="任务管理、备忘管理的 REST API",
     version="1.0.0"
 )
@@ -53,7 +53,7 @@ async def startup():
 
 @app.get("/")
 async def root():
-    return {"message": "银龄AI助手 Tools API", "status": "running"}
+    return {"message": "晚晴 Tools API", "status": "running"}
 
 @app.post("/tasks/create")
 async def api_create_task(req: CreateTaskRequest):
@@ -95,5 +95,5 @@ async def api_query_notes(req: QueryNotesRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    print("🚀 启动银龄AI助手 Tools API...")
+    print("🚀 启动晚晴 Tools API...")
     uvicorn.run(app, host="0.0.0.0", port=8100)
