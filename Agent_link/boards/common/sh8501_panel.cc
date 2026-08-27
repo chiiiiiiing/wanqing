@@ -166,6 +166,35 @@ esp_err_t Sh8501Panel::FillSolid(uint16_t color) {
     return ESP_OK;
 }
 
+esp_err_t Sh8501Panel::DrawRgb565(const uint16_t* pixels, uint16_t width, uint16_t height) {
+    if (!panel_) return ESP_ERR_INVALID_STATE;
+    if (!pixels || width != cfg_.width || height != cfg_.height) return ESP_ERR_INVALID_ARG;
+
+    const size_t stripe_bytes = static_cast<size_t>(width) * kStripeRows * 2u;
+    if (!stripe_ || stripe_cap_ < stripe_bytes) {
+        if (stripe_) heap_caps_free(stripe_);
+        stripe_ = static_cast<uint8_t*>(
+            heap_caps_aligned_alloc(4, stripe_bytes, MALLOC_CAP_DMA | MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT));
+        if (!stripe_) { stripe_cap_ = 0; return ESP_ERR_NO_MEM; }
+        stripe_cap_ = stripe_bytes;
+    }
+
+    for (uint16_t row = 0; row < height; row = static_cast<uint16_t>(row + kStripeRows)) {
+        const uint16_t rows = std::min<uint16_t>(kStripeRows, static_cast<uint16_t>(height - row));
+        const size_t count = static_cast<size_t>(width) * rows;
+        const uint16_t* src = pixels + static_cast<size_t>(row) * width;
+        for (size_t i = 0; i < count; ++i) {
+            stripe_[2 * i] = static_cast<uint8_t>(src[i] >> 8);
+            stripe_[2 * i + 1] = static_cast<uint8_t>(src[i]);
+        }
+        const uint32_t expect = done_count_.load(std::memory_order_acquire) + 1;
+        ESP_RETURN_ON_ERROR(
+            esp_lcd_panel_draw_bitmap(panel_, 0, row, width, static_cast<uint16_t>(row + rows), stripe_),
+            TAG, "draw frame");
+        if (!WaitDone(expect, 500)) return ESP_ERR_TIMEOUT;
+    }
+    return ESP_OK;
+}
 esp_err_t Sh8501Panel::SetBrightness(uint8_t level) {
     if (!io_) return ESP_ERR_INVALID_STATE;
     const uint8_t p[] = { level };

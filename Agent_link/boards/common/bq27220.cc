@@ -64,11 +64,15 @@ int Bq27220::Soc() const {
 }
 
 bool Bq27220::IsCharging() const {
-    if (!ready_) return false;
+    const int current_ma = CurrentMa();
+    return current_ma != INT32_MIN && current_ma > kChargeThreshMa;
+}
+
+int Bq27220::CurrentMa() const {
+    if (!ready_) return INT32_MIN;
     uint16_t raw = 0;
-    if (ReadU16Le(kRegCurrent, &raw) != ESP_OK) return false;  // read failed: conservatively treat as not charging
-    const int16_t current_ma = static_cast<int16_t>(raw);      // signed mA
-    return current_ma > kChargeThreshMa;
+    if (ReadU16Le(kRegCurrent, &raw) != ESP_OK) return INT32_MIN;
+    return static_cast<int16_t>(raw);
 }
 
 float Bq27220::VoltageVolts() const {

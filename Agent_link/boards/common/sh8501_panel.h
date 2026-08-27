@@ -51,6 +51,7 @@ public:
 
     // Fill the whole screen with one RGB565 color. Valid only after Init() succeeds.
     esp_err_t FillSolid(uint16_t rgb565_color);
+    esp_err_t DrawRgb565(const uint16_t* pixels, uint16_t width, uint16_t height);
 
     // Screen brightness 0-255 (write 0x51).
     esp_err_t SetBrightness(uint8_t level);

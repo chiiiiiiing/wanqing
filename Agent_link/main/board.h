@@ -7,6 +7,15 @@
 
 void* create_board();
 
+enum class DeviceUiState : uint8_t {
+    Boot, Idle, Listening, Uploading, Thinking, Speaking,
+    Reminder, FamilyMessage, Offline, Error, LowBattery
+};
+
+enum class HapticPattern : uint8_t {
+    Success, Reminder, FamilyMessage, ImportantReminder, Error
+};
+
 class Board {
 public:
     virtual ~Board() = default;
@@ -23,6 +32,16 @@ public:
     virtual void ShowText(const char* utf8) { (void)utf8; }
     virtual void Vibrate(uint32_t duration_ms) { (void)duration_ms; }
     virtual void SetLed(uint32_t rgb) { (void)rgb; }   // RGB 0x00RRGGBB; the SDK's led0 endpoint routes here
+    virtual void SetUiState(DeviceUiState state) { (void)state; }
+    virtual void PlayHapticPattern(HapticPattern pattern) { (void)pattern; }
+    virtual void SetVolumePercent(uint8_t percent) { (void)percent; }
+    // App-initiated microphone capture (BLE commands 0x3C/0x3D). Implementations
+    // hand this request to their microphone worker; transport callbacks must not
+    // touch the codec directly.
+    virtual void SetRemoteListening(bool start, uint32_t max_ms) {
+        (void)start;
+        (void)max_ms;
+    }
 
     // Device → Agent: Status Query & Reporting
     virtual int GetBatteryLevel() { return -1; }

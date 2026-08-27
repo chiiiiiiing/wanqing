@@ -15,6 +15,7 @@ public:
 
     int   Soc() const;
     bool  IsCharging() const;
+    int   CurrentMa() const;
     float VoltageVolts() const;
 
 private:
