@@ -1,0 +1,410 @@
+[
+  {
+    "id": 20,
+    "intent": "CREATE_NOTE",
+    "input": "遥控器放在电视柜第二个抽屉里",
+    "expected": {
+      "content": "遥控器放在电视柜第二个抽屉",
+      "category": "item_location"
+    }
+  },
+  {
+    "id": 21,
+    "intent": "CREATE_NOTE",
+    "input": "帮我记一下，医保卡在钱包的夹层里",
+    "expected": {
+      "content": "医保卡在钱包夹层",
+      "category": "item_location"
+    }
+  },
+  {
+    "id": 22,
+    "intent": "CREATE_NOTE",
+    "input": "记一下鸡蛋快没了",
+    "expected": {
+      "content": "鸡蛋快没了",
+      "category": "shopping"
+    }
+  },
+  {
+    "id": 23,
+    "intent": "CREATE_NOTE",
+    "input": "帮我记住隔壁王阿姨的电话是13812345678",
+    "expected": {
+      "content": "王阿姨电话13812345678",
+      "category": "contact"
+    }
+  },
+  {
+    "id": 24,
+    "intent": "CREATE_NOTE",
+    "input": "帮我记一下，降压药是每天早晚各一片",
+    "expected": {
+      "content": "降压药每天早晚各一片",
+      "category": "medical"
+    }
+  },
+  {
+    "id": 25,
+    "intent": "CREATE_NOTE",
+    "input": "记住密码是六个八",
+    "expected": {
+      "content": "密码是888888",
+      "category": "info"
+    }
+  },
+  {
+    "id": 26,
+    "intent": "CREATE_NOTE",
+    "input": "帮我记一下，楼下快递柜的密码是9527",
+    "expected": {
+      "content": "快递柜密码9527",
+      "category": "info"
+    }
+  },
+  {
+    "id": 27,
+    "intent": "CREATE_NOTE",
+    "input": "记一下明天要把被子拿出去晒",
+    "expected": {
+      "content": "明天晒被子",
+      "category": "life"
+    }
+  },
+  {
+    "id": 28,
+    "intent": "CREATE_NOTE",
+    "input": "帮我记住张医生的门诊是每周四上午",
+    "expected": {
+      "content": "张医生门诊每周四上午",
+      "category": "medical"
+    }
+  },
+  {
+    "id": 29,
+    "intent": "CREATE_NOTE",
+    "input": "帮我记着，冰箱里的酸奶后天就过期了",
+    "expected": {
+      "content": "酸奶后天过期",
+      "category": "food"
+    }
+  },
+  {
+    "id": 40,
+    "intent": "QUERY_TASK",
+    "input": "今天还有什么事情？",
+    "expected": {
+      "date": "today"
+    }
+  },
+  {
+    "id": 41,
+    "intent": "QUERY_TASK",
+    "input": "帮我看看明天有什么安排",
+    "expected": {
+      "date": "tomorrow"
+    }
+  },
+  {
+    "id": 42,
+    "intent": "QUERY_TASK",
+    "input": "我这周有什么事？",
+    "expected": {
+      "date": "this_week"
+    }
+  },
+  {
+    "id": 43,
+    "intent": "QUERY_TASK",
+    "input": "有没有什么忘记做的？",
+    "expected": {
+      "date": "today",
+      "status": "pending"
+    }
+  },
+  {
+    "id": 44,
+    "intent": "QUERY_TASK",
+    "input": "今天还要做什么来着？",
+    "expected": {
+      "date": "today",
+      "status": "pending"
+    }
+  },
+  {
+    "id": 45,
+    "intent": "QUERY_TASK",
+    "input": "帮我看看还有哪些事没做",
+    "expected": {
+      "status": "pending"
+    }
+  },
+  {
+    "id": 46,
+    "intent": "QUERY_TASK",
+    "input": "下午有什么事？",
+    "expected": {
+      "date": "today",
+      "time_range": "afternoon"
+    }
+  },
+  {
+    "id": 50,
+    "intent": "COMPLETE_TASK",
+    "input": "买菜已经买好了",
+    "expected": {
+      "task_reference": "买菜"
+    }
+  },
+  {
+    "id": 51,
+    "intent": "COMPLETE_TASK",
+    "input": "药已经吃了",
+    "expected": {
+      "task_reference": "吃药"
+    }
+  },
+  {
+    "id": 52,
+    "intent": "COMPLETE_TASK",
+    "input": "物业费交好了",
+    "expected": {
+      "task_reference": "交物业费"
+    }
+  },
+  {
+    "id": 53,
+    "intent": "COMPLETE_TASK",
+    "input": "已经看完医生了",
+    "expected": {
+      "task_reference": "看医生"
+    }
+  },
+  {
+    "id": 54,
+    "intent": "COMPLETE_TASK",
+    "input": "好了好了，做完了",
+    "expected": {
+      "task_reference": "current",
+      "context": "last_task"
+    }
+  },
+  {
+    "id": 55,
+    "intent": "COMPLETE_TASK",
+    "input": "那个买菜的已经搞定了",
+    "expected": {
+      "task_reference": "买菜"
+    }
+  },
+  {
+    "id": 56,
+    "intent": "COMPLETE_TASK",
+    "input": "刚才提醒的那个事已经办好了",
+    "expected": {
+      "task_reference": "current",
+      "context": "last_reminder"
+    }
+  },
+  {
+    "id": 60,
+    "intent": "DELAY_TASK",
+    "input": "晚两个小时再提醒",
+    "expected": {
+      "delay_minutes": 120,
+      "task_reference": "current_reminder"
+    }
+  },
+  {
+    "id": 61,
+    "intent": "DELAY_TASK",
+    "input": "等一下再说",
+    "expected": {
+      "delay_minutes": 30,
+      "task_reference": "current_reminder"
+    }
+  },
+  {
+    "id": 62,
+    "intent": "DELAY_TASK",
+    "input": "推迟到明天",
+    "expected": {
+      "delay_to": "tomorrow",
+      "task_reference": "current"
+    }
+  },
+  {
+    "id": 63,
+    "intent": "DELAY_TASK",
+    "input": "先不提醒了，过一会儿再说",
+    "expected": {
+      "delay_minutes": 30,
+      "task_reference": "current_reminder"
+    }
+  },
+  {
+    "id": 64,
+    "intent": "DELAY_TASK",
+    "input": "买菜那个提醒延后一小时",
+    "expected": {
+      "delay_minutes": 60,
+      "task_reference": "买菜"
+    }
+  },
+  {
+    "id": 70,
+    "intent": "GENERAL_QA",
+    "input": "今天几号？",
+    "expected": {}
+  },
+  {
+    "id": 71,
+    "intent": "GENERAL_QA",
+    "input": "现在几点了？",
+    "expected": {}
+  },
+  {
+    "id": 72,
+    "intent": "GENERAL_QA",
+    "input": "今天天气怎么样？",
+    "expected": {}
+  },
+  {
+    "id": 73,
+    "intent": "GENERAL_QA",
+    "input": "今天是星期几？",
+    "expected": {}
+  },
+  {
+    "id": 74,
+    "intent": "GENERAL_QA",
+    "input": "帮我算算，100块打八折是多少？",
+    "expected": {}
+  },
+  {
+    "id": 75,
+    "intent": "GENERAL_QA",
+    "input": "端午节是哪天？",
+    "expected": {}
+  },
+  {
+    "id": 80,
+    "intent": "UNKNOWN",
+    "input": "嗯嗯嗯",
+    "expected": {}
+  },
+  {
+    "id": 81,
+    "intent": "UNKNOWN",
+    "input": "那个那个那个",
+    "expected": {}
+  },
+  {
+    "id": 82,
+    "intent": "UNKNOWN",
+    "input": "啊？",
+    "expected": {}
+  },
+  {
+    "id": 90,
+    "intent": "CREATE_TASK",
+    "input": "后天早上要去银行办卡",
+    "expected": {
+      "title": "去银行办卡",
+      "time_ref": "后天早上"
+    }
+  },
+  {
+    "id": 91,
+    "intent": "CREATE_TASK",
+    "input": "帮我提醒一下，大后天要去复查",
+    "expected": {
+      "title": "去复查",
+      "time_ref": "大后天"
+    }
+  },
+  {
+    "id": 92,
+    "intent": "CREATE_TASK",
+    "input": "明天下午两点半提醒我给花浇水",
+    "expected": {
+      "title": "给花浇水",
+      "time_ref": "明天14:30"
+    }
+  },
+  {
+    "id": 93,
+    "intent": "CREATE_TASK",
+    "input": "周六上午要去公园打太极",
+    "expected": {
+      "title": "公园打太极",
+      "time_ref": "周六上午"
+    }
+  },
+  {
+    "id": 94,
+    "intent": "CREATE_TASK",
+    "input": "明天早上六点叫我起来赶火车",
+    "expected": {
+      "title": "赶火车",
+      "time_ref": "明天06:00"
+    }
+  },
+  {
+    "id": 95,
+    "intent": "CREATE_TASK",
+    "input": "帮我设个闹钟，下午三点半",
+    "expected": {
+      "title": "闹钟",
+      "time_ref": "今天15:30"
+    }
+  },
+  {
+    "id": 96,
+    "intent": "CREATE_NOTE",
+    "input": "帮我记一下，小区物业的电话是021-12345678",
+    "expected": {
+      "content": "物业电话021-12345678",
+      "category": "contact"
+    }
+  },
+  {
+    "id": 97,
+    "intent": "CREATE_NOTE",
+    "input": "记一下，老李说他搬到三号楼502了",
+    "expected": {
+      "content": "老李搬到三号楼502",
+      "category": "contact"
+    }
+  },
+  {
+    "id": 98,
+    "intent": "CREATE_TASK",
+    "input": "每天晚上七点提醒我看新闻联播",
+    "expected": {
+      "title": "看新闻联播",
+      "time_ref": "每天19:00",
+      "recurring": true
+    }
+  },
+  {
+    "id": 99,
+    "intent": "CREATE_TASK",
+    "input": "每周一早上提醒我去量血压",
+    "expected": {
+      "title": "量血压",
+      "time_ref": "每周一早上",
+      "recurring": true
+    }
+  },
+  {
+    "id": 100,
+    "intent": "CREATE_TASK",
+    "input": "帮我记住，每个月15号要去领退休金",
+    "expected": {
+      "title": "领退休金",
+      "time_ref": "每月15号",
+      "recurring": true
+    }
+  }
+]

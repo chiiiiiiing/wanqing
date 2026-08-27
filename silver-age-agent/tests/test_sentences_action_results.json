@@ -1,0 +1,522 @@
+[
+  {
+    "id": 1,
+    "input": "明天下午三点提醒我买菜",
+    "expected_intent": "CREATE_TASK",
+    "response": "已设置好提醒 ✅\n\n- **时间**：明天（2026年8月28日）下午 3:00（北京时间）\n- **内容**：提醒你买菜 🛒\n\n到时候我会在这个对话里通知你。如果你的时区不是北京时间，请告诉我，我来调整。",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 1
+  },
+  {
+    "id": 2,
+    "input": "提醒我后天上午去医院检查",
+    "expected_intent": "CREATE_TASK",
+    "response": "提醒已设置 ✅\n\n- **时间**：2026年8月29日（周六）上午 8:00（北京时间）\n- **内容**：去医院检查\n\n届时我会在这个对话中提醒您。祝您检查顺利！",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 1
+  },
+  {
+    "id": 3,
+    "input": "帮我记一下，周五下午两点要去社区开会",
+    "expected_intent": "CREATE_TASK",
+    "response": "已帮你记好了 ✅\n\n- **备忘已保存**：周五（8月28日）下午 2:00 社区开会\n- **提醒已设置**：当天下午 1:30（提前30分钟）会提醒你\n\n> 提醒时间按北京时间（UTC+8）设置，如果你在其他时区请告诉我，我帮你调整。",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 1
+  },
+  {
+    "id": 4,
+    "input": "下周一早上九点要交物业费",
+    "expected_intent": "CREATE_TASK",
+    "response": "已设好提醒 ✅\n\n**下周一（8月31日）早上 9:00（北京时间）** 会提醒你交物业费。到时候我会通知你！",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 1
+  },
+  {
+    "id": 5,
+    "input": "今天晚上八点提醒我吃降压药",
+    "expected_intent": "CREATE_TASK",
+    "response": "已设好提醒 ✅\n\n今晚 **20:00（北京时间）** 我会提醒您吃降压药 💊，到时候别忘了！",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 1
+  },
+  {
+    "id": 6,
+    "input": "那个，明儿下午吧，就是提醒我去买点菜",
+    "expected_intent": "CREATE_TASK",
+    "response": "好了，已经设好了！明天（8月28日）下午大约 12:10 左右会提醒你去买菜 🥬",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 1
+  },
+  {
+    "id": 7,
+    "input": "帮我设个提醒，半小时后该量血压了",
+    "expected_intent": "CREATE_TASK",
+    "response": "已设好提醒 ⏰ 30 分钟后会提醒你量血压，到时候别忘了～",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 1
+  },
+  {
+    "id": 8,
+    "input": "过两个小时提醒我喝水",
+    "expected_intent": "CREATE_TASK",
+    "response": "好的，已经设置好了！⏰ 两小时后（约 16:11）我会提醒你喝水 💧",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 1
+  },
+  {
+    "id": 9,
+    "input": "一会儿提醒我给女儿打个电话",
+    "expected_intent": "CREATE_TASK",
+    "response": "好的，已经帮你设好了，30 分钟后会提醒你给女儿打电话 📞\n\n如果你觉得时间需要调整（比如改成 15 分钟或 1 小时后），随时告诉我。",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 1
+  },
+  {
+    "id": 10,
+    "input": "每天早上八点提醒我吃药",
+    "expected_intent": "CREATE_TASK",
+    "response": "已为您设置好每日吃药提醒 ✅\n\n- **提醒时间**：每天早上 8:00（北京时间）\n- **首次提醒**：2026年8月28日（明天）早上8点\n\n到时间我会准时提醒您吃药 💊。如果需要调整时间或取消提醒，随时告诉我。",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 1
+  },
+  {
+    "id": 11,
+    "input": "每周三下午提醒我去老年大学上课",
+    "expected_intent": "CREATE_TASK",
+    "response": "已为您设置好每周三下午的提醒 ✅\n\n- **提醒内容**：去老年大学上课\n- **提醒时间**：每周三下午 13:00（北京时间）\n- **下次提醒**：2026年9月2日（周三）13:00\n\n如果需要调整提醒时间，随时告诉我！",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 1
+  },
+  {
+    "id": 12,
+    "input": "提醒我明天去拿体检报告",
+    "expected_intent": "CREATE_TASK",
+    "response": "已为您设置好提醒 ✅\n\n- **时间**：明天（2026年8月28日）上午 9:00（北京时间）\n- **内容**：去拿体检报告\n\n到时候我会准时提醒您。如果时间需要调整，随时告诉我。",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 1
+  },
+  {
+    "id": 13,
+    "input": "下午四点的时候提醒我接孙子放学",
+    "expected_intent": "CREATE_TASK",
+    "response": "已设好提醒 ✅ 今天下午 4:00（北京时间）会提醒你去接孙子放学。",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 1
+  },
+  {
+    "id": 14,
+    "input": "帮我记住明天中午要去老张家下棋",
+    "expected_intent": "CREATE_TASK",
+    "response": "已经帮你记下了。明天（8月28日周五）中午12点去老张家下棋，已经添加到备忘里了。",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "title_in_response",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 0
+  },
+  {
+    "id": 15,
+    "input": "晚一点再提醒我",
+    "expected_intent": "CREATE_TASK",
+    "response": "根据您的备忘，您明天（2026-08-28）有两个安排：\n\n- 12:00 去老张家下棋\n- 14:00 社区开会\n\n请问您想让我提醒哪一项（或哪些）？另外，\"晚一点\"具体是提前多久提醒呢？",
+    "checks": [
+      [
+        "non_empty_response",
+        true,
+        ""
+      ],
+      [
+        "chinese_response",
+        true,
+        ""
+      ],
+      [
+        "task_action",
+        true,
+        ""
+      ],
+      [
+        "concise",
+        true,
+        ""
+      ]
+    ],
+    "all_passed": true,
+    "schedulers_created": 0
+  }
+]

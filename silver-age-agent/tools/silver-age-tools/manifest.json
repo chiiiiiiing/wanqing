@@ -1,0 +1,132 @@
+{
+  "name": "silver-age-tools",
+  "displayName": "银龄助手工具包",
+  "description": "银龄AI助手的任务和备忘管理工具。支持创建任务、创建备忘、查询事项、完成任务、延期任务。",
+  "version": 1,
+  "entry": "index.mjs",
+  "allowedHosts": [
+    "*"
+  ],
+  "credentials": [
+    {
+      "env": "BACKEND_URL",
+      "label": "后端服务地址",
+      "description": "银龄助手后端 API 的完整 URL（如 https://example.com）"
+    }
+  ],
+  "tools": [
+    {
+      "name": "create_task",
+      "displayName": "创建任务",
+      "description": "创建一个新的提醒任务并保存到数据库。当老人说"提醒我..."、"明天要..."、"帮我记一下..."时调用。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "任务标题，简短描述要做的事"
+          },
+          "due_time": {
+            "type": "string",
+            "description": "到期时间，ISO 8601 格式（如 2025-08-28T15:00:00+08:00）"
+          },
+          "category": {
+            "type": "string",
+            "description": "任务分类",
+            "enum": ["health", "life", "social", "finance", "other"],
+            "default": "life"
+          },
+          "description": {
+            "type": "string",
+            "description": "任务详细描述（可选）"
+          }
+        },
+        "required": ["title", "due_time"]
+      }
+    },
+    {
+      "name": "create_note",
+      "displayName": "创建备忘",
+      "description": "创建一条备忘笔记并保存到数据库。当老人说"记一下..."、"帮我记住..."时调用。备忘不需要时间。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "备忘内容"
+          },
+          "category": {
+            "type": "string",
+            "description": "备忘分类",
+            "enum": ["health", "life", "recipe", "contact", "general"],
+            "default": "general"
+          }
+        },
+        "required": ["content"]
+      }
+    },
+    {
+      "name": "query_tasks",
+      "displayName": "查询任务",
+      "description": "查询老人的待办任务列表。当老人说"今天有什么事"、"帮我看看..."、"还有什么安排"时调用。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "查询日期，格式 YYYY-MM-DD（如 2025-08-28）。不填则查询所有待办。"
+          },
+          "status": {
+            "type": "string",
+            "description": "任务状态筛选",
+            "enum": ["pending", "completed", "cancelled"],
+            "default": "pending"
+          }
+        }
+      }
+    },
+    {
+      "name": "complete_task",
+      "displayName": "完成任务",
+      "description": "将一个任务标记为已完成。当老人说"...做完了"、"...好了"、"已经...了"时调用。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title_keyword": {
+            "type": "string",
+            "description": "任务标题中的关键词，用于模糊匹配要完成的任务"
+          },
+          "task_id": {
+            "type": "string",
+            "description": "任务的精确 ID（如果已知）"
+          }
+        },
+        "required": ["title_keyword"]
+      }
+    },
+    {
+      "name": "delay_task",
+      "displayName": "延期任务",
+      "description": "推迟一个任务的时间。当老人说"晚一点"、"推迟..."、"等一下再..."时调用。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title_keyword": {
+            "type": "string",
+            "description": "任务标题中的关键词，用于模糊匹配要延期的任务"
+          },
+          "minutes": {
+            "type": "integer",
+            "description": "推迟的分钟数",
+            "default": 30
+          },
+          "new_due_time": {
+            "type": "string",
+            "description": "新的到期时间，ISO 8601 格式（如果指定了具体新时间）"
+          }
+        },
+        "required": ["title_keyword"]
+      }
+    }
+  ]
+}

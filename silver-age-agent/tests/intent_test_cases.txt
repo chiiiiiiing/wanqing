@@ -1,0 +1,131 @@
+# 银龄AI助手 — 意图解析测试集
+# 共 100 条中文测试语句
+
+# ============ CREATE_TASK (30 条) ============
+
+# 明确时间
+1. "明天下午三点提醒我买菜" | CREATE_TASK | title=买菜, due_time=明天15:00, category=生活
+2. "后天上午十点要去看医生" | CREATE_TASK | title=看医生, due_time=后天10:00, category=医疗
+3. "今天中午12点提醒我吃药" | CREATE_TASK | title=吃药, due_time=今天12:00, category=健康
+4. "今天晚上七点半提醒我散步" | CREATE_TASK | title=散步, due_time=今天19:30, category=生活
+5. "明天早上八点提醒我浇花" | CREATE_TASK | title=浇花, due_time=明天08:00, category=生活
+
+# 模糊时间
+6. "今天下午提醒我去超市" | CREATE_TASK | title=去超市, due_time=今天15:00, category=生活
+7. "明天上午提醒我交水电费" | CREATE_TASK | title=交水电费, due_time=明天09:00, category=生活
+8. "后天提醒我取快递" | CREATE_TASK | title=取快递, due_time=后天09:00, category=生活
+9. "星期五提醒我去银行" | CREATE_TASK | title=去银行, due_time=本周五09:00, category=生活
+10. "下周一提醒我复查" | CREATE_TASK | title=复查, due_time=下周一09:00, category=医疗
+
+# 相对时间
+11. "半小时后提醒我喝水" | CREATE_TASK | title=喝水, due_time=+30min, category=健康
+12. "两个小时后提醒我量血压" | CREATE_TASK | title=量血压, due_time=+2h, category=健康
+13. "一会儿提醒我给女儿打电话" | CREATE_TASK | title=给女儿打电话, due_time=+30min, category=家庭
+14. "晚一点提醒我收拾屋子" | CREATE_TASK | title=收拾屋子, due_time=+30min, category=生活
+
+# 简略表达
+15. "帮我记一下，明天要买米" | CREATE_TASK | title=买米, due_time=明天, category=生活
+16. "提醒我后天去理发" | CREATE_TASK | title=理发, due_time=后天, category=生活
+17. "明天要还书，帮我设个提醒" | CREATE_TASK | title=还书, due_time=明天, category=生活
+18. "下午三点有个事，提醒我" | CREATE_TASK | title=有个事, due_time=今天15:00, category=其他
+19. "明天下午要开会" | CREATE_TASK | title=开会, due_time=明天15:00, category=工作
+20. "下周二下午两点去看牙" | CREATE_TASK | title=看牙, due_time=下周二14:00, category=医疗
+
+# 带分类
+21. "提醒我明天下午吃降压药" | CREATE_TASK | title=吃降压药, due_time=明天15:00, category=健康
+22. "明天上午要去社区活动" | CREATE_TASK | title=社区活动, due_time=明天09:00, category=社交
+23. "后天早上要去菜市场" | CREATE_TASK | title=去菜市场, due_time=后天09:00, category=生活
+24. "今天晚上八点看新闻联播" | CREATE_TASK | title=看新闻联播, due_time=今天20:00, category=生活
+25. "明天下午四点接孙子放学" | CREATE_TASK | title=接孙子, due_time=明天16:00, category=家庭
+
+# 复杂表达
+26. "帮我记一下，后天下午三点要和老李下棋" | CREATE_TASK | title=和老李下棋, due_time=后天15:00, category=社交
+27. "明天要去医院复查，帮我设个提醒" | CREATE_TASK | title=医院复查, due_time=明天, category=医疗
+28. "下周三上午要去银行办业务" | CREATE_TASK | title=银行办业务, due_time=下周三09:00, category=生活
+29. "周末要去给老伴买药" | CREATE_TASK | title=买药, due_time=周六09:00, category=健康
+30. "过两天要去参加老年大学的活动" | CREATE_TASK | title=老年大学活动, due_time=后天09:00, category=社交
+
+# ============ CREATE_NOTE (15 条) ============
+
+31. "帮我记一下，鸡蛋快没了" | CREATE_NOTE | content=鸡蛋快没了, category=生活
+32. "记住，牛奶要买低脂的" | CREATE_NOTE | content=牛奶要买低脂的, category=生活
+33. "帮我记一下王阿姨的电话是13800138000" | CREATE_NOTE | content=王阿姨电话13800138000, category=联系人
+34. "记一下，降压药每天吃一片" | CREATE_NOTE | content=降压药每天一片, category=健康
+35. "帮我记住，孙子生日是10月15号" | CREATE_NOTE | content=孙子生日10月15号, category=家庭
+36. "记一下，小区物业电话是88886666" | CREATE_NOTE | content=物业电话88886666, category=联系人
+37. "帮我记住，血糖正常值是3.9-6.1" | CREATE_NOTE | content=血糖正常值3.9-6.1, category=健康
+38. "记一下，女儿的公司叫ABC科技" | CREATE_NOTE | content=女儿公司ABC科技, category=家庭
+39. "帮我记住，医保卡在抽屉第二层" | CREATE_NOTE | content=医保卡在抽屉第二层, category=生活
+40. "记一下，下周要交党费" | CREATE_NOTE | content=下周交党费, category=生活
+41. "帮我记住，老张搬家了，新地址是阳光小区3栋" | CREATE_NOTE | content=老张新地址阳光小区3栋, category=联系人
+42. "记一下，这个月水电费已经交了" | CREATE_NOTE | content=本月水电费已交, category=生活
+43. "帮我记住，老伴喜欢吃的菜是红烧肉" | CREATE_NOTE | content=老伴喜欢红烧肉, category=家庭
+44. "记一下，明天要去居委会登记" | CREATE_NOTE | content=明天去居委会登记, category=生活
+45. "帮我记住，公交车改线了，302路不到医院了" | CREATE_NOTE | content=302路公交改线, category=生活
+
+# ============ QUERY_TASK (15 条) ============
+
+46. "今天有什么事？" | QUERY_TASK | date_range=today
+47. "今天还有什么安排吗？" | QUERY_TASK | date_range=today
+48. "帮我看看今天有什么提醒" | QUERY_TASK | date_range=today
+49. "今天要做什么？" | QUERY_TASK | date_range=today
+50. "这周有什么安排？" | QUERY_TASK | date_range=week
+51. "最近有什么事吗？" | QUERY_TASK | date_range=week
+52. "帮我看看这周的安排" | QUERY_TASK | date_range=week
+53. "还有什么没做的事吗？" | QUERY_TASK | status=pending
+54. "看看我的待办事项" | QUERY_TASK | status=pending
+55. "我有什么提醒？" | QUERY_TASK | status=pending
+56. "明天有什么安排？" | QUERY_TASK | date_range=tomorrow
+57. "帮我查一下明天的事" | QUERY_TASK | date_range=tomorrow
+58. "下午有什么事？" | QUERY_TASK | date_range=today_afternoon
+59. "今天还有几个提醒？" | QUERY_TASK | date_range=today
+60. "看看我的日程" | QUERY_TASK | status=pending
+
+# ============ COMPLETE_TASK (15 条) ============
+
+61. "菜已经买好了" | COMPLETE_TASK | task_ref=买菜
+62. "药吃过了" | COMPLETE_TASK | task_ref=吃药
+63. "医生看完了" | COMPLETE_TASK | task_ref=看医生
+64. "那个事做完了" | COMPLETE_TASK | task_ref=最近的任务
+65. "已经去过超市了" | COMPLETE_TASK | task_ref=超市
+66. "花浇好了" | COMPLETE_TASK | task_ref=浇花
+67. "快递取回来了" | COMPLETE_TASK | task_ref=快递
+68. "电话打过了" | COMPLETE_TASK | task_ref=打电话
+69. "书还了" | COMPLETE_TASK | task_ref=还书
+70. "水电费交了" | COMPLETE_TASK | task_ref=水电费
+71. "米买好了" | COMPLETE_TASK | task_ref=买米
+72. "理完发了" | COMPLETE_TASK | task_ref=理发
+73. "血压量过了" | COMPLETE_TASK | task_ref=量血压
+74. "屋子收拾好了" | COMPLETE_TASK | task_ref=收拾屋子
+75. "那个提醒我处理了" | COMPLETE_TASK | task_ref=最近的任务
+
+# ============ DELAY_TASK (10 条) ============
+
+76. "那个提醒晚一点再提醒我" | DELAY_TASK | task_ref=最近的任务, minutes=30
+77. "推迟半小时" | DELAY_TASK | task_ref=最近的任务, minutes=30
+78. "等一下再提醒我" | DELAY_TASK | task_ref=最近的任务, minutes=30
+79. "一个小时后再提醒" | DELAY_TASK | task_ref=最近的任务, minutes=60
+80. "晚两个小时" | DELAY_TASK | task_ref=最近的任务, minutes=120
+81. "推迟到明天" | DELAY_TASK | task_ref=最近的任务, due_time=明天
+82. "改到下午四点" | DELAY_TASK | task_ref=最近的任务, due_time=今天16:00
+83. "那个事先放一放" | DELAY_TASK | task_ref=最近的任务, minutes=30
+84. "不着急，晚点再说" | DELAY_TASK | task_ref=最近的任务, minutes=60
+85. "延后一天" | DELAY_TASK | task_ref=最近的任务, due_time=+1day
+
+# ============ GENERAL_QA (15 条) ============
+
+86. "今天星期几？" | GENERAL_QA | 
+87. "现在几点了？" | GENERAL_QA | 
+88. "今天天气怎么样？" | GENERAL_QA | 
+89. "明天会下雨吗？" | GENERAL_QA | 
+90. "春节是什么时候？" | GENERAL_QA | 
+91. "帮我算一下，100块打八折是多少？" | GENERAL_QA | 
+92. "高血压应该注意什么？" | GENERAL_QA | 
+93. "老年人每天应该喝多少水？" | GENERAL_QA | 
+94. "谢谢你了" | GENERAL_QA | 
+95. "你叫什么名字？" | GENERAL_QA | 
+96. "再见" | GENERAL_QA | 
+97. "好的，我知道了" | GENERAL_QA | 
+98. "你说什么？再说一遍" | GENERAL_QA | 
+99. "声音大一点" | GENERAL_QA | 
+100. "今天农历几号？" | GENERAL_QA |

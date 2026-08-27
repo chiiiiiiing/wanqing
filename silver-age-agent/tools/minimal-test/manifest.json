@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "agent9-custom-tool-v1",
+  "name": "custom_hellotest",
+  "displayName": "Hello Test",
+  "description": "Minimal test tool",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Name to greet"
+      }
+    }
+  }
+}

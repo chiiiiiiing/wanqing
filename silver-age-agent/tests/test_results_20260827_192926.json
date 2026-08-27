@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-08-27T19:29:26.875161",
+  "session_id": "sess_a0bf4c78b00246c89655d3de6f20d173",
+  "results": {
+    "total": 3,
+    "correct": 0,
+    "incorrect": 3,
+    "errors": 0
+  },
+  "test_range": "1-3"
+}

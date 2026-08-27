@@ -1,0 +1,87 @@
+{
+  "summary": {
+    "passed": 3,
+    "total": 5
+  },
+  "results": [
+    {
+      "id": 1,
+      "input": "明天下午三点提醒我买菜",
+      "expected_intent": "CREATE_TASK",
+      "actual_intent": "CREATE_TASK",
+      "confidence": 0.98,
+      "match": true,
+      "response": "```json\n{\n  \"intent\": \"CREATE_TASK\",\n  \"confidence\": 0.98,\n  \"extracted\": {\n    \"task\": \"买菜\",\n    \"time\": \"2026-08-28 15:00:00\",\n    \"time_display\": \"明天下午3点\"\n  },\n  \"reply\": \"好的，我记下了！明天（8月28日）下午3点提醒您买",
+      "parsed": {
+        "intent": "CREATE_TASK",
+        "confidence": 0.98,
+        "extracted": {
+          "task": "买菜",
+          "time": "2026-08-28 15:00:00",
+          "time_display": "明天下午3点"
+        },
+        "reply": "好的，我记下了！明天（8月28日）下午3点提醒您买菜。🛒\n\n到时候我会准时提醒您，您放心～"
+      }
+    },
+    {
+      "id": 2,
+      "input": "提醒我后天上午去医院检查",
+      "expected_intent": "CREATE_TASK",
+      "actual_intent": "NO_JSON",
+      "confidence": 0,
+      "match": false,
+      "response": "好的，我记下了！后天（8月29日，星期六）上午您要【去医院检查】🏥\n\n请问大概几点去医院呢？这样我可以准时提醒您。",
+      "parsed": null
+    },
+    {
+      "id": 3,
+      "input": "帮我记一下，周五下午两点要去社区开会",
+      "expected_intent": "CREATE_TASK",
+      "actual_intent": "NO_JSON",
+      "confidence": 0,
+      "match": false,
+      "response": "都安排好啦！总结一下：\n\n✅ **任务已记录** — 明天周五下午2:00，社区开会\n⏰ **提醒已设置** — 明天下午1:30会提前提醒您，留够时间准备出门\n\n您安心忙别的就好，到时候我叫您～ 😊 还有什么需要帮忙的吗？",
+      "parsed": null
+    },
+    {
+      "id": 4,
+      "input": "下周一早上九点要交物业费",
+      "expected_intent": "CREATE_TASK",
+      "actual_intent": "CREATE_TASK",
+      "confidence": 0.98,
+      "match": true,
+      "response": "```json\n{\n  \"intent\": \"CREATE_TASK\",\n  \"confidence\": 0.98,\n  \"extracted\": {\n    \"task\": \"交物业费\",\n    \"date\": \"2026-08-31\",\n    \"time\": \"09:00\",\n    \"weekday\": \"星期一\",\n    \"reminder_needed\": true\n  },\n  ",
+      "parsed": {
+        "intent": "CREATE_TASK",
+        "confidence": 0.98,
+        "extracted": {
+          "task": "交物业费",
+          "date": "2026-08-31",
+          "time": "09:00",
+          "weekday": "星期一",
+          "reminder_needed": true
+        },
+        "reply": "好的，已经帮您记下来啦！📝\n\n📌 任务：交物业费\n🕘 时间：8月31日（下周一）上午9点\n\n要不要我到时候提前提醒您一下呀？比如前一天晚上或者当天早上8点提醒，这样就不会忘啦～"
+      }
+    },
+    {
+      "id": 5,
+      "input": "今天晚上八点提醒我吃降压药",
+      "expected_intent": "CREATE_TASK",
+      "actual_intent": "CREATE_TASK",
+      "confidence": 0.98,
+      "match": true,
+      "response": "```json\n{\n  \"intent\": \"CREATE_TASK\",\n  \"confidence\": 0.98,\n  \"extracted\": {\n    \"task\": \"吃降压药\",\n    \"time\": \"2026-08-27 20:00\",\n    \"category\": \"健康用药\"\n  },\n  \"reply\": \"好的，已经帮您记下了！今晚8点我会提醒您吃降压药 💊 按时吃药对",
+      "parsed": {
+        "intent": "CREATE_TASK",
+        "confidence": 0.98,
+        "extracted": {
+          "task": "吃降压药",
+          "time": "2026-08-27 20:00",
+          "category": "健康用药"
+        },
+        "reply": "好的，已经帮您记下了！今晚8点我会提醒您吃降压药 💊 按时吃药对身体好，您放心，到点我一定叫您！"
+      }
+    }
+  ]
+}
