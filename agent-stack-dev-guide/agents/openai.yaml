@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Stack Developer"
+  short_description: "Use Agent Stack through its HTTP API"
+  default_prompt: "Use $agent-stack-developer to integrate Agent Stack through its HTTP API."
