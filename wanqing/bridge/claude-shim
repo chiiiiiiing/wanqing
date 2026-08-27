@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# rorolee-shim-version: 1
+# rorolee claude shim —— 装在 ~/.rorolee/bin/claude,置于 PATH 最前。
+#
+# 作用:让你在终端里跑的 claude 会话能被手机 App 看到、并且能被手机「代打字」。
+# 终端体验完全不变(还是原生 TUI),只是多了一层 PTY 托管。
+#
+# 临时绕过: RORO_DISABLE=1 claude
+# 彻底卸载: roro shim uninstall
+
+SHIM_DIR="$HOME/.rorolee/bin"
+
+# 找到**真**的 claude,绝不能找回自己。
+REAL=""
+for c in \
+  "$HOME/.claude/local/claude" \
+  "$HOME/.local/bin/claude" \
+  "$HOME/Library/pnpm/claude" \
+  "$HOME/.npm-global/bin/claude" \
+  "$HOME/.bun/bin/claude" \
+  /opt/homebrew/bin/claude \
+  /usr/local/bin/claude; do
+  if [ -x "$c" ]; then REAL="$c"; break; fi
+done
+if [ -z "$REAL" ]; then
+  REAL="$(command -v -a claude 2>/dev/null | grep -v "^$SHIM_DIR/" | head -1)"
+fi
+
+# 已经在托管里了(claude 又拉起了 claude)、用户显式关闭、找不到真 claude、
+# 或者插件没在跑 —— 一律直通。
+if [ -n "${RORO_DISABLE:-}" ] || [ -n "${RORO_TERM_ACTIVE:-}" ] || [ -z "$REAL" ]; then
+  exec "${REAL:-claude}" "$@"
+fi
+# 插件本体:优先用安装时钉进来的绝对路径。
+#
+# 为什么不能只靠 PATH:这个 shim 每次起 claude 都要跑,而 PATH 是用户随时会改的东西 ——
+# 装完插件之后他换个 shell、清理一遍 rc、或者装了别的什么工具往前插一段,command -v roro
+# 就可能找不到、甚至找到另一个同名的东西。装的时候我们**知道**真二进制在哪,钉下来最省事。
+RORO_BIN="/Users/nibelung/.rorolee/bin/roro"
+if [ ! -x "$RORO_BIN" ]; then
+  RORO_BIN="$(command -v roro 2>/dev/null)"
+fi
+if [ -z "$RORO_BIN" ] || [ ! -S "$HOME/.roro/hub.sock" ]; then
+  exec "$REAL" "$@"
+fi
+
+# 非交互场景直通:PTY 会让脚本/管道用法变慢、挂住,或让 claude 误判成交互。
+# (a) stdin 或 stdout 不是 TTY → 被管道/重定向了(CI、脚本、$(claude ...))
+if [ ! -t 0 ] || [ ! -t 1 ]; then
+  exec "$REAL" "$@"
+fi
+# (b) 参数里有 -p / --print → one-shot,没有 TUI
+for arg in "$@"; do
+  case "$arg" in
+    -p|--print) exec "$REAL" "$@" ;;
+  esac
+done
+# (c) 不需要托管的子命令 / 信息类 flag
+case "${1:-}" in
+  mcp|config|doctor|update|install|migrate-installer|--version|-v|--help|-h)
+    exec "$REAL" "$@" ;;
+esac
+
+# 把绝对路径钉给 roro,它就不可能再走回这个 shim。
+# bridge: route to TiDB Agent Stack instead of real Claude
+if [ -z "${RORO_REAL_CLAUDE:-}" ] && [ -x "$HOME/.rorolee/bin/claude-bridge" ]; then
+  export RORO_CLAUDE_BIN="$HOME/.rorolee/bin/claude-bridge"
+else
+  export RORO_CLAUDE_BIN="$REAL"
+fi
+
+
+# ── Restart roro daemon to fix mirror JSONL monitoring ──
+# The daemon only monitors JSONL files that exist at startup.
+# New sessions created after daemon start are never watched.
+# Restarting ensures the daemon picks up existing session files.
+OLD_DAEMON=$(pgrep -f "roro.*--daemon" 2>/dev/null | head -1)
+if [ -n "$OLD_DAEMON" ]; then
+    kill "$OLD_DAEMON" 2>/dev/null
+    sleep 1
+fi
+nohup "$RORO_BIN" --daemon > /dev/null 2>&1 &
+sleep 2
+
+exec "$RORO_BIN" term -- "$@"

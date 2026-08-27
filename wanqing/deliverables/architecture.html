@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>晚晴 — 系统架构图</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: #fff; color: #1a1a2e;
+    width: 1600px; padding: 28px 36px 20px;
+  }
+
+  /* ── Title ── */
+  .title { text-align: center; margin-bottom: 6px; }
+  .title h1 { font-size: 30px; letter-spacing: 2px; }
+  .title p { font-size: 15px; color: #555; margin-top: 4px; }
+
+  /* ── Category colors ── */
+  .cat-organizer { border: 2.5px solid #2563eb; background: #eff6ff; }
+  .cat-config    { border: 2.5px solid #059669; background: #ecfdf5; }
+  .cat-custom    { border: 2.5px solid #ea580c; background: #fff7ed; }
+
+  .tag { display: inline-block; font-size: 10.5px; font-weight: 600; border-radius: 3px;
+         padding: 1px 6px; margin-left: 6px; vertical-align: middle; }
+  .tag-organizer { background: #2563eb; color: #fff; }
+  .tag-config    { background: #059669; color: #fff; }
+  .tag-custom    { background: #ea580c; color: #fff; }
+
+  /* ── Stage layout ── */
+  .diagram { display: flex; align-items: stretch; gap: 0; margin-top: 14px; }
+  .stage { display: flex; flex-direction: column; }
+  .stage-label { text-align: center; font-size: 15px; font-weight: 700; color: #333;
+                 margin-bottom: 8px; letter-spacing: 1px; }
+  .stage-body { flex: 1; display: flex; flex-direction: column; gap: 10px;
+                border-radius: 10px; padding: 12px 10px; }
+
+  /* arrow between stages */
+  .arrow { display: flex; flex-direction: column; justify-content: center; align-items: center;
+           width: 74px; flex-shrink: 0; }
+  .arrow .line { display:flex; align-items:center; width: 100%; }
+  .arrow .line::before { content:""; flex:1; height:3px; background:#64748b; }
+  .arrow .line::after  { content:""; width:0; height:0;
+        border-left:9px solid #64748b; border-top:6px solid transparent; border-bottom:6px solid transparent; }
+  .arrow .label { font-size: 10.5px; color: #475569; text-align: center; margin: 3px 0; line-height: 1.3; font-weight: 600; }
+
+  /* ── Boxes ── */
+  .box { border-radius: 8px; padding: 8px 10px; background: #fff; }
+  .box h3 { font-size: 14px; margin-bottom: 5px; display: flex; align-items: center; flex-wrap: wrap; }
+  .box ul { list-style: none; }
+  .box li { font-size: 11.5px; color: #374151; padding: 1.5px 0 1.5px 10px; position: relative; line-height: 1.35; }
+  .box li::before { content: "·"; position: absolute; left: 2px; font-weight: 700; }
+  .box .note { font-size: 10.5px; color: #6b7280; margin-top: 4px; font-style: italic; }
+
+  /* input icons */
+  .input-item { border-radius: 8px; padding: 8px 10px; background: #f1f5f9; border: 1.5px solid #94a3b8;
+                display: flex; align-items: center; gap: 8px; }
+  .input-item .ico { font-size: 20px; }
+  .input-item .t { font-size: 12px; font-weight: 600; line-height: 1.3; }
+
+  /* output items */
+  .output-item { border-radius: 8px; padding: 8px 10px; background: #fef9c3; border: 1.5px solid #ca8a04;
+                display: flex; align-items: center; gap: 8px; }
+  .output-item .ico { font-size: 20px; }
+  .output-item .t { font-size: 12px; font-weight: 600; line-height: 1.3; }
+
+  /* hardware module chips inside device box */
+  .hw-chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 4px 0 2px; }
+  .chip { font-size: 10.5px; background: #fff; border: 1.5px solid #d97706; color: #92400e;
+          border-radius: 10px; padding: 2px 8px; font-weight: 600; }
+
+  /* ── Legend ── */
+  .legend { display: flex; justify-content: center; gap: 34px; margin-top: 16px;
+            border-top: 2px solid #e5e7eb; padding-top: 10px; }
+  .legend .item { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; }
+  .legend .swatch { width: 26px; height: 15px; border-radius: 3px; }
+
+  /* capability mapping strip */
+  .mapping { margin-top: 14px; border: 1.5px dashed #9ca3af; border-radius: 8px; padding: 8px 14px;
+             background: #fafafa; }
+  .mapping h4 { font-size: 13px; color: #374151; margin-bottom: 6px; }
+  .mapping table { width: 100%; border-collapse: collapse; }
+  .mapping th { font-size: 11.5px; color: #6b7280; text-align: left; padding: 3px 8px;
+                border-bottom: 1px solid #d1d5db; font-weight: 700; }
+  .mapping td { font-size: 11.5px; color: #1f2937; padding: 4px 8px; border-bottom: 1px solid #f3f4f6;
+                line-height: 1.35; }
+  .mapping td b { color: #ea580c; }
+  .mapping .flow { color: #2563eb; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="title">
+  <h1>晚晴 — 老年人的随身 AI 管家 · 系统架构</h1>
+  <p>Physical AI 闭环：真实输入 → 设备 → BLE → 智能决策 → 硬件动作 → 感官反馈</p>
+</div>
+
+<div class="diagram">
+
+  <!-- ═══ Stage 1: Real-world input ═══ -->
+  <div class="stage" style="width:172px;">
+    <div class="stage-label">真实世界输入</div>
+    <div class="stage-body" style="background:#f8fafc; border:1.5px dashed #94a3b8;">
+      <div class="input-item"><span class="ico">🔘</span><span class="t">BOOT 按键<br>GPIO0 · 一键通话</span></div>
+      <div class="input-item"><span class="ico">🎙️</span><span class="t">麦克风 ES7210<br>16kHz PCM 采集</span></div>
+      <div class="input-item"><span class="ico">🔊</span><span class="t">音量键 GPIO39/40<br>长按=自检演示</span></div>
+    </div>
+  </div>
+
+  <div class="arrow"><div class="label">GPIO /<br>I2S 读取</div><div class="line"></div></div>
+
+  <!-- ═══ Stage 2: Device ═══ -->
+  <div class="stage" style="width:218px;">
+    <div class="stage-label">设备层</div>
+    <div class="stage-body" style="gap:8px;">
+      <div class="box cat-custom">
+        <h3>ESP32-S3 主控 <span class="tag tag-custom">自研固件</span></h3>
+        <div class="hw-chips">
+          <span class="chip">SH8501 AMOLED</span>
+          <span class="chip">ES8311 功放</span>
+          <span class="chip">ES7210 麦克风</span>
+          <span class="chip">BQ27220 电量计</span>
+          <span class="chip">振动马达</span>
+          <span class="chip">SD 卡</span>
+        </div>
+      </div>
+      <div class="box cat-custom">
+        <h3>板级固件 rorolee_basic.cc</h3>
+        <ul>
+          <li>11 种表情状态机（呼吸/倾听/思考/说话…）</li>
+          <li>PTT 语音采集 + 打断播放（回声抑制）</li>
+          <li>语义触觉模式（提醒/家人/错误 长短振）</li>
+          <li>0x70 JSON 协议解析 device_protocol</li>
+          <li>电量上报（5s 轮询 → 事件 0x14）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow"><div class="label">API 调用<br>push_voice()<br>PlayAudio()</div><div class="line"></div></div>
+
+  <!-- ═══ Stage 3: SDK ═══ -->
+  <div class="stage" style="width:190px;">
+    <div class="stage-label">设备能力层</div>
+    <div class="stage-body">
+      <div class="box cat-organizer">
+        <h3>agent_link SDK <span class="tag tag-organizer">主办方提供</span></h3>
+        <ul>
+          <li>语音上行 0x40 VoiceChunk（GATT 0xFFA1）</li>
+          <li>TTS 下行（L2CAP CoC PSM 0x0081）</li>
+          <li>自定义命令 0x70 / 事件 0x64</li>
+          <li>电量事件 0x14 + 0x2A19</li>
+          <li>MTU 切片 · 背压重试</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow"><div class="label">BLE GATT<br>+<br>L2CAP CoC<br>协议 v1.0</div><div class="line"></div></div>
+
+  <!-- ═══ Stage 4: Connection / App ═══ -->
+  <div class="stage" style="width:196px;">
+    <div class="stage-label">连接层</div>
+    <div class="stage-body">
+      <div class="box cat-organizer">
+        <h3>ROROLEE App <span class="tag tag-organizer">主办方提供</span></h3>
+        <ul>
+          <li>手机蓝牙网关：音频/命令双向路由</li>
+          <li>语音 → 会话提交（ASR 输入）</li>
+          <li>回复分发：0x70 JSON + TTS PCM</li>
+          <li>TCP 云端中继（EC2）</li>
+        </ul>
+      </div>
+      <div class="box cat-config" style="padding:6px 10px;">
+        <h3 style="margin:0;">BLE 协议 v1.0 <span class="tag tag-config">团队定义</span></h3>
+        <div class="note">5 类下行消息 · 7 类上行事件 · 见 docs/ble_protocol_v1.md</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow"><div class="label">TCP 中继<br>→<br>roro daemon<br>→ bridge</div><div class="line"></div></div>
+
+  <!-- ═══ Stage 5: Intelligence ═══ -->
+  <div class="stage" style="width:390px;">
+    <div class="stage-label">智能层</div>
+    <div class="stage-body" style="gap:8px;">
+      <div style="display:flex; gap:8px;">
+        <div class="box cat-custom" style="flex:1;">
+          <h3>claude-bridge <span class="tag tag-custom">自研</span></h3>
+          <ul>
+            <li>roro ↔ Agent Stack 协议桥</li>
+            <li>Session/Turn 管理 · NDJSON 流解析</li>
+            <li>TTY 保活 · 15s 看门狗</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box cat-config">
+        <h3>TiDB Agent Stack · 晚晴 Agent <span class="tag tag-config">团队配置</span></h3>
+        <ul>
+          <li><b>模型</b> qwen3.7-plus · 流式 NDJSON 回复</li>
+          <li><b>System Prompt</b>（MEMORY.md）：适老化语气/时间解析/最小追问策略</li>
+          <li><b>Scheduler</b>：定时提醒主动触发 → App 推送</li>
+          <li><b>Session 上下文</b>：多轮指代消解（"晚一点"→买菜提醒）</li>
+        </ul>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <div class="box cat-custom" style="flex:1.1;">
+          <h3>MCP Server :8200 <span class="tag tag-custom">自研</span></h3>
+          <ul>
+            <li>create_task / create_note</li>
+            <li>query_tasks / complete_task / delay_task</li>
+          </ul>
+        </div>
+        <div class="box cat-custom" style="flex:1;">
+          <h3>后端 + SQLite <span class="tag tag-custom">自研</span></h3>
+          <ul>
+            <li>任务/备忘/提醒 CRUD</li>
+            <li>FastAPI REST :8100（家人端预留）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow"><div class="label">BLE 0x70 JSON<br>+<br>TTS PCM<br>L2CAP</div><div class="line"></div></div>
+
+  <!-- ═══ Stage 6: Output ═══ -->
+  <div class="stage" style="width:186px;">
+    <div class="stage-label">实际输出</div>
+    <div class="stage-body" style="background:#fffbeb; border:1.5px dashed #ca8a04;">
+      <div class="output-item"><span class="ico">🖥️</span><span class="t">屏幕表情动画<br>说话/提醒/家人/低电量</span></div>
+      <div class="output-item"><span class="ico">📢</span><span class="t">扬声器 TTS 播报<br>16kHz PCM 流</span></div>
+      <div class="output-item"><span class="ico">📳</span><span class="t">振动反馈<br>重要提醒三连振</span></div>
+      <div class="output-item"><span class="ico">🔔</span><span class="t">定时提醒触发<br>Scheduler → 推送</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Hardware capability mapping ═══ -->
+<div class="mapping">
+  <h4>硬件能力映射：Agent / Tool 决策 → SDK 能力 → 设备动作</h4>
+  <table>
+    <tr><th style="width:26%;">Agent / Tool 决策</th><th style="width:24%;">SDK / 协议通道</th><th style="width:26%;">设备动作</th><th>用户感知</th></tr>
+    <tr>
+      <td>回复文本 <span class="flow">→</span> tts=true</td>
+      <td>cmd 0x70 JSON → L2CAP TTS PCM</td>
+      <td><b>ShowText</b> / <b>PlayAudio</b> + 表情状态机</td>
+      <td>屏幕表情 + 扬声器播报</td>
+    </tr>
+    <tr>
+      <td>Scheduler 触发提醒</td>
+      <td>cmd 0x70 {"type":"reminder"}</td>
+      <td><b>SetUiState</b>(Reminder) + <b>PlayHapticPattern</b></td>
+      <td>提醒表情 + 振动 + TTS</td>
+    </tr>
+    <tr>
+      <td>家人消息下发</td>
+      <td>cmd 0x70 {"type":"family_message"}</td>
+      <td><b>SetUiState</b>(FamilyMessage) + 触觉</td>
+      <td>爱心表情 + 振动</td>
+    </tr>
+    <tr>
+      <td>device_command 音量</td>
+      <td>cmd 0x70 {"action":"set_volume"}</td>
+      <td><b>SetVolumePercent</b> → ES8311</td>
+      <td>音量变化</td>
+    </tr>
+    <tr>
+      <td>错误处理</td>
+      <td>cmd 0x70 {"type":"error"}</td>
+      <td><b>SetUiState</b>(Error) + 错误触觉</td>
+      <td>错误表情 + 长振</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ═══ Legend ═══ -->
+<div class="legend">
+  <div class="item"><span class="swatch cat-organizer"></span>主办方提供（agent_link SDK · ROROLEE App · Agent Stack 平台）</div>
+  <div class="item"><span class="swatch cat-config"></span>团队配置（BLE 协议 v1 · Agent Prompt · MCP 注册 · 模型选择）</div>
+  <div class="item"><span class="swatch cat-custom"></span>团队自主开发（板级固件 · 协议解析 · Bridge · MCP Server · 后端）</div>
+</div>
+
+</body>
+</html>

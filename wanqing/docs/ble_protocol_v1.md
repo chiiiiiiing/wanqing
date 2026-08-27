@@ -2,7 +2,7 @@
 
 > **适用范围**：App ↔ ESP32 设备端（基于 agent_link SDK）
 > **传输层**：BLE GATT + L2CAP CoC
-> **最后更新**：2026-08-27
+> **最后更新**：2026-08-27（§6 修正：BOOT 对话语音通道由 `agent_link_asr_push` → `agent_link_push_voice`）
 
 ---
 
@@ -253,18 +253,26 @@ Payload 为 UTF-8 JSON，不含 BOM。
 
 ## 6. App → 云端语音流程
 
+> **通道语义区分**（参见 agent_link SDK）：
+>
+> | 通道 | API | BLE 传输 | 事件 ID | 用途 |
+> |------|-----|----------|---------|------|
+> | VoiceChunk（实时对话） | `agent_link_push_voice()` / `voice_end()` | GATT Notify `0xFFA1` | `0x40` | 实时 Agent 对话：设备端采集 PCM → App 识别/提交 → Agent 回复 |
+> | ASR/Recording（录音） | `agent_link_asr_start()` / `asr_push()` / `asr_end()` | L2CAP CoC `PSM 0x0081` | `0x52` / `0x53` | 会议录音转写：长时间录音流，App 端转写/存档 |
+>
+> 晚晴 Agent 对话场景使用 **VoiceChunk 通道**（`push_voice`），不使用 ASR/Recording 通道。
+
 ```
 设备端                    App 端                     Agent Stack 云端
   │                        │                              │
   │ button/wakeup 事件     │                              │
   │────0x64 JSON──────────>│                              │
+  │   (GATT 0xFFC4)        │                              │
   │                        │                              │
-  │ ASR 音频流             │                              │
-  │═══L2CAP 0x0081════════>│ 转发音频至 ASR               │
-  │ agent_link_asr_push()  │─────────────────────────────>│
-  │                        │                              │
-  │                        │ ASR 文本结果                  │
-  │                        │<─────────────────────────────│
+  │ Voice 音频流           │                              │
+  │═══GATT Notify═════════>│ ASR 识别 → 文本              │
+  │   0xFFA1 (0x40)        │                              │
+  │ push_voice()/voice_end │                              │
   │                        │                              │
   │                        │ 提交 Turn (text)             │
   │                        │─────────────────────────────>│
@@ -281,6 +289,26 @@ Payload 为 UTF-8 JSON，不含 BOM。
   │ ③ VoiceReply 0x05     │                              │
   │───GATT 0xFFC1────────>│                              │
 ```
+
+### 上行音频帧格式（VoiceChunk 0x40）
+
+每帧由 6 字节公共帧头 + VoiceChunk 专有字段 + PCM 数据组成：
+
+```
+┌─────────┬──────────┬──────────┬────────────┬────────────┬─────────┬─────────┐
+│ ver (1) │ type (1) │ cmd (1)  │  seq (1)   │  len (2)   │sess(4)  │seq (4)  │
+│  0x01   │   0x03   │   0x40   │   0x00     │ payload len│session_id│sequence │
+└─────────┴──────────┴──────────┴────────────┴────────────┴─────────┴─────────┘
+┌──────────┬──────────────┐
+│flags (1) │  PCM 数据    │
+│          │ (≤205 bytes) │
+└──────────┴──────────────┘
+```
+
+- `session_id` (4B, LE)：语音会话编号，首帧自动分配
+- `sequence` (4B, LE)：帧序号，从 0 递增
+- `flags` (1B)：`0x01` = 末帧（等同于 `voice_end()`）
+- PCM：16kHz / 16bit / mono，单帧 ≤ 205 字节（220 - 15 帧开销），偶数对齐
 
 ### 会话 ID 管理
 
@@ -372,9 +400,9 @@ Payload 为 UTF-8 JSON，不含 BOM。
 | 0x36 | App→设备 | SetReadingConfig |
 | 0x3C | App→设备 | StartCapture（开始录音） |
 | 0x3D | App→设备 | StopCapture（停止录音） |
-| 0x40 | 设备→App | VoiceChunk（语音分片） |
-| 0x52 | 设备→App | StreamStart（ASR 流开始） |
-| 0x53 | 设备→App | StreamEnd（ASR 流结束） |
+| 0x40 | 设备→App | VoiceChunk（实时对话语音分片，GATT Notify `0xFFA1`） |
+| 0x52 | 设备→App | StreamStart（录音/ASR 流开始，L2CAP `PSM 0x0081`） |
+| 0x53 | 设备→App | StreamEnd（录音/ASR 流结束） |
 | 0x54 | 设备→App | ImageStart（图片流开始） |
 | 0x55 | 设备→App | ImageEnd（图片流结束） |
 | **0x64** | **设备→App** | **AGENT_EVT_CUSTOM（上行自定义事件）** |

@@ -1,0 +1,465 @@
+#!/usr/bin/env python3
+"""
+claude-bridge — TiDB Agent Stack CLI for rorolee.
+
+Replaces the real Claude Code behind rorolee's shim.  When rorolee
+launches this in a PTY, every line the user types becomes a Turn on
+TiDB Agent Stack; the assistant response is streamed back and printed.
+
+Also writes Claude Code JSONL session files so roro can detect activity.
+
+Usage:
+  claude-bridge                   interactive REPL
+  claude-bridge -p "question"     one-shot, print response and exit
+  claude-bridge --new-session     discard saved session, start fresh
+"""
+
+import json
+import os
+import signal
+import sys
+import threading
+import time
+import urllib.error
+import urllib.request
+import uuid as uuid_mod
+
+# ── paths ────────────────────────────────────────────────────────────
+RORO_HOME = os.path.expanduser("~/.rorolee")
+ENV_FILE = os.path.join(RORO_HOME, "bridge.env")
+SESSION_FILE = os.path.join(RORO_HOME, "bridge-session.json")
+CLAUDE_PROJECTS = os.path.expanduser("~/.claude/projects")
+
+# ── graceful shutdown ────────────────────────────────────────────────
+def _sigint_handler(sig, frame):
+    print("\nBye.")
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, _sigint_handler)
+
+# ── config loader ────────────────────────────────────────────────────
+def load_config():
+    cfg = {}
+    if os.path.isfile(ENV_FILE):
+        with open(ENV_FILE) as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                if "=" in line:
+                    k, v = line.split("=", 1)
+                    cfg[k.strip()] = v.strip()
+    for key in (
+        "AGENT_STACK_BASE_URL",
+        "AGENT_STACK_USER_API_KEY",
+        "AGENT_STACK_PROJECT_ID",
+        "AGENT_STACK_AGENT_ID",
+    ):
+        val = os.environ.get(key)
+        if val:
+            cfg[key] = val
+    return cfg
+
+
+def validate_config(cfg):
+    missing = []
+    for key in (
+        "AGENT_STACK_BASE_URL",
+        "AGENT_STACK_USER_API_KEY",
+        "AGENT_STACK_PROJECT_ID",
+        "AGENT_STACK_AGENT_ID",
+    ):
+        if not cfg.get(key):
+            missing.append(key)
+    if missing:
+        print(f"[bridge] Missing config: {', '.join(missing)}", file=sys.stderr)
+        print(f"[bridge] Edit {ENV_FILE} or export them as env vars.", file=sys.stderr)
+        sys.exit(1)
+
+# ── HTTP helpers (stdlib only) ───────────────────────────────────────
+def _headers(cfg):
+    return {
+        "Authorization": f"Bearer {cfg['AGENT_STACK_USER_API_KEY']}",
+        "x-agent9-project-id": cfg["AGENT_STACK_PROJECT_ID"],
+        "Content-Type": "application/json",
+    }
+
+
+def _post_json(url, body, cfg):
+    data = json.dumps(body).encode()
+    req = urllib.request.Request(url, data=data, headers=_headers(cfg), method="POST")
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        return json.loads(resp.read().decode())
+
+
+def create_session(cfg):
+    base = cfg["AGENT_STACK_BASE_URL"].rstrip("/")
+    url = f"{base}/api/sessions"
+    result = _post_json(url, {"agentId": cfg["AGENT_STACK_AGENT_ID"]}, cfg)
+    return result["session"]["sessionId"]
+
+# ── System prompt injection ────────────────────────────────────────
+# Repo renamed silver-age-agent -> wanqing; check both paths, newest wins.
+_prompt_candidates = [
+    os.path.expanduser("~/Desktop/VentureD/wanqing/prompts/system_prompt.md"),
+    os.path.expanduser("~/Desktop/VentureD/silver-age-agent/prompts/system_prompt.md"),
+]
+SYSTEM_PROMPT_FILE = next((p for p in _prompt_candidates if os.path.isfile(p)), _prompt_candidates[0])
+_initialized_sessions = set()
+
+def _send_turn_raw(cfg, session_id, text):
+    """Send a turn without triggering thinking indicator or keepalive (for init only)."""
+    base = cfg["AGENT_STACK_BASE_URL"].rstrip("/")
+    url = f"{base}/api/sessions/{session_id}/turns"
+    body = json.dumps({"input": {"type": "text", "text": text}}).encode()
+    req = urllib.request.Request(url, data=body, headers=_headers(cfg), method="POST")
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        # Drain the NDJSON response
+        resp.read()
+
+def init_session_prompt(cfg, session_id):
+    """Send system prompt as first message to initialize agent role."""
+    if session_id in _initialized_sessions:
+        return
+    _initialized_sessions.add(session_id)
+    if not os.path.isfile(SYSTEM_PROMPT_FILE):
+        return
+    with open(SYSTEM_PROMPT_FILE, "r") as f:
+        prompt = f.read()
+    init_msg = (
+        "[SYSTEM INSTRUCTIONS - 请始终遵循以下角色设定]\n\n"
+        f"{prompt}\n\n"
+        "[END SYSTEM INSTRUCTIONS]\n\n"
+        "你好。请记住以上角色设定，以后每次回复都按照这个设定来。"
+    )
+    try:
+        _send_turn_raw(cfg, session_id, init_msg)
+    except Exception:
+        pass
+
+# ── session persistence ──────────────────────────────────────────────
+def load_session_id():
+    if os.path.isfile(SESSION_FILE):
+        try:
+            with open(SESSION_FILE) as f:
+                return json.load(f).get("session_id")
+        except (json.JSONDecodeError, OSError):
+            return None
+    return None
+
+
+def save_session_id(sid):
+    os.makedirs(RORO_HOME, exist_ok=True)
+    with open(SESSION_FILE, "w") as f:
+        json.dump({"session_id": sid}, f)
+
+
+def get_or_create_session(cfg, force_new=False):
+    if not force_new:
+        sid = load_session_id()
+        if sid:
+            return sid
+    sid = create_session(cfg)
+    save_session_id(sid)
+    return sid
+
+# ── Claude Code JSONL session writer ─────────────────────────────────
+class ClaudeSessionWriter:
+    """Writes Claude Code-compatible JSONL session files for roro."""
+
+    def __init__(self, roro_session_id=None):
+        self.roro_session_id = roro_session_id
+        self.session_file = None
+        self.claude_session_id = roro_session_id or str(uuid_mod.uuid4())
+        self.last_uuid = None
+        self._init_session_file()
+
+    def _get_project_dir(self):
+        """Derive project dir name from CWD, matching Claude Code convention."""
+        cwd = os.getcwd()
+        # Convert /Users/nibelung to -Users-nibelung
+        dir_name = cwd.replace("/", "-")
+        return os.path.join(CLAUDE_PROJECTS, dir_name)
+
+    def _init_session_file(self):
+        """Create the session JSONL file with initial entries."""
+        project_dir = self._get_project_dir()
+        os.makedirs(project_dir, exist_ok=True)
+        self.session_file = os.path.join(
+            project_dir, f"{self.claude_session_id}.jsonl"
+        )
+        cwd = os.getcwd()
+        now = time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime())
+
+        with open(self.session_file, "w") as f:
+            # Mode line
+            f.write(json.dumps({
+                "type": "mode",
+                "mode": "normal",
+                "sessionId": self.claude_session_id
+            }) + "\n")
+            # Initial system/mode marker
+            f.write(json.dumps({
+                "type": "mode",
+                "mode": "normal",
+                "sessionId": self.claude_session_id
+            }) + "\n")
+            f.flush()
+            os.fsync(f.fileno())
+
+    def write_user_message(self, text):
+        """Write a user message entry."""
+        if not self.session_file:
+            return
+        msg_uuid = str(uuid_mod.uuid4())
+        now = time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime())
+        cwd = os.getcwd()
+        entry = {
+            "parentUuid": self.last_uuid,
+            "isSidechain": False,
+            "type": "user",
+            "message": {"role": "user", "content": text},
+            "uuid": msg_uuid,
+            "timestamp": now,
+            "userType": "external",
+            "entrypoint": "cli",
+            "cwd": cwd,
+            "sessionId": self.claude_session_id,
+            "version": "2.1.232",
+            "gitBranch": "HEAD"
+        }
+        self.last_uuid = msg_uuid
+        try:
+            with open(self.session_file, "a") as f:
+                f.write(json.dumps(entry) + "\n")
+                f.flush()
+                os.fsync(f.fileno())
+        except OSError:
+            pass
+
+    def write_assistant_message(self, text):
+        """Write an assistant message entry."""
+        if not self.session_file:
+            return
+        msg_uuid = str(uuid_mod.uuid4())
+        now = time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime())
+        cwd = os.getcwd()
+        entry = {
+            "parentUuid": self.last_uuid,
+            "isSidechain": False,
+            "type": "assistant",
+            "message": {
+                "role": "assistant",
+                "content": [{"type": "text", "text": text}]
+            },
+            "uuid": msg_uuid,
+            "timestamp": now,
+            "costUSD": 0,
+            "isSidechain": False,
+            "userType": "external",
+            "cwd": cwd,
+            "sessionId": self.claude_session_id,
+            "version": "2.1.232"
+        }
+        self.last_uuid = msg_uuid
+        try:
+            with open(self.session_file, "a") as f:
+                f.write(json.dumps(entry) + "\n")
+                f.flush()
+                os.fsync(f.fileno())
+        except OSError:
+            pass
+
+# Global session writer
+_session_writer = None
+
+# ── NDJSON turn ──────────────────────────────────────────────────────
+def send_turn(cfg, session_id, text):
+    """Send a text turn and return the assistant message text."""
+    base = cfg["AGENT_STACK_BASE_URL"].rstrip("/")
+    url = f"{base}/api/sessions/{session_id}/turns"
+    body = json.dumps({"input": {"type": "text", "text": text}}).encode()
+    req = urllib.request.Request(url, data=body, headers=_headers(cfg), method="POST")
+
+    # DEBUG: log send_turn
+
+    # Write user message to Claude session file (for roro detection)
+    global _session_writer
+    if _session_writer:
+        _session_writer.write_user_message(text)
+
+    # Immediately output "thinking" indicator
+    sys.stdout.write("**正在思考...**\n")
+    sys.stdout.flush()
+
+    # Keep-alive: print bold dots every 8 seconds to prevent roro timeout
+    stop_keepalive = threading.Event()
+    def keepalive():
+        while not stop_keepalive.is_set():
+            stop_keepalive.wait(8)
+            if not stop_keepalive.is_set():
+                sys.stdout.write("**...**\n")
+                sys.stdout.flush()
+    ka_thread = threading.Thread(target=keepalive, daemon=True)
+    ka_thread.start()
+
+    assistant_text = ""
+    turn_status = None
+    try:
+        with urllib.request.urlopen(req, timeout=300) as resp:
+            buf = b""
+            while True:
+                chunk = resp.read(1)
+                if not chunk:
+                    break
+                buf += chunk
+                while b"\n" in buf:
+                    line_bytes, buf = buf.split(b"\n", 1)
+                    line = line_bytes.decode("utf-8", errors="replace").strip()
+                    if not line:
+                        continue
+                    try:
+                        event = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
+                    evt_type = event.get("event")
+                    if evt_type == "assistant_message":
+                        assistant_text = event.get("payload", {}).get("text", "")
+                    elif evt_type == "turn_finished":
+                        turn_status = event.get("payload", {}).get("status")
+                    elif evt_type == "turn_error":
+                        err = event.get("payload", {})
+                        print(
+                            f"\n[error] {err.get('code', '?')}: {err.get('message', '?')}",
+                            file=sys.stderr,
+                        )
+    except urllib.error.HTTPError as e:
+        stop_keepalive.set()
+        body_text = e.read().decode("utf-8", errors="replace")[:500]
+        print(f"\n[HTTP {e.code}] {body_text}", file=sys.stderr)
+        return ""
+    except Exception as e:
+        stop_keepalive.set()
+        print(f"\n[error] {e}", file=sys.stderr)
+        return ""
+
+    stop_keepalive.set()
+
+    # Output the final response
+    if assistant_text:
+        sys.stdout.write("\r\033[K")  # clear thinking line
+        sys.stdout.write(assistant_text)
+        if not assistant_text.endswith("\n"):
+            sys.stdout.write("\n")
+        sys.stdout.flush()
+
+        # Write assistant message to Claude session file (for roro detection)
+        if _session_writer:
+            _session_writer.write_assistant_message(assistant_text)
+    return assistant_text
+
+# ── argument parsing ─────────────────────────────────────────────────
+def parse_args(argv):
+    """Minimal arg parser that tolerates unknown Claude Code flags."""
+    print_mode = False
+    print_text = None
+    new_session = False
+    roro_session_id = None
+    i = 0
+    positional = []
+    while i < len(argv):
+        a = argv[i]
+        if a in ("-p", "--print"):
+            print_mode = True
+            if i + 1 < len(argv):
+                i += 1
+                print_text = argv[i]
+        elif a == "--new-session":
+            new_session = True
+        elif a.startswith("--session-id="):
+            roro_session_id = a.split("=", 1)[1]
+        elif a == "--session-id":
+            if i + 1 < len(argv):
+                i += 1
+                roro_session_id = argv[i]
+        elif a in ("--version", "-v"):
+            print("claude-bridge 0.1.0 (TiDB Agent Stack)")
+            sys.exit(0)
+        elif a in ("--help", "-h"):
+            print(__doc__)
+            sys.exit(0)
+        elif a.startswith("-"):
+            if a in ("--model", "--system-prompt", "--allowedTools",
+                      "--output-format", "--conversation-id",
+                      "--max-turns", "--permission-mode") and i + 1 < len(argv):
+                i += 1  # skip value
+        else:
+            positional.append(a)
+        i += 1
+
+    if print_mode and not print_text and positional:
+        print_text = " ".join(positional)
+
+    return print_mode, print_text, new_session, roro_session_id
+
+# ── main ─────────────────────────────────────────────────────────────
+def main():
+    global _session_writer
+    cfg = load_config()
+    validate_config(cfg)
+
+    print_mode, print_text, new_session, roro_session_id = parse_args(sys.argv[1:])
+
+    sid = get_or_create_session(cfg, force_new=new_session)
+
+    # Inject system prompt for new sessions
+    init_session_prompt(cfg, sid)
+
+    # Initialize Claude session writer for roro compatibility
+    _session_writer = ClaudeSessionWriter(roro_session_id)
+
+    if print_mode:
+        if not print_text:
+            print_text = sys.stdin.read().strip()
+        if not print_text:
+            sys.exit(0)
+        result = send_turn(cfg, sid, print_text)
+        if result and not result.endswith("\n"):
+            sys.stdout.write("\n")
+        sys.exit(0)
+
+    # ── interactive REPL ─────────────────────────────────────────
+    print(f"[bridge] TiDB Agent Stack — session {sid}")
+    print("[bridge] Type your message, or Ctrl+C to quit.")
+    print("[bridge] Use --new-session to start a fresh conversation.\n")
+
+    while True:
+        try:
+            sys.stdout.write("> ")
+            sys.stdout.flush()
+            user_input = sys.stdin.readline()
+        except (EOFError, KeyboardInterrupt):
+            print("\nBye.")
+            break
+
+        if not user_input:
+            break
+
+        user_input = user_input.strip()
+        if not user_input:
+            continue
+
+        if user_input.lower() in ("/exit", "/quit", "exit", "quit"):
+            print("Bye.")
+            break
+        if user_input.lower() == "/new":
+            sid = get_or_create_session(cfg, force_new=True)
+            print(f"[bridge] New session: {sid}")
+            continue
+
+        send_turn(cfg, sid, user_input)
+        print()
+
+
+if __name__ == "__main__":
+    main()
