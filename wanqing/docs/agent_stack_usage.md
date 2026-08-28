@@ -294,6 +294,7 @@ python tests/test_intent.py --start 1 --end 100   # 工具调用口径：校验�
 | `wanqing/deliverables/agent_ndjson_trace.json` | Agent Stack 完整 NDJSON 流脱敏 trace |
 | `wanqing/deliverables/reminder_e2e_trace.json` | Scheduler 准点触发 → reminder-pusher → MQTT 推送闭环脱敏 trace |
 | `wanqing/deliverables/family_care_trace.json` | 家人关注四步闭环（日报/告警/留言下发/老人听留言）脱敏 trace |
+| `wanqing/deliverables/family_care_demo.mp4` | 家人关注功能演示视频（69s 中文旁白；构建脚本 `demo_build/`） |
 | `wanqing/tests/test_results_*.json` | 意图识别 62/64 通过原始结果 |
 | Agent Stack Console | Agent MEMORY.md / MCP 服务器列表截图需评委自行查看（已脱敏，无凭证） |
 
