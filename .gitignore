@@ -48,3 +48,6 @@ package-lock.json
 *.sqlite
 *.db-shm
 *.db-wal
+
+# 本地构建工作区（不入库）
+.codex-build/
