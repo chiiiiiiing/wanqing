@@ -9,6 +9,7 @@
 | 交付物 | 文件位置 |
 |--------|----------|
 | **四、一页架构图** | [`wanqing/deliverables/architecture_verified.pdf`](wanqing/deliverables/architecture_verified.pdf)（附可编辑 PPTX 与高清 PNG） |
+| **项目展示页** | [wanqing/docs/project_intro.html](wanqing/docs/project_intro.html)（背景、用户场景、Physical AI 闭环与核心体验） |
 | **五、代码与运行说明** | 本 README.md |
 | **六、Agent Stack 使用说明** | [`wanqing/docs/agent_stack_usage.md`](wanqing/docs/agent_stack_usage.md) |
 
