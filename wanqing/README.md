@@ -1,143 +1,47 @@
 # 晚晴 — 老年人的随身 AI 管家
 
-AI assistant for elderly people, built on TiDB Agent Stack with MCP tool integration.
+> 这是仓库子目录 `wanqing/` 的快速参考。**完整复现说明、硬件接线、目录结构、Agent Stack 配置和交付物索引请查看仓库根目录 [`README.md`](../README.md)。**
 
-## Architecture
+## 快速启动
 
-```
-老人说话 → 板卡D(录音) → BLE → ROROLEE App → Agent Stack
-                                                    ├── Audio Turn (ASR)
-                                                    ├── 晚晴 Agent (NLU + Scheduler)
-                                                    │     └── MCP Tools → Our Backend → SQLite
-                                                    └── NDJSON流式回复
-                                                        → App → BLE → 板卡D (TTS+震动+屏幕)
-```
+```bash
+cd wanqing
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
 
-## Project Structure
-
-```
-wanqing/
-├── prompts/
-│   └── system_prompt.md          # Agent system prompt (需手动设置到 MEMORY.md)
-├── backend/
-│   ├── models/
-│   │   └── database.py          # SQLite 数据库层 (tasks, notes, reminders)
-│   ├── api/
-│   │   └── server.py            # FastAPI REST API (port 8100)
-│   ├── mcp_server.py            # MCP Server (port 8200) - 5 tools
-│   └── wanqing.db               # SQLite database file
-├── tools/
-│   └── wanqing-tools/           # Custom Tool package (备用方案)
-│       ├── manifest.json
-│       └── index.mjs
-├── tests/
-│   ├── test_sentences.json      # 100条中文测试语句
-│   ├── run_action_tests.py      # Agent 行为测试
-│   └── demo_e2e.py              # 端到端验证脚本
-└── .venv/                       # Python virtual environment
+cp .env.example ~/.rorolee/bridge.env    # 填入 Agent Stack 凭证
+python backend/mcp_server.py             # :8200
+# 另开终端
+bash bridge/install.sh                   # 部署 claude-bridge + shim
+claude
 ```
 
-## Verified Capabilities
+## 子目录速查
 
-| 能力 | 状态 | 说明 |
-|------|------|------|
-| Agent NLU (意图解析) | ✅ | 96.9% 通过率 (62/64 tests) |
-| Agent Scheduler (内置提醒) | ✅ | Agent 自动创建定时提醒 |
-| MCP Server (5 tools) | ✅ | create_task, create_note, query_tasks, complete_task, delay_task |
-| MCP on Agent Stack | ✅ | 已注册并激活 (serverId: mcp_ed84d40c-...) |
-| SQLite 持久化 | ✅ | Task/Note/Reminder CRUD 全部工作 |
-| NDJSON 流式回复 | ✅ | 完整事件流: turn_started → drafts → message → finished |
+| 路径 | 说明 |
+|------|------|
+| `prompts/system_prompt.md` | Agent MEMORY.md 提示词 |
+| `backend/mcp_server.py` | MCP Server（5 个工具） |
+| `backend/api/server.py` | FastAPI REST :8100 |
+| `backend/models/database.py` | SQLite 数据层 |
+| `bridge/` | roro ↔ Agent Stack 桥接程序与安装脚本 |
+| `docs/ble_protocol_v1.md` | BLE 应用层协议 v1.0 |
+| `docs/agent_stack_usage.md` | Agent Stack 使用说明（交付物六） |
+| `deliverables/` | 一页架构图 + 脱敏 trace |
+| `tests/` | 意图识别与端到端测试 |
 
 ## MCP Tools
 
-All 5 tools are exposed via MCP (Model Context Protocol) at `http://localhost:8200/mcp`:
+| Tool | 用途 |
+|------|------|
+| `create_task` | 创建提醒任务 |
+| `create_note` | 创建备忘笔记 |
+| `query_tasks` | 查询任务列表 |
+| `complete_task` | 标记任务完成 |
+| `delay_task` | 推迟任务 |
 
-| Tool | 功能 | 参数 |
-|------|------|------|
-| `create_task` | 创建提醒任务 | title, due_time, category, description |
-| `create_note` | 创建备忘笔记 | content, category |
-| `query_tasks` | 查询任务列表 | date, status |
-| `complete_task` | 标记任务完成 | title_keyword, task_id |
-| `delay_task` | 延期任务 | title_keyword, minutes, new_due_time |
+## 测试结果
 
-## Quick Start
-
-### 1. Start the MCP server
-```bash
-cd wanqing
-source .venv/bin/activate
-python backend/mcp_server.py
-# MCP server running on http://0.0.0.0:8200
-```
-
-### 2. (Optional) Start the REST API
-```bash
-python backend/api/server.py
-# REST API on http://0.0.0.0:8100
-```
-
-### 3. Set up public tunnel
-```bash
-ssh -T -o StrictHostKeyChecking=no -R 80:localhost:8200 serveo.net
-# Gives you: https://xxxx.serveousercontent.com
-```
-
-### 4. Register MCP on Agent Stack
-```bash
-# Create registration
-curl -X POST "https://ventured-agent-stack.pingcap.cn/api/mcp/servers" \
-  -H "Authorization: Bearer $API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"displayName":"晚晴工具包","endpointUrl":"https://YOUR_TUNNEL/mcp","transport":"streamable_http","scope":{"kind":"agent","agentId":"agent_cc0aa5c6ff600adf4d6c31718e3fc9bb"}}'
-
-# Set credential to none
-curl -X PUT "https://ventured-agent-stack.pingcap.cn/api/mcp/servers/$SERVER_ID/credential" \
-  -H "Authorization: Bearer $API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"authKind":"none"}'
-
-# Activate
-curl -X POST "https://ventured-agent-stack.pingcap.cn/api/mcp/servers/$SERVER_ID/activate" \
-  -H "Authorization: Bearer $API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"expectedServerVersion":1}'
-```
-
-### 5. Run tests
-```bash
-python tests/demo_e2e.py --skip-agent --skip-scheduler
-```
-
-## Manual Steps Required (Console GUI)
-
-1. **Set MEMORY.md**: Log into https://ventured-agent-stack.pingcap.cn and paste `prompts/system_prompt.md` content into the Agent's MEMORY.md. This is required for the Agent to use our MCP tools.
-
-2. **Audio Turn testing**: Test Chinese ASR with real audio files from the board.
-
-3. **Scheduler webhook**: Configure a webhook URL for Scheduler fire events to trigger notifications.
-
-## Key Resources
-
-| Resource | Value |
-|----------|-------|
-| Agent Stack URL | `ventured-agent-stack.pingcap.cn` |
-| Project ID | `proj_6c440f8173104d06b005d9c552bfe774` |
-| Agent ID | `agent_cc0aa5c6ff600adf4d6c31718e3fc9bb` |
-| MCP Server ID | `mcp_ed84d40c-abbb-403f-8007-223d1bdca5e5` |
-| Agent Model | `qwen3.7-plus` |
-
-## Test Results
-
-### Intent Parsing (62/64 passed, 96.9%)
-
-| Intent | Tests | Pass Rate |
-|--------|-------|-----------|
-| CREATE_TASK | 27/27 | 100% |
-| CREATE_NOTE | 10/10 | 100% |
-| QUERY_TASK | 7/7 | 100% |
-| COMPLETE_TASK | 6/7 | 86% |
-| DELAY_TASK | 3/5 | 60% |
-| GENERAL_QA | 6/6 | 100% |
-| UNKNOWN | 3/3 | 100% |
-
-Failed cases: ambiguous inputs without conversation context ("好了好了做完了" and "等一下再说").
+- 意图识别：62/64 通过（96.9%）
+- MCP Server：5 个工具已注册并验证
+- NDJSON 流式回复：完整事件流已验证

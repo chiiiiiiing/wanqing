@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-08-28T09:12:00+08:00",
+  "description": "MCP 直连工具验证：Agent Stack 经 streamable-http 调用本机 wanqing-tools 的 create_task",
+  "steps": [
+    {
+      "request": "POST /mcp {jsonrpc: initialize, protocolVersion: 2024-11-05}",
+      "response_header": "Mcp-Session-Id: b47082a90cc746d88ff788a41d090c41",
+      "response_body": {
+        "serverInfo": {"name": "wanqing-tools", "description": "晚晴的任务和备忘管理工具", "version": "0.1.0"},
+        "capabilities": {"tools": {"listChanged": false}}
+      }
+    },
+    {
+      "request": "POST /mcp {jsonrpc: tools/list}",
+      "response_body": {
+        "tools": [
+          {"name": "create_task", "description": "创建提醒任务"},
+          {"name": "create_note", "description": "创建备忘笔记"},
+          {"name": "query_tasks", "description": "查询任务列表"},
+          {"name": "complete_task", "description": "标记任务完成"},
+          {"name": "delay_task", "description": "推迟任务"}
+        ]
+      }
+    },
+    {
+      "request": "POST /mcp {jsonrpc: tools/call, name: create_task, arguments: {title: \"评委验证：提醒吃降压药\", due_time: \"2026-08-29T09:00:00+08:00\", category: \"health\"}}",
+      "response_body": "✅ 任务「评委验证：提醒吃降压药」已创建，提醒时间：8月29日 09:00"
+    }
+  ],
+  "persistence_proof": "sqlite3 backend/wanqing.db SELECT title,due_time,status FROM tasks WHERE title LIKE '%评委验证%';\n=> task_f983738e135b | 评委验证：提醒吃降压药 | 2026-08-29T09:00:00+08:00 | pending"
+}

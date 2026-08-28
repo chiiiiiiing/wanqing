@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-08-27T21:55:00+08:00",
+  "description": "Agent Stack 晚晴 Agent 完整 NDJSON 流：文本输入 → operation_step（含工具调用） → 流式草稿 → 最终回复",
+  "session": "sess_d2c09977f...(redacted)",
+  "model": "qwen3.7-plus",
+  "input": "后天早上九点提醒我去社区医院量血压",
+  "events": [
+    {"event": "turn_started", "payload": {"execution": {"backend": "pi", "model": "qwen3.7-plus"}}},
+    {"event": "operation_step", "payload": {"operationId": "op_5fdc...", "status": "succeeded", "label": "Completed thinking"}},
+    {"event": "operation_step", "payload": {"operationId": "op_2a68...", "status": "running", "label": "Working"}},
+    {"event": "operation_step", "payload": {"operationId": "op_2a68...", "status": "succeeded", "label": "Operation completed"}},
+    {"event": "assistant_draft", "payload": {"text": "已"}},
+    {"event": "operation_step", "payload": {"operationId": "op_1733...", "status": "succeeded", "label": "Completed thinking"}},
+    {"event": "assistant_draft", "payload": {"text": "已设好提醒 ✅\n\n**后天（8月29日，周六）早上 9:00** 会提醒你去社区医院量血压。到时候我会准时通知你！"}},
+    {"event": "assistant_message", "payload": {"text": "已设好提醒 ✅\n\n**后天（8月29日，周六）早上 9:00** 会提醒你去社区医院量血压。到时候我会准时通知你！"}},
+    {"event": "turn_finished", "payload": {"status": "succeeded"}}
+  ],
+  "notes": [
+    "Working operation_step 后接 assistant_draft，说明 Agent 调用了外部工具/Scheduler 完成动作后生成回复",
+    "system_prompt 要求时间解析：后天早上九点 → 2026-08-29T09:00:00+08:00",
+    "最终回复严格遵循 MEMORY.md 的适老化语气：简短、温暖、无英文"
+  ]
+}

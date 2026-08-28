@@ -4,6 +4,14 @@
 
 > 晚晴取自李商隐"天意怜幽草，人间重晚晴"——为老年人做一个听得清、记得住、会提醒的随身管家。
 
+## 赛题交付物索引
+
+| 交付物 | 文件位置 |
+|--------|----------|
+| **四、一页架构图** | [`wanqing/deliverables/architecture.pdf`](wanqing/deliverables/architecture.pdf)（附 PNG、HTML 源） |
+| **五、代码与运行说明** | 本 README.md |
+| **六、Agent Stack 使用说明** | [`wanqing/docs/agent_stack_usage.md`](wanqing/docs/agent_stack_usage.md) |
+
 ---
 
 ## 1. 项目概述与核心 Physical AI 闭环
