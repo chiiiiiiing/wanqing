@@ -1,5 +1,6 @@
-# 晚晴后端 + MCP Server 依赖（Python 3.10+，已在 3.14 验证）
-mcp>=2.1.1
-fastapi>=0.141.0
-uvicorn>=0.52.0
-pydantic>=2.13.0
+# Reproduced on Python 3.12 (2026-08-28)
+mcp==2.1.1
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+pydantic==2.13.4
+requests==2.34.2

@@ -19,6 +19,10 @@ import argparse
 import requests
 from datetime import datetime, timezone, timedelta
 
+# Keep emoji/Chinese output reproducible on Windows consoles that default to GBK.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
 # Config（凭证一律走环境变量，参见 ../.env.example）
 BASE_URL = os.environ.get("AGENT_STACK_BASE_URL", "https://ventured-agent-stack.pingcap.cn")
 API_KEY = os.environ.get("AGENT_STACK_USER_API_KEY", "")
@@ -26,8 +30,6 @@ PROJECT_ID = os.environ.get("AGENT_STACK_PROJECT_ID", "")
 AGENT_ID = os.environ.get("AGENT_STACK_AGENT_ID", "")
 MCP_URL = os.environ.get("MCP_URL", "http://localhost:8200/mcp")
 
-if not API_KEY:
-    raise SystemExit("缺少环境变量 AGENT_STACK_USER_API_KEY（参见 ../.env.example）")
 
 CST = timezone(timedelta(hours=8))
 HEADERS = {
@@ -157,7 +159,7 @@ class MCPClient:
             },
             json={"jsonrpc": "2.0", "method": "tools/list", "params": {}, "id": self._next_id()},
         )
-        for line in resp.text.strip().split("\n"):
+        for line in resp.content.decode("utf-8").strip().split("\n"):
             if line.startswith("data: "):
                 data = json.loads(line[6:])
                 return data.get("result", {}).get("tools", [])
@@ -178,7 +180,7 @@ class MCPClient:
                 "id": self._next_id(),
             },
         )
-        for line in resp.text.strip().split("\n"):
+        for line in resp.content.decode("utf-8").strip().split("\n"):
             if line.startswith("data: "):
                 data = json.loads(line[6:])
                 result = data.get("result", {})
@@ -220,7 +222,7 @@ def test_mcp_tools():
         "category": "life",
     })
     if len(result) > 10 and "error" not in result.lower():
-        ok(f"create_task: {result.encode('utf-8', errors='replace').decode('ascii', errors='replace')[:60]}...")
+        ok(f"create_task: {result[:60]}...")
     else:
         fail(f"create_task: {result}")
 
@@ -230,7 +232,7 @@ def test_mcp_tools():
         "category": "contact",
     })
     if len(result) > 10 and "error" not in result.lower():
-        ok(f"create_note: {result.encode('utf-8', errors='replace').decode('ascii', errors='replace')[:60]}...")
+        ok(f"create_note: {result[:60]}...")
     else:
         fail(f"create_note: {result}")
 
@@ -344,6 +346,8 @@ def main():
     parser.add_argument("--skip-scheduler", action="store_true", help="Skip Scheduler tests")
     args = parser.parse_args()
 
+    if (not args.skip_agent or not args.skip_scheduler) and not API_KEY:
+        raise SystemExit("云端测试缺少 AGENT_STACK_USER_API_KEY；纯本地测试请加 --skip-agent --skip-scheduler")
     print(f"{BOLD}{'='*60}{RESET}")
     print(f"{BOLD}  晚晴 — End-to-End Demo{RESET}")
     print(f"{BOLD}  {datetime.now(CST).strftime('%Y-%m-%d %H:%M:%S CST')}{RESET}")

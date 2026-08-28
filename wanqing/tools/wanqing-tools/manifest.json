@@ -18,7 +18,7 @@
     {
       "name": "create_task",
       "displayName": "创建任务",
-      "description": "创建一个新的提醒任务并保存到数据库。当老人说"提醒我..."、"明天要..."、"帮我记一下..."时调用。",
+      "description": "创建一个新的提醒任务并保存到数据库。当老人说“提醒我...”、“明天要...”、“帮我记一下...”时调用。",
       "parameters": {
         "type": "object",
         "properties": {
@@ -47,7 +47,7 @@
     {
       "name": "create_note",
       "displayName": "创建备忘",
-      "description": "创建一条备忘笔记并保存到数据库。当老人说"记一下..."、"帮我记住..."时调用。备忘不需要时间。",
+      "description": "创建一条备忘笔记并保存到数据库。当老人说“记一下...”、“帮我记住...”时调用。备忘不需要时间。",
       "parameters": {
         "type": "object",
         "properties": {
@@ -68,7 +68,7 @@
     {
       "name": "query_tasks",
       "displayName": "查询任务",
-      "description": "查询老人的待办任务列表。当老人说"今天有什么事"、"帮我看看..."、"还有什么安排"时调用。",
+      "description": "查询老人的待办任务列表。当老人说“今天有什么事”、“帮我看看...”、“还有什么安排”时调用。",
       "parameters": {
         "type": "object",
         "properties": {
@@ -88,7 +88,7 @@
     {
       "name": "complete_task",
       "displayName": "完成任务",
-      "description": "将一个任务标记为已完成。当老人说"...做完了"、"...好了"、"已经...了"时调用。",
+      "description": "将一个任务标记为已完成。当老人说“...做完了”、“...好了”、“已经...了”时调用。",
       "parameters": {
         "type": "object",
         "properties": {
@@ -107,7 +107,7 @@
     {
       "name": "delay_task",
       "displayName": "延期任务",
-      "description": "推迟一个任务的时间。当老人说"晚一点"、"推迟..."、"等一下再..."时调用。",
+      "description": "推迟一个任务的时间。当老人说“晚一点”、“推迟...”、“等一下再...”时调用。",
       "parameters": {
         "type": "object",
         "properties": {

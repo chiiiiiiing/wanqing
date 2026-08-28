@@ -55,7 +55,7 @@
 | 音频编解码 | ES8311（播放）+ ES7210（录音，4 麦） | TTS 播放 / 语音采集 16kHz PCM | 板载 |
 | 显示屏 | SH8501 AMOLED 120×240（SPI） | 表情状态机动画 | 板载 |
 | 电量计 | BQ27220（I²C） | 电量上报（事件 0x14 / 0x2A19） | 板载 |
-| 触觉 | 振动马达（GPIO 直驱，高电平有效） | 提醒/家人消息/错误触觉模式 | 板载 |
+| 触觉 | 振动马达（板载驱动电路，GPIO 高电平控制） | 提醒/家人消息/错误触觉模式 | 板载 |
 | 存储 | SD 卡（SDIO 4-bit，选配） | 未来本地录音/离线数据 | 板载 |
 | 网关 | iPhone/Android 手机 + ROROLEE App | BLE ↔ 云端中继 | 主办方提供 |
 | 服务器 | 任意可访问 Agent Stack 的 macOS/Linux 主机 | MCP Server + 桥接 + 隧道 | 团队自备 |
@@ -76,7 +76,7 @@
 | 屏幕 CS / DC / RST / SCK / MOSI | GPIO7 / GPIO15 / GPIO6 / GPIO5 / GPIO4 | SPI Mode3 @40MHz |
 | SD D0-D3 / CLK / CMD | GPIO8/21/47/16 / GPIO17 / GPIO18 | SDIO 4-bit |
 
-> 所有外设均为板载，**无需额外接线**。仅 USB-C 供电（≥500mA）即可运行全部演示。
+> 所有外设均为板载，**无需额外接线**。仅 USB-C 供电（≥500mA）即可运行全部演示。`config.h` 中 GPIO 均为 3.3 V 逻辑；禁止向 GPIO 输入 5 V，也不要用 GPIO 直接驱动裸马达或扬声器。
 > ES8311 地址 0x18、ES7210 地址 0x40、BQ27220 地址 0x55，均在音频 I²C 总线上。
 
 ---
@@ -89,9 +89,9 @@
 | agent_link SDK | 仓库内 `Agent_link/components/agent_link` | 主办方提供，BLE 传输 + 语音/TTS 通道 |
 | espressif/esp_codec_dev | 1.6.2 | ES8311/ES7210 驱动 |
 | espressif/esp32-camera | 2.1.7 | （本板未用，其他板型使用） |
-| Python | ≥ 3.10（在 3.14 验证） | 后端 + MCP Server |
+| Python | ≥ 3.11（已在 3.12 / 3.14 验证） | 后端 + MCP Server |
 | mcp (python-sdk) | 2.1.1 | MCP streamable-http 传输 |
-| FastAPI / Uvicorn | 0.141.1 / 0.52.4 | REST API（家人端预留） |
+| FastAPI / Uvicorn | 0.141.1 / 0.52.4 | REST API（家人端预留）；完整锁定见 `requirements.txt` |
 | Claude Code CLI | 2.x（shim 兼容层） | roro 托管入口 |
 | TiDB Agent Stack | ventured-agent-stack.pingcap.cn | Agent 运行平台，模型 qwen3.7-plus |
 
@@ -164,6 +164,17 @@ vim ~/.rorolee/bridge.env   # 填入 BASE_URL / API_KEY / PROJECT_ID / AGENT_ID
 
 # 部署桥接到 roro（需先安装 rorolee 插件）
 bash bridge/install.sh
+Windows PowerShell 安装后端依赖：
+
+```powershell
+cd wanqing
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+`.env.example` 只是变量名模板，代码不会自动加载仓库内 `.env`；请把真实值注入当前 shell、`~/.rorolee/bridge.env` 或密钥管理服务。
 ```
 
 ---
@@ -247,7 +258,7 @@ curl -X POST "$BASE/api/mcp/servers/$SERVER_ID/activate" \
 
 | 项 | 状态 | 说明 |
 |----|------|------|
-| 语音上行（0x40 VoiceChunk） | 已实现，**未真机验证** | SDK 侧实现完成；演示环境用 App 侧文本输入为主链路 |
+| 语音上行（0x40 VoiceChunk） | 已实现，真机验证通过 | BOOT 按住说话进入 Agent 当前会话；不能映射到会议 Recording 通道 |
 | TTS 下行播放 | 已实现，真机验证通过 | 16kHz PCM L2CAP 流 + 静音尾判停 |
 | 唤醒词"小晚晴" | 协议已定义（0x64 wakeup 事件） | 板端依赖乐鑫唤醒词方案，未集成 |
 | 摄像头 / SD 卡录音 | 未启用 | 引脚与驱动预留，非 MVP 范围 |
@@ -255,12 +266,15 @@ curl -X POST "$BASE/api/mcp/servers/$SERVER_ID/activate" \
 | serveo 隧道稳定性 | 可用但偶发过期 | 生产建议换 cloudflared / 自建 frp |
 | 意图识别 | 96.9%（62/64） | 2 个失败用例为无上下文指代（"好了好了做完了"），多轮 Session 下可解 |
 | SQLite 单用户 | 当前 `default_user` | 多用户需 App 传 device_id（后端已支持 user_id 字段） |
+| Android App 交付 | **当前仓库未包含 App 源码/APK** | 评审前必须补充可访问的 App 仓库或 Release/APK 链接与版本号，否则无法独立复现手机桥接 |
+| BLE 长 JSON | 尚有限制 | GATT 单次写入有效 payload 约 506 字节，超长 0x70 JSON 的多帧重组尚未完整实现 |
 
 ---
 
 ## 10. 配置与凭证管理
 
 - **真实凭证只存在于 `~/.rorolee/bridge.env`**（仓库外），由 `claude-bridge` 启动时读取；同名的环境变量优先。
+- 历史提交曾出现过 User API Key；仅删除当前文件不等于失效，维护者必须在 Agent Stack 控制台撤销并轮换旧密钥。
 - 仓库只提交 [`wanqing/.env.example`](wanqing/.env.example) 模板，`*.env / *.key / *.pem` 均在 `.gitignore`。
 - MCP Server 与 Agent Stack 之间使用免鉴权（`authKind=none`）+ serveo 随机域名，演示后可随时吊销。
 
@@ -268,11 +282,24 @@ curl -X POST "$BASE/api/mcp/servers/$SERVER_ID/activate" \
 
 ## 11. 测试
 
+本地 MCP 测试不需要云端密钥。终端 A：
+
 ```bash
 cd wanqing && source .venv/bin/activate
-export $(grep -v '^#' .env.local | xargs)   # 或手动 export AGENT_STACK_* 变量（参见 .env.example）
-python tests/demo_e2e.py --skip-agent --skip-scheduler   # 后端 CRUD + MCP 协议
-python tests/test_intent.py --start 1 --end 100          # 100 条意图用例（工具调用口径）
+python backend/mcp_server.py
+```
+
+终端 B：
+
+```bash
+cd wanqing && source .venv/bin/activate
+python tests/demo_e2e.py --skip-agent --skip-scheduler
+```
+
+云端意图测试需先注入 `.env.example` 中的四个 `AGENT_STACK_*` 变量，再运行：
+
+```bash
+python tests/test_intent.py --start 1 --end 100
 ```
 
 > 评测口径说明：`test_intent.py` 校验 Agent 实际发起的工具调用（tool_calls）与关键参数，
@@ -287,6 +314,7 @@ python tests/test_intent.py --start 1 --end 100          # 100 条意图用例�
 - 仓库：**https://github.com/chiiiiiiing/wanqing**（如为私有请向评委账号授权）
 - 关键路径：`wanqing/deliverables/`（架构图）、`wanqing/docs/`（协议+Agent 说明）、`wanqing/bridge/`（桥接）、`Agent_link/boards/rorolee-basic/`（固件）
 - 硬件同款：ROROLEE Basic 板 + ROROLEE App 账号即可复现 §8 全流程
+- **待补交**：Android App 源码或可下载 APK/Release 链接。当前仅凭本仓库无法从零构建手机侧桥接。
 
 ---
 
