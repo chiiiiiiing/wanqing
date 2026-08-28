@@ -17,7 +17,7 @@
 
 ## 1. 项目概述与核心 Physical AI 闭环
 
-老人按一下 BOOT 键说话 → 设备采集语音经 BLE 上行到手机 App → App 通过 roro 中继链路送达 **TiDB Agent Stack** 上的晚晴 Agent → Agent 理解意图后调用 MCP 工具（创建提醒/备忘/查询/完成/延期）→ Agent 决定的回复经原路返回 → 设备屏幕播放表情动画、扬声器播报 TTS、振动马达给出触觉反馈。到点的提醒由 **Scheduler** 准点触发，**reminder-pusher 守护进程**检测到后经 MQTT 推给 App、再经 BLE 送达设备（实测 4s 内送达，无需用户语音输入）。
+老人按一下 BOOT 键说话 → 设备采集语音经 BLE 上行到手机 App → App 通过 roro 中继链路送达 **TiDB Agent Stack** 上的晚晴 Agent → Agent 理解意图后调用 MCP 工具（创建提醒/备忘/查询/完成/延期）→ Agent 决定的回复经原路返回 → 设备屏幕播放表情动画、扬声器播报 TTS、振动马达给出触觉反馈。到点的提醒由 **Scheduler** 准点触发，**reminder-pusher 守护进程**检测到后写入被托管会话的 JSONL，经 roro daemon mirror 协议投给 App、再经 BLE 送达设备（实测 4s 内送达，无需用户语音输入）。
 
 ```
 ┌────────┐  按键/语音  ┌─────────┐  BLE   ┌──────────┐  TCP   ┌───────────────┐
@@ -122,7 +122,7 @@ VentureD/
 │   ├── bridge/
 │   │   ├── claude-bridge           ←   ★ roro ↔ Agent Stack 协议桥（Python, stdlib only）
 │   │   ├── claude-shim             ←   PATH shim：重启 daemon + 注入 bridge
-│   │   ├── reminder-pusher         ←   ★ 主动提醒守护进程：Scheduler 触发 → MQTT 推送（launchd 托管）
+│   │   ├── reminder-pusher         ←   ★ 主动提醒守护进程：Scheduler 触发 → JSONL mirror 投递（launchd 托管）
 │   │   ├── ai.rorolee.reminder-pusher.plist ← launchd 配置（入库版）
 │   │   ├── ai.rorolee.family-api.plist ← 家人端 REST 服务 launchd 模板（install.sh 渲染）
 │   │   └── install.sh              ←   一键部署到 ~/.rorolee/bin/（含 pusher/family-api 注册）
@@ -254,7 +254,7 @@ TOK=$(cat ~/.rorolee/family.token)
 # 家人日报：今日任务/已推提醒/最近互动/无互动告警/App 在线状态
 curl -s -H "X-Family-Token: $TOK" localhost:8100/family/report
 
-# 家人留言 → 设备 TTS 播报 + 爱心表情 + 振动（MQTT 双格式下发）
+# 家人留言 → 设备 TTS 播报 + 爱心表情 + 振动（JSONL mirror 投递）
 curl -s -X POST -H "X-Family-Token: $TOK" -H "Content-Type: application/json" \
   -d '{"sender":"女儿","text":"妈，我周末回来陪你吃饭"}' localhost:8100/family/message
 
@@ -276,7 +276,7 @@ curl -s -H "X-Family-Token: $TOK" localhost:8100/family/messages
 3. **Agent 决策**（云端）：晚晴 Agent 解析意图 = CREATE_TASK，时间解析"明天下午三点" → 调用 `create_task(title="吃降压药", due_time=明天15:00+08:00)` → SQLite 落库。
 4. **结果回传**：屏幕切"说话"表情，扬声器播报 *"好的，明天下午三点提醒你吃降压药。"*，振动一次确认。
 5. **验证持久化**：再按 BOOT 说 *"明天有什么安排？"* → Agent 调 `query_tasks` → 播报 *"明天下午三点有一件事：吃降压药。"*
-6. **（加分）主动提醒**：到点 Scheduler fire → reminder-pusher 30s 内检测 → MQTT 发布到 App 订阅的 chat 频道 → App 经 BLE 下发 → 设备播“提醒”动画 + 三连振动 + TTS 播报提醒内容（实测触发后 4s 内送达，trace 见 `wanqing/deliverables/reminder_e2e_trace.json`）。
+6. **（加分）主动提醒**：到点 Scheduler fire → reminder-pusher 30s 内检测 → 写入被托管会话 JSONL → roro daemon 经 mirror 协议投给 App → App 经 BLE 下发 → 设备播“提醒”动画 + 三连振动 + TTS 播报提醒内容（实测触发后 4s 内送达，trace 见 `wanqing/deliverables/reminder_e2e_trace.json`）。
 
 无需写任何代码即可复现；每一步的日志见 §9 验证材料。
 

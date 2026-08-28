@@ -27,7 +27,7 @@ from models.database import (
     init_db, create_task, get_task, query_tasks, complete_task, cancel_task,
     find_task_by_title, create_note, query_notes, create_reminder,
     get_pending_reminders, fire_reminder, db,
-    create_family_message, query_family_messages,
+    create_family_message, query_family_messages, mark_family_message_read,
 )
 
 CST = timezone(timedelta(hours=8))
@@ -372,38 +372,44 @@ def family_send_message(
     record = create_family_message(body.sender.strip(), body.text.strip())
 
     pushed = False
+    via = None
     error = None
     try:
-        from mqttws import MQTTWebSocket
-        channel = "main"
-        try:
-            with open(PUSHER_STATE) as f:
-                channel = json.load(f).get("last_channel") or channel
-        except Exception:
-            pass
-        mqtt = MQTTWebSocket(MQTT_BROKER, MQTT_PORT)
-        mqtt.connect(client_id=f"family-api-{os.getpid()}")
-        out_topic = f'announcement/{MQTT_USER_ID}/{MQTT_DEVICE_ID}/chat/{channel}/out'
-        now_ms = int(time.time() * 1000)
-        # 1) assistant 文本：App 现有路径，保证 TTS 播报
-        mqtt.publish(out_topic, json.dumps({
-            "type": "assistant",
-            "text": f"💌 {record['sender']}的留言：{record['text']}",
-            "timestamp": now_ms,
-        }, ensure_ascii=False))
-        # 2) 结构化 family_message：协议 v1，设备播爱心表情 + 振动
-        mqtt.publish(out_topic, json.dumps({
-            "type": "family_message",
-            "sender": record["sender"],
-            "text": record["text"],
-            "timestamp": now_ms,
-        }, ensure_ascii=False))
-        mqtt.close()
+        from deliver import deliver
+        with open(PUSHER_STATE) as f:
+            pusher_state = json.load(f)
+        tts_text = f"💌 {record['sender']}的留言：{record['text']}"
+        via, _detail = deliver(pusher_state, tts_text)
+        if via == "mqtt-fallback":
+            # App 未托管会话时直接发布兜底
+            from mqttws import MQTTWebSocket
+            channel = pusher_state.get("last_channel") or "main"
+            mqtt = MQTTWebSocket(MQTT_BROKER, MQTT_PORT)
+            mqtt.connect(client_id=f"family-api-{os.getpid()}")
+            out_topic = f'announcement/{MQTT_USER_ID}/{MQTT_DEVICE_ID}/chat/{channel}/out'
+            now_ms = int(time.time() * 1000)
+            mqtt.publish(out_topic, json.dumps({
+                "type": "assistant",
+                "text": tts_text,
+                "timestamp": now_ms,
+            }, ensure_ascii=False))
+            # 结构化 family_message：协议 v1，设备播爱心表情 + 振动
+            mqtt.publish(out_topic, json.dumps({
+                "type": "family_message",
+                "sender": record["sender"],
+                "text": record["text"],
+                "timestamp": now_ms,
+            }, ensure_ascii=False))
+            mqtt.close()
         pushed = True
+        if via == "jsonl":
+            # mirror 投递成功 = 设备将播报，语义上记为已播/已读
+            mark_family_message_read(record["id"])
     except Exception as e:
         error = str(e)
 
     return {"success": True, "message": record, "pushed": pushed,
+            "via": via,
             **({"push_error": error} if error else {})}
 
 
@@ -508,7 +514,7 @@ async function refresh() {
     '<div class="row"><span>今日已完成</span><b>'+t.tasks_completed.length+' 件</b></div>' + pushed;
   document.getElementById('msgs').innerHTML = t.family_messages.map(m =>
     '<div class="msg"><div class="meta"><span>'+esc(m.sender)+' · '+m.created_at.slice(5,16).replace('T',' ')+'</span>' +
-    '<span class="badge '+(m.read_at?'read':'unread')+'">'+(m.read_at?'已读':'未读')+'</span></div>' +
+    '<span class="badge '+(m.read_at?'read':'unread')+'">'+(m.read_at?'已播':'未播')+'</span></div>' +
     '<div>'+esc(m.text)+'</div></div>'
   ).join('') || '<div class="row"><span>暂无留言</span></div>';
 }

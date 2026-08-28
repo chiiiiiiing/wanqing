@@ -278,6 +278,16 @@ def mark_family_messages_read() -> int:
         return cur.rowcount
 
 
+def mark_family_message_read(message_id: str) -> None:
+    """单条标已读（设备已播报 mirror 投递成功时调用）。"""
+    now = datetime.now(CST).isoformat()
+    with db() as conn:
+        conn.execute(
+            "UPDATE family_messages SET read_at = ? WHERE id = ? AND read_at IS NULL",
+            (now, message_id),
+        )
+
+
 if __name__ == "__main__":
     init_db()
     print(f"Database initialized at: {DB_PATH}")

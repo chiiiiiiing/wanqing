@@ -139,7 +139,7 @@ agent_link SDK（L2CAP TTS / GATT 事件 / GPIO）
 - **家人侧（REST :8100，token 鉴权）**：
   - `GET /family/web?token=…`：家人网页门户（留言表单 + 日报/告警 + 已读状态，30s 刷新）；
   - `GET /family/report`：今日任务/今日已推提醒/最近互动时间/超 24h 无互动告警/App 在线状态；
-  - `POST /family/message`：留言落库 + MQTT 双格式下发（`assistant` 保 TTS 送达 + `family_message` 触发爱心表情/振动）；
+  - `POST /family/message`：留言落库 + JSONL mirror 投递（写入被托管会话 → roro daemon → App TTS；未托管时 MQTT 直发兜底），投递成功即标已播；
   - `GET /family/messages`：留言列表与已读状态。
 - **互动信号**：reminder-pusher 观察 MQTT `/in`（老人语音上行）记录 `last_interaction_at`，与任务/备忘操作时间取最大。
 - **验证记录**（2026-08-28）：四步全链路 PASS，见 [`../deliverables/family_care_trace.json`](../deliverables/family_care_trace.json)。

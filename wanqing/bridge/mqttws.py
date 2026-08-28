@@ -55,11 +55,13 @@ class MQTTWebSocket:
         self._ws_send(self._mqtt_publish(topic, message, qos))
 
     def recv_message(self, timeout=1):
-        """接收 PUBLISH。返回 (topic, payload) 或 None。"""
+        """接收 PUBLISH。返回 (topic, payload) 或 None；连接断开时抛 ConnectionError。"""
         self.sock.settimeout(timeout)
         try:
             data = self._ws_recv()
-            if data and (data[0] & 0xF0) == 0x30:
+            if data is None:
+                raise ConnectionError('connection closed by peer')
+            if (data[0] & 0xF0) == 0x30:
                 qos = (data[0] >> 1) & 0x03
                 topic_len = struct.unpack('>H', data[2:4])[0]
                 topic = data[4:4+topic_len].decode('utf-8', errors='replace')
@@ -70,8 +72,6 @@ class MQTTWebSocket:
                 return topic, payload
             return None
         except socket.timeout:
-            return None
-        except Exception:
             return None
 
     def _ws_send(self, data):

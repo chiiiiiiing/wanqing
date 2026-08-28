@@ -224,8 +224,9 @@
         <h3>reminder-pusher 守护进程 <span class="tag tag-custom">自研 · launchd 托管</span></h3>
         <ul>
           <li>30s 轮询 Scheduler lastFiredAt → 检测准点触发</li>
-          <li>MQTT-over-WS 发布到 App 订阅的 chat 频道（自动学习）</li>
-          <li>双格式下发：assistant（TTS 直达）+ reminder（结构化）</li>
+          <li>触发后写入被托管会话 JSONL → roro mirror 投递 App（TTS）</li>
+          <li>订阅设备 # topic：学习托管会话/channel、记录老人互动</li>
+          <li>兜底：未托管时 MQTT 直发（assistant + reminder 双格式）</li>
         </ul>
       </div>
     </div>
@@ -258,7 +259,7 @@
     </tr>
     <tr>
       <td>Scheduler 触发提醒</td>
-      <td>reminder-pusher → MQTT chat/{ch}/out → App → 0x70</td>
+      <td>reminder-pusher → JSONL mirror → daemon → App → BLE</td>
       <td><b>SetUiState</b>(Reminder) + <b>PlayHapticPattern</b></td>
       <td>提醒表情 + 振动 + TTS</td>
     </tr>
@@ -291,8 +292,8 @@
     <tr>
       <td>Agent Stack Scheduler<br>cron/once 准点 fire<br>（cron 按 Asia/Shanghai）</td>
       <td>reminder-pusher 守护进程<br>30s 轮询 lastFiredAt 变化<br>首启仅补推 1h 内</td>
-      <td>MQTT-over-WS broker:8083<br>announcement/106/{device}/<br>chat/{channel}/out<br>双格式：assistant + reminder</td>
-      <td>ROROLEE App<br>订阅 chat 频道<br>→ BLE 转发</td>
+      <td>写入被托管会话 JSONL（fsync）<br>roro daemon mirror 察觉<br>→ watermark/replay 协议下行</td>
+      <td>ROROLEE App<br>replay 新条目<br>→ BLE 转发</td>
       <td><b>TTS 播报</b> + 提醒表情 + 振动</td>
     </tr>
   </table>
@@ -309,7 +310,7 @@
       <td>老人：“有留言吗？”<br>→ Agent 调 MCP query_family_messages<br>→ TTS 念出 + 标记已读</td>
     </tr>
     <tr>
-      <td>family-api → SQLite 落库<br>→ MQTT 双格式（assistant + family_message）<br>→ App → BLE → <b>爱心表情 + 振动 + TTS</b></td>
+      <td>family-api → SQLite 落库<br>→ JSONL mirror 投递 → daemon → App<br>→ BLE → <b>TTS + 爱心表情 + 振动</b></td>
       <td>互动信号 = MQTT /in 观察（pusher）<br>+ 任务/备忘操作时间取最大<br>App 在线状态读 roro state.json</td>
       <td>留言读取状态回写 family_messages.read_at<br>家人端 /family/messages 可见</td>
     </tr>

@@ -38,7 +38,8 @@ echo "[install] 已安装 claude shim -> $RORO_BIN_DIR/claude"
 # 3) reminder-pusher（定时提醒闭环：Scheduler 触发 → MQTT 推送到 App）
 install -m 0755 "$REPO_DIR/bridge/reminder-pusher" "$RORO_BIN_DIR/reminder-pusher"
 install -m 0644 "$REPO_DIR/bridge/mqttws.py" "$RORO_BIN_DIR/mqttws.py"
-echo "[install] 已安装 reminder-pusher + mqttws -> $RORO_BIN_DIR/"
+install -m 0644 "$REPO_DIR/bridge/deliver.py" "$RORO_BIN_DIR/deliver.py"
+echo "[install] 已安装 reminder-pusher + mqttws + deliver -> $RORO_BIN_DIR/"
 
 # 4) reminder-pusher launchd 自启（开机启动 + 崩溃自拉起）
 PLIST_SRC="$REPO_DIR/bridge/ai.rorolee.reminder-pusher.plist"
