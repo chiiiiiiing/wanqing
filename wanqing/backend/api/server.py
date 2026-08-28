@@ -354,7 +354,7 @@ def family_report(
             "tasks_pending": query_tasks("default_user", "pending", today),
             "tasks_completed": query_tasks("default_user", "completed", today),
             "reminders_pushed": _today_pushed_reminders(),
-            "family_messages": query_family_messages(10),
+            "family_messages": query_family_messages(10, direction=None),
         },
     }
 
@@ -420,7 +420,7 @@ def family_messages(
     token: Optional[str] = Query(None),
 ):
     require_family(x_family_token, token)
-    msgs = query_family_messages(limit)
+    msgs = query_family_messages(limit, direction=None)
     return {"messages": msgs, "count": len(msgs)}
 
 
@@ -449,6 +449,7 @@ FAMILY_WEB_HTML = """<!DOCTYPE html>
   .msg { border-bottom:1px solid #f3f4f6; padding:8px 0; font-size:13px; }
   .msg .meta { color:#6b7280; font-size:11px; display:flex; justify-content:space-between; }
   .badge { border-radius:8px; padding:1px 6px; font-size:10px; }
+  .badge.reply { background:#fff7ed; color:#ea580c; }
   .unread { background:#fef3c7; color:#92400e; }
   .read { background:#e5e7eb; color:#6b7280; }
   .chip { display:inline-block; background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; border-radius:10px; padding:2px 8px; font-size:11px; margin:2px 4px 2px 0; }
@@ -514,7 +515,9 @@ async function refresh() {
     '<div class="row"><span>今日已完成</span><b>'+t.tasks_completed.length+' 件</b></div>' + pushed;
   document.getElementById('msgs').innerHTML = t.family_messages.map(m =>
     '<div class="msg"><div class="meta"><span>'+esc(m.sender)+' · '+m.created_at.slice(5,16).replace('T',' ')+'</span>' +
-    '<span class="badge '+(m.read_at?'read':'unread')+'">'+(m.read_at?'已播':'未播')+'</span></div>' +
+    (m.direction==='elder_to_family'
+      ? '<span class="badge reply">妈妈回复</span>'
+      : '<span class="badge '+(m.read_at?'read':'unread')+'">'+(m.read_at?'已播':'未播')+'</span>')+'</div>' +
     '<div>'+esc(m.text)+'</div></div>'
   ).join('') || '<div class="row"><span>暂无留言</span></div>';
 }

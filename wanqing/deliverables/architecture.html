@@ -210,6 +210,7 @@
             <li>create_task / create_note</li>
             <li>query_tasks / complete_task / delay_task</li>
             <li>query_family_messages（老人听留言）</li>
+            <li>reply_to_family（老人回话）/ query_notes</li>
           </ul>
         </div>
         <div class="box cat-custom" style="flex:1;">
@@ -303,16 +304,16 @@
 <div class="mapping" style="margin-top:14px;">
   <h4>家人关注闭环：家人端 REST（token 鉴权） ⇄ 老人设备（已实测全链路 PASS）</h4>
   <table>
-    <tr><th style="width:22%;">方向 A：家人 → 老人</th><th style="width:30%;">方向 B：老人状态 → 家人</th><th>方向 C：老人主动听留言</th></tr>
+    <tr><th style="width:22%;">方向 A：家人 → 老人</th><th style="width:30%;">方向 B：老人状态 → 家人</th><th>方向 C：老人 ⇄ 家人留言（双向）</th></tr>
     <tr>
       <td>POST /family/message<br>{sender, text} + token</td>
       <td>GET /family/report + token<br>→ 今日任务/已推提醒/最近互动<br>→ 超 24h 无互动 no_interaction_alert</td>
-      <td>老人：“有留言吗？”<br>→ Agent 调 MCP query_family_messages<br>→ TTS 念出 + 标记已读</td>
+      <td>听：老人“有留言吗？”→ MCP query_family_messages → TTS 念出 + 标已读<br>回：老人“告诉女儿…”→ MCP reply_to_family → 家人门户“妈妈回复”</td>
     </tr>
     <tr>
       <td>family-api → SQLite 落库<br>→ JSONL mirror 投递 → daemon → App<br>→ BLE → <b>TTS + 爱心表情 + 振动</b></td>
       <td>互动信号 = MQTT /in 观察（pusher）<br>+ 任务/备忘操作时间取最大<br>App 在线状态读 roro state.json</td>
-      <td>留言读取状态回写 family_messages.read_at<br>家人端 /family/messages 可见</td>
+      <td>family_messages.direction 区分双向<br>播/读状态回写 read_at，家人端可见</td>
     </tr>
   </table>
 </div>

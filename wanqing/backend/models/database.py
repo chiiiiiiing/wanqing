@@ -80,6 +80,7 @@ def init_db():
                 sender TEXT NOT NULL,
                 text TEXT NOT NULL,
                 status TEXT NOT NULL DEFAULT 'pushed',
+                direction TEXT NOT NULL DEFAULT 'family_to_elder',
                 created_at TEXT NOT NULL,
                 read_at TEXT
             );
@@ -90,6 +91,13 @@ def init_db():
             CREATE INDEX IF NOT EXISTS idx_reminders_task ON reminders(task_id);
             CREATE INDEX IF NOT EXISTS idx_family_messages_created ON family_messages(created_at);
         """)
+        # 旧库迁移：补 direction 列（家人→老人 / 老人→家人）
+        try:
+            conn.execute(
+                "ALTER TABLE family_messages ADD COLUMN direction TEXT NOT NULL DEFAULT 'family_to_elder'"
+            )
+        except Exception:
+            pass
 
 
 def generate_id(prefix: str) -> str:
@@ -242,13 +250,13 @@ def get_pending_reminders(until: Optional[str] = None) -> List[dict]:
 
 # === Family Message Operations ===
 
-def create_family_message(sender: str, text: str) -> dict:
+def create_family_message(sender: str, text: str, direction: str = "family_to_elder") -> dict:
     msg_id = generate_id("fam")
     now = datetime.now(CST).isoformat()
     with db() as conn:
         conn.execute(
-            "INSERT INTO family_messages (id, sender, text, status, created_at) VALUES (?, ?, ?, 'pushed', ?)",
-            (msg_id, sender, text, now)
+            "INSERT INTO family_messages (id, sender, text, status, direction, created_at) VALUES (?, ?, ?, 'pushed', ?, ?)",
+            (msg_id, sender, text, direction, now)
         )
     return get_family_message(msg_id)
 
@@ -259,13 +267,16 @@ def get_family_message(msg_id: str) -> Optional[dict]:
         return dict(row) if row else None
 
 
-def query_family_messages(limit: int = 10, unread_only: bool = False) -> List[dict]:
+def query_family_messages(limit: int = 10, unread_only: bool = False,
+                          direction: Optional[str] = "family_to_elder") -> List[dict]:
     with db() as conn:
-        sql = "SELECT * FROM family_messages"
+        sql = "SELECT * FROM family_messages WHERE 1=1"
+        if direction:
+            sql += " AND direction = ?"
         if unread_only:
-            sql += " WHERE read_at IS NULL"
+            sql += " AND read_at IS NULL"
         sql += " ORDER BY created_at DESC LIMIT ?"
-        rows = conn.execute(sql, (limit,)).fetchall()
+        rows = conn.execute(sql, (limit,) if not direction else (direction, limit)).fetchall()
         return [dict(r) for r in rows]
 
 
@@ -273,7 +284,8 @@ def mark_family_messages_read() -> int:
     now = datetime.now(CST).isoformat()
     with db() as conn:
         cur = conn.execute(
-            "UPDATE family_messages SET read_at = ? WHERE read_at IS NULL", (now,)
+            "UPDATE family_messages SET read_at = ? WHERE read_at IS NULL AND direction = 'family_to_elder'",
+            (now,)
         )
         return cur.rowcount
 

@@ -263,7 +263,7 @@ curl -s -X POST -H "X-Family-Token: $TOK" -H "Content-Type: application/json" \
 curl -s -H "X-Family-Token: $TOK" localhost:8100/family/messages
 ```
 
-老人侧闭环：老人说“有留言吗？”→ Agent 调 MCP `query_family_messages` → TTS 念出并标记已读。验证 trace：[`wanqing/deliverables/family_care_trace.json`](wanqing/deliverables/family_care_trace.json)。
+老人侧闭环（双向）：老人说“有留言吗？”→ Agent 调 MCP `query_family_messages` → TTS 念出并标记已读；老人说“告诉女儿…”→ MCP `reply_to_family` → 家人门户留言记录显示“妈妈回复”。验证 trace：[`wanqing/deliverables/family_care_trace.json`](wanqing/deliverables/family_care_trace.json)。
 
 ---
 

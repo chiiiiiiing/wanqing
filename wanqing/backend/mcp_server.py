@@ -10,6 +10,8 @@ Tools:
   - complete_task: Mark a task as done
   - delay_task: Postpone a task
   - query_family_messages: Read family messages aloud to the elder
+  - reply_to_family: Send the elder's voice reply to the family portal
+  - query_notes: Look up saved memo notes
 """
 import sys
 import os
@@ -35,6 +37,7 @@ from models.database import (
     fire_reminder as db_fire_reminder,
     query_family_messages as db_query_family_messages,
     mark_family_messages_read as db_mark_family_read,
+    create_family_message as db_create_family_message,
 )
 
 CST = timezone(timedelta(hours=8))
@@ -248,6 +251,41 @@ def query_family_messages(limit: int = 5) -> str:
         return "家人的留言：\n" + "\n".join(lines)
     except Exception as e:
         return f"❌ 查询留言失败：{e}"
+
+
+@mcp.tool()
+def reply_to_family(text: str) -> str:
+    """把老人的话转告给家人，家人在手机门户上就能看到。
+    当老人说"告诉女儿..."、"跟家人说..."、"给女儿带个话"、"回个话"时调用。
+
+    Args:
+        text: 老人要转告的话
+    """
+    if not text:
+        return "❌ 缺少要转告的内容"
+    try:
+        db_create_family_message(sender="妈妈", text=text, direction="elder_to_family")
+        return "好的，已经把您的话转告给家人了，他们在手机上就能看到。"
+    except Exception as e:
+        return f"❌ 转告失败：{e}"
+
+
+@mcp.tool()
+def query_notes(category: str = "") -> str:
+    """查询老人记过的备忘。
+    当老人问"我记过什么"、"备忘里有什么"、"医保卡放哪了"、"鸡蛋还有吗"时调用。
+
+    Args:
+        category: 按分类过滤，可选：health/life/recipe/contact/general；留空查全部
+    """
+    try:
+        notes = db_query_notes(user_id="default_user", category=category or None, limit=10)
+        if not notes:
+            return "备忘里还没有记录。想记什么可以说“帮我记一下”。"
+        lines = [f"{n['content']}（{format_time(n['created_at'])}记）" for n in notes]
+        return "你记过这些：\n" + "\n".join(lines)
+    except Exception as e:
+        return f"❌ 查询备忘失败：{e}"
 
 
 # ── Entry Point ──────────────────────────────────────────────

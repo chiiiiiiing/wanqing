@@ -67,6 +67,8 @@ MCP Server 地址：`http://localhost:8200/mcp`（经 serveo 公网暴露后注�
 | `complete_task` | 标记任务完成 | `title_keyword`(模糊匹配), `task_id`(精确 ID，可选) | 完成确认 |
 | `delay_task` | 推迟任务 | `title_keyword`, `minutes`(默认 30), `new_due_time`(可选) | 推迟确认 |
 | `query_family_messages` | 老人听家人留言 | `limit`(默认 5) | 留言列表文本，并自动标记已读 |
+| `reply_to_family` | 老人给家人回话 | `text`(要转告的话) | 转告确认；家人门户显示“妈妈回复” |
+| `query_notes` | 查询备忘 | `category`(可选) | 备忘列表文本 |
 
 ### 3.2 自定义 Custom Tool（备用方案）
 
@@ -135,7 +137,7 @@ agent_link SDK（L2CAP TTS / GATT 事件 / GPIO）
 
 ### 5.3 家人关注（family care MVP）
 
-- **老人侧（Agent 能力）**：MCP 工具 `query_family_messages`——老人说“有留言吗/女儿说什么了”时，Agent 调工具念出留言并标记已读。
+- **老人侧（Agent 能力）**：MCP 工具 `query_family_messages`——老人说“有留言吗/女儿说什么了”时，Agent 调工具念出留言并标记已读；`reply_to_family`——老人说“告诉女儿…”时把话转告家人（家人门户“妈妈回复”）；`query_notes`——老人问“我记过什么/医保卡放哪”时查备忘。
 - **家人侧（REST :8100，token 鉴权）**：
   - `GET /family/web?token=…`：家人网页门户（留言表单 + 日报/告警 + 已读状态，30s 刷新）；
   - `GET /family/report`：今日任务/今日已推提醒/最近互动时间/超 24h 无互动告警/App 在线状态；
