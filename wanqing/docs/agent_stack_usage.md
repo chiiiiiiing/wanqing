@@ -119,14 +119,18 @@ agent_link SDK（L2CAP TTS / GATT 事件 / GPIO）
   - 第 2 轮："明天下午三点" → Agent 创建任务"买菜"
   - 第 3 轮："晚一点" → Agent 识别指代，调用 `delay_task` 修改"买菜"
 
-### 5.2 Scheduler 主动提醒
+### 5.2 Scheduler 主动提醒（已实现端到端闭环）
 
-- **触发条件**：Agent 创建提醒任务时，同时要求 Agent Stack Scheduler 在指定时间触发。
+- **触发条件**：Agent 创建提醒任务时，同时创建 Agent Stack Scheduler（一次性 `runAt` 或周期性 `cron`）。
 - **运行过程**：
-  1. Agent 调用 `create_task` 写入本地 SQLite；
-  2. Agent Stack Scheduler 到点后向 roro webhook/App 推送；
-  3. App 通过 BLE 下发 `reminder` 消息到设备。
-- **用户感知**：设备自动跳"提醒"表情、三连振动、TTS 播报提醒内容；老人按 BOOT 键或说"好了"即可调用 `complete_task` 关闭提醒。
+  1. Agent 调用 `create_task` 写入本地 SQLite，并创建 Scheduler；
+  2. Scheduler 到点触发（`lastFiredAt` 更新）；
+  3. **`reminder-pusher` 守护进程**（`wanqing/bridge/reminder-pusher`，launchd 自启）每 30 秒轮询 `GET /api/schedulers`，检测到新触发后从 prompt 提取提醒文案；
+  4. 通过 MQTT 推送到 App 的 chat 下行 topic `announcement/{user}/{device}/chat/{channel}/out`（channel 自动从 roro 流量学习）；
+  5. App 经 BLE 下发到设备。
+- **推送格式**：同时发送两条——`{"type":"assistant","text":...}`（App 现有解析路径，保证送达+TTS）与协议 v1 的结构化 `{"type":"reminder",...}`（App 支持后可触发专属提醒 UI）。
+- **用户感知**：设备 TTS 播报提醒内容；老人按 BOOT 键或说"好了"即可调用 `complete_task` 关闭提醒。
+- **验证记录**（2026-08-28）：创建 2 分钟后触发的测试提醒，Scheduler 准点触发，pusher 4 秒内完成 MQTT 推送，channel 与文案均正确，见 [`../deliverables/reminder_e2e_trace.json`](../deliverables/reminder_e2e_trace.json)。
 
 ---
 

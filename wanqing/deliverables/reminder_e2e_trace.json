@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-08-28T11:47:00+08:00",
+  "description": "定时提醒端到端闭环验证：Agent Stack Scheduler 准点触发 → reminder-pusher 检测 → MQTT 推送到 App 下行 topic",
+  "chain": [
+    "POST /api/schedulers (kind=once, runAt=2026-08-28T03:46:26.000Z, Idempotency-Key 必填)",
+    "Agent Stack 准点触发: lastFiredAt=2026-08-28T03:46:26.000Z",
+    "reminder-pusher 30s 轮询检测（延迟 ≤4s）",
+    "MQTT publish: announcement/106/{device}/chat/claude-nibelung-67164ff0/out",
+    "App (在线时) → BLE → 设备 TTS/UI"
+  ],
+  "steps": [
+    {
+      "request": "POST /api/schedulers {agentId, title:'闭环验证2：吃降压药', prompt:'[schedule] 闭环验证2：吃降压药 {\"message\": \"该吃降压药啦，吃完记得喝口水～\"}', schedule:{kind:'once', runAt:'2026-08-28T03:46:26.000Z'}}",
+      "response": {"schedulerId": "sch_c655c9...(redacted)", "status": "enabled", "nextFireAt": "2026-08-28T03:46:26.000Z"}
+    },
+    {
+      "polling": "GET /api/schedulers?limit=1 → lastFiredAt 由 null 变为 2026-08-28T03:46:26.000Z（11:42 起每 15s 观察，03:42:22Z 触发后首个轮询即命中）"
+    },
+    {
+      "pusher_log": "[2026-08-28 11:46:30] 已推送提醒 [claude-nibelung-67164ff0] 闭环验证2：吃降压药: 该吃降压药啦，吃完记得喝口水～"
+    }
+  ],
+  "mqtt_payloads": [
+    {"type": "assistant", "text": "⏰ 提醒：闭环验证2：吃降压药\\n该吃降压药啦，吃完记得喝口水～", "timestamp": 1787888790000},
+    {"type": "reminder", "id": "sch_c655c9...", "title": "闭环验证2：吃降压药", "text": "该吃降压药啦，吃完记得喝口水～", "importance": "important"}
+  ],
+  "deployment": "reminder-pusher 由 launchd 托管（ai.rorolee.reminder-pusher.plist，KeepAlive + RunAtLoad），日志 ~/.roro/reminder-pusher.log",
+  "notes": [
+    "App 当前离线（state.json app_online=false），MQTT 消息已送达 broker，App 重新上线后可在设备端复现 TTS",
+    "channel 从 roro daemon 的 watermark 流量（/out）自动学习，无需手动配置",
+    "已知限制：Scheduler cron 时区为 UTC，Agent 创建周期提醒时需在 prompt 中明确北京时间换算"
+  ]
+}

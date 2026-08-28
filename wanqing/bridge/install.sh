@@ -35,7 +35,21 @@ fi
 install -m 0755 "$REPO_DIR/bridge/claude-shim" "$RORO_BIN_DIR/claude"
 echo "[install] 已安装 claude shim -> $RORO_BIN_DIR/claude"
 
-# 3) 配置检查
+# 3) reminder-pusher（定时提醒闭环：Scheduler 触发 → MQTT 推送到 App）
+install -m 0755 "$REPO_DIR/bridge/reminder-pusher" "$RORO_BIN_DIR/reminder-pusher"
+echo "[install] 已安装 reminder-pusher -> $RORO_BIN_DIR/reminder-pusher"
+
+# 4) reminder-pusher launchd 自启（开机启动 + 崩溃自拉起）
+PLIST_SRC="$REPO_DIR/bridge/ai.rorolee.reminder-pusher.plist"
+PLIST_DST="$HOME/Library/LaunchAgents/ai.rorolee.reminder-pusher.plist"
+if [ -f "$PLIST_SRC" ]; then
+    launchctl unload "$PLIST_DST" 2>/dev/null || true
+    cp "$PLIST_SRC" "$PLIST_DST"
+    launchctl load "$PLIST_DST"
+    echo "[install] reminder-pusher 已注册 launchd 自启"
+fi
+
+# 5) 配置检查
 if [ ! -f "$HOME/.rorolee/bridge.env" ]; then
     echo "[install] 警告：缺少 ~/.rorolee/bridge.env"
     echo "          请复制 wanqing/.env.example 并填入 Agent Stack 凭证："
@@ -44,4 +58,4 @@ else
     echo "[install] 配置就绪：~/.rorolee/bridge.env"
 fi
 
-echo "[install] 完成。运行 'claude' 即可启动桥接会话。"
+echo "[install] 完成。运行 'claude' 即可启动桥接会话；提醒推送由 reminder-pusher 自动运行。"

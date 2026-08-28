@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  reminder-pusher launchd 配置（开机自启 + 崩溃自拉起）
+  部署：install.sh 会复制到 ~/Library/LaunchAgents/ 并 launchctl load。
+  日志：~/.roro/reminder-pusher.log
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>ai.rorolee.reminder-pusher</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/python3</string>
+        <string>/Users/nibelung/.rorolee/bin/reminder-pusher</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/Users/nibelung/.roro/reminder-pusher.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/nibelung/.roro/reminder-pusher.log</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>HOME</key>
+        <string>/Users/nibelung</string>
+        <key>PATH</key>
+        <string>/Users/nibelung/.rorolee/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+</dict>
+</plist>

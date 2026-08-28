@@ -1,0 +1,404 @@
+#!/usr/bin/env python3
+"""
+reminder-pusher — 晚晴定时提醒闭环的"最后一公里"
+
+Agent Stack Scheduler 到点触发后，提醒只停留在云端 session 里。
+本守护进程负责：
+  1. 每 30 秒轮询 GET /api/schedulers，检测 lastFiredAt 变化；
+  2. 首次发现触发时，从 scheduler 的 prompt 中提取提醒文案；
+  3. 通过 MQTT 推送到手机 App 的 chat 下行 topic：
+       announcement/{USER_ID}/{DEVICE_ID}/chat/{channel}/out
+     App 收到后经 BLE 下发给设备（TTS + 提醒 UI + 振动）。
+
+同时订阅 chat/# 通配符，记录 App 最近使用的 channel，
+保证主动推送落在 App 正在监听的 channel 上。
+
+零第三方依赖（复用 bridge-mqtt-responder 的 MQTT-over-WebSocket 实现）。
+日志: ~/.roro/reminder-pusher.log（launchd 重定向）
+状态: ~/.roro/reminder-pusher-state.json
+"""
+
+import base64
+import json
+import os
+import signal
+import socket
+import struct
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+
+# ── Config ───────────────────────────────────────────────────────
+RORO_HOME = os.path.expanduser("~/.rorolee")
+ENV_FILE = os.path.join(RORO_HOME, "bridge.env")
+STATE_FILE = os.path.expanduser("~/.roro/reminder-pusher-state.json")
+
+MQTT_BROKER = "mqtt.deotaland.ai"
+MQTT_PORT = 8083
+USER_ID = "106"
+DEVICE_ID = "d-c0065571f81bbe36"
+
+POLL_INTERVAL = 30          # scheduler 轮询间隔（秒）
+CATCHUP_WINDOW = 3600       # 首次启动时补推最近 N 秒内已触发的提醒
+DEFAULT_CHANNEL = "main"    # 未观察到 App channel 时的兜底
+
+running = True
+
+def sig_handler(sig, frame):
+    global running
+    log("收到退出信号，停止")
+    running = False
+
+signal.signal(signal.SIGINT, sig_handler)
+signal.signal(signal.SIGTERM, sig_handler)
+
+def log(msg):
+    ts = time.strftime("%Y-%m-%d %H:%M:%S")
+    print(f"[{ts}] {msg}", flush=True)
+
+# ── Config / state ───────────────────────────────────────────────
+def load_config():
+    cfg = {}
+    if os.path.isfile(ENV_FILE):
+        with open(ENV_FILE) as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                if "=" in line:
+                    k, v = line.split("=", 1)
+                    cfg[k.strip()] = v.strip()
+    for key in ("AGENT_STACK_BASE_URL", "AGENT_STACK_USER_API_KEY", "AGENT_STACK_PROJECT_ID"):
+        if not os.environ.get(key) and not cfg.get(key):
+            log(f"缺少配置 {key}（{ENV_FILE}）")
+            sys.exit(1)
+        cfg[key] = os.environ.get(key) or cfg[key]
+    return cfg
+
+def load_state():
+    try:
+        with open(STATE_FILE) as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def save_state(state):
+    tmp = STATE_FILE + ".tmp"
+    with open(tmp, "w") as f:
+        json.dump(state, f, ensure_ascii=False, indent=1)
+    os.replace(tmp, STATE_FILE)
+
+# ── Agent Stack API ──────────────────────────────────────────────
+def fetch_schedulers(cfg):
+    """拉取全部 scheduler（翻页）。"""
+    base = cfg["AGENT_STACK_BASE_URL"].rstrip("/")
+    headers = {
+        "Authorization": f"Bearer {cfg['AGENT_STACK_USER_API_KEY']}",
+        "x-agent9-project-id": cfg["AGENT_STACK_PROJECT_ID"],
+    }
+    schedulers, cursor = [], None
+    for _ in range(10):  # 最多翻 10 页，防止死循环
+        url = f"{base}/api/schedulers?limit=50"
+        if cursor:
+            url += f"&cursor={urllib.parse.quote(cursor)}"
+        req = urllib.request.Request(url, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = json.loads(resp.read().decode())
+        except (urllib.error.URLError, TimeoutError) as e:
+            log(f"拉取 schedulers 失败: {e}")
+            return None
+        schedulers.extend(data.get("schedulers", []))
+        cursor = data.get("nextCursor")
+        if not cursor:
+            break
+    return schedulers
+
+def extract_reminder_text(sched):
+    """从 scheduler 的 prompt 中提取提醒文案。
+    prompt 形如:
+      '[schedule] 标题\\n{"message": "提醒：该吃药啦！"}'   # 两行
+      '[schedule] 标题 {"message": "..."}'                 # 同行带 JSON 尾巴
+    """
+    title = sched.get("title", "提醒")
+    prompt = sched.get("prompt", "")
+    # 尝试从任意位置提取 JSON 中的 message 字段
+    for line in prompt.splitlines():
+        idx = line.find('{')
+        while idx >= 0:
+            try:
+                msg = json.loads(line[idx:]).get("message")
+                if msg:
+                    return title, msg
+            except json.JSONDecodeError:
+                pass
+            idx = line.find('{', idx + 1)
+    # 兜底：去掉 [schedule] 前缀和 JSON 尾巴后的剩余文本
+    lines = []
+    for l in prompt.splitlines():
+        l = l.strip()
+        if not l:
+            continue
+        if l.startswith("[schedule]"):
+            l = l[len("[schedule]"):].strip()
+            # 去掉同行尾部可能的 JSON 与标题本身（标题与 title 重复）
+            brace = l.find('{')
+            if brace >= 0:
+                l = l[:brace].strip()
+            if l and l != title:
+                lines.append(l)
+        elif not l.startswith('{'):
+            lines.append(l)
+    text = " ".join(lines) or title
+    return title, text
+
+# ── MQTT over WebSocket（与 bridge-mqtt-responder 同款） ─────────
+class MQTTWebSocket:
+    def __init__(self, broker, port):
+        self.broker = broker
+        self.port = port
+        self.sock = None
+        self._msg_id = 0
+
+    def connect(self):
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.settimeout(15)
+        self.sock.connect((self.broker, self.port))
+        key = base64.b64encode(os.urandom(16)).decode()
+        req = (
+            f'GET /mqtt HTTP/1.1\r\n'
+            f'Host: {self.broker}:{self.port}\r\n'
+            f'Upgrade: websocket\r\n'
+            f'Connection: Upgrade\r\n'
+            f'Sec-WebSocket-Key: {key}\r\n'
+            f'Sec-WebSocket-Version: 13\r\n'
+            f'Sec-WebSocket-Protocol: mqtt\r\n'
+            f'\r\n'
+        )
+        self.sock.send(req.encode())
+        resp = self.sock.recv(4096).decode()
+        if '101' not in resp:
+            raise Exception('WebSocket upgrade failed')
+        self._ws_send(self._mqtt_connect(f'reminder-pusher-{os.getpid()}'))
+        data = self._ws_recv()
+        if not data or data[0] != 0x20 or data[3] != 0:
+            raise Exception(f'MQTT CONNACK failed: {data!r}')
+
+    def subscribe(self, topic, qos=0):
+        self._msg_id += 1
+        self._ws_send(self._mqtt_subscribe(topic, qos, self._msg_id))
+        self._ws_recv()
+
+    def publish(self, topic, message, qos=0):
+        self._ws_send(self._mqtt_publish(topic, message, qos))
+
+    def recv_message(self, timeout=1):
+        """接收 PUBLISH。返回 (topic, payload) 或 None。"""
+        self.sock.settimeout(timeout)
+        try:
+            data = self._ws_recv()
+            if data and (data[0] & 0xF0) == 0x30:
+                qos = (data[0] >> 1) & 0x03
+                topic_len = struct.unpack('>H', data[2:4])[0]
+                topic = data[4:4+topic_len].decode('utf-8', errors='replace')
+                offset = 4 + topic_len
+                if qos > 0:
+                    offset += 2
+                payload = data[offset:].decode('utf-8', errors='replace')
+                return topic, payload
+            return None
+        except socket.timeout:
+            return None
+        except Exception:
+            return None
+
+    def _ws_send(self, data):
+        frame = bytearray([0x82])
+        mask_key = os.urandom(4)
+        length = len(data)
+        if length < 126:
+            frame.append(0x80 | length)
+        elif length < 65536:
+            frame.append(0x80 | 126)
+            frame.extend(struct.pack('>H', length))
+        else:
+            frame.append(0x80 | 127)
+            frame.extend(struct.pack('>Q', length))
+        frame.extend(mask_key)
+        masked = bytes(b ^ mask_key[i % 4] for i, b in enumerate(data))
+        frame.extend(masked)
+        self.sock.send(frame)
+
+    def _ws_recv(self):
+        header = self.sock.recv(2)
+        if len(header) < 2:
+            return None
+        masked = (header[1] & 0x80) != 0
+        length = header[1] & 0x7F
+        if length == 126:
+            length = struct.unpack('>H', self.sock.recv(2))[0]
+        elif length == 127:
+            length = struct.unpack('>Q', self.sock.recv(8))[0]
+        if masked:
+            mask = self.sock.recv(4)
+        data = b''
+        while len(data) < length:
+            chunk = self.sock.recv(min(length - len(data), 65536))
+            if not chunk:
+                break
+            data += chunk
+        if masked:
+            data = bytes(b ^ mask[i % 4] for i, b in enumerate(data))
+        return data
+
+    def _mqtt_connect(self, client_id):
+        cid = client_id.encode()
+        variable = b'\x00\x04MQTT\x04\x02\x00\x3c'
+        payload = struct.pack('>H', len(cid)) + cid
+        remaining = variable + payload
+        header = bytearray([0x10])
+        l = len(remaining)
+        while l > 0:
+            byte = l % 128; l //= 128
+            if l > 0: byte |= 0x80
+            header.append(byte)
+        return bytes(header) + remaining
+
+    def _mqtt_subscribe(self, topic, qos, msg_id):
+        variable = struct.pack('>H', msg_id)
+        t = topic.encode()
+        payload = struct.pack('>H', len(t)) + t + bytes([qos])
+        remaining = variable + payload
+        header = bytearray([0x82])
+        l = len(remaining)
+        while l > 0:
+            byte = l % 128; l //= 128
+            if l > 0: byte |= 0x80
+            header.append(byte)
+        return bytes(header) + remaining
+
+    def _mqtt_publish(self, topic, message, qos):
+        t = topic.encode()
+        variable = struct.pack('>H', len(t)) + t
+        if qos > 0:
+            self._msg_id += 1
+            variable += struct.pack('>H', self._msg_id)
+        payload = message.encode('utf-8')
+        remaining = variable + payload
+        header_byte = 0x30 | (qos << 1)
+        header = bytearray([header_byte])
+        l = len(remaining)
+        while l > 0:
+            byte = l % 128; l //= 128
+            if l > 0: byte |= 0x80
+            header.append(byte)
+        return bytes(header) + remaining
+
+    def close(self):
+        if self.sock:
+            try:
+                self.sock.close()
+            except Exception:
+                pass
+
+# ── 推送 ─────────────────────────────────────────────────────────
+def push_reminder(mqtt, state, sched):
+    title, text = extract_reminder_text(sched)
+    channel = state.get("last_channel") or DEFAULT_CHANNEL
+    out_topic = f'announcement/{USER_ID}/{DEVICE_ID}/chat/{channel}/out'
+    now_ms = int(time.time() * 1000)
+
+    # 1) 普通 assistant 文本（App 现有解析路径，保证送达 + TTS）
+    mqtt.publish(out_topic, json.dumps({
+        "text": f"⏰ 提醒：{title}\n{text}",
+        "type": "assistant",
+        "timestamp": now_ms,
+    }, ensure_ascii=False))
+
+    # 2) 结构化 reminder（协议 v1 预留，App 支持后可触发专属提醒 UI/振动）
+    mqtt.publish(out_topic, json.dumps({
+        "type": "reminder",
+        "id": sched.get("schedulerId", ""),
+        "title": title,
+        "text": text,
+        "importance": "important",
+        "timestamp": now_ms,
+    }, ensure_ascii=False))
+
+    log(f"已推送提醒 [{channel}] {title}: {text[:50]}")
+
+# ── Main loop ────────────────────────────────────────────────────
+def main():
+    cfg = load_config()
+    state = load_state()
+    fired = state.get("fired", {})       # schedulerId -> lastFiredAt
+    first_run = not state.get("booted")
+    if first_run:
+        state["booted"] = True
+
+    mqtt = MQTTWebSocket(MQTT_BROKER, MQTT_PORT)
+    mqtt.connect()
+    watch_topic = f'announcement/{USER_ID}/{DEVICE_ID}/chat/#'
+    mqtt.subscribe(watch_topic, qos=0)
+    log(f"已启动。MQTT 连接成功，订阅 {watch_topic}")
+    log(f"轮询间隔 {POLL_INTERVAL}s，当前已记录 {len(fired)} 条 scheduler 状态")
+
+    last_poll = 0.0
+    while running:
+        # ── 处理入站消息：从 chat 流量学习 App 实际使用的 channel ──
+        # roro daemon 会持续向 chat/{channel}/out 发 watermark，
+        # 其 channel 即 App 当前监听的会话；/in 同理。
+        result = mqtt.recv_message(timeout=1)
+        if result:
+            topic, payload = result
+            parts = topic.split('/')
+            # announcement/106/{device}/chat/{channel}/(in|out)
+            if len(parts) >= 6 and parts[3] == 'chat' and parts[5] in ('in', 'out'):
+                ch = parts[4]
+                if state.get("last_channel") != ch:
+                    state["last_channel"] = ch
+                    save_state(state)
+                    log(f"观察到 App channel: {ch}（来自 {parts[5]} 流量）")
+
+        # ── 定时轮询 schedulers ──
+        now = time.time()
+        if now - last_poll < POLL_INTERVAL:
+            continue
+        last_poll = now
+
+        schedulers = fetch_schedulers(cfg)
+        if schedulers is None:
+            continue
+
+        for sched in schedulers:
+            sid = sched.get("schedulerId")
+            last_fired = sched.get("lastFiredAt")
+            if not sid or not last_fired:
+                continue
+            if fired.get(sid) == last_fired:
+                continue
+            # 新触发（或首次见到）
+            fired[sid] = last_fired
+            try:
+                # lastFiredAt 为 UTC（如 2026-08-28T20:00:00.000Z）
+                fired_ts = time.mktime(time.strptime(
+                    last_fired.split('.')[0], "%Y-%m-%dT%H:%M:%S"))
+                fired_ts += time.timezone  # UTC → 本地 epoch 修正
+            except Exception:
+                fired_ts = now
+            age = now - fired_ts
+            if first_run and age > CATCHUP_WINDOW:
+                continue  # 首次启动只补推最近窗口内的，避免刷屏
+            push_reminder(mqtt, state, sched)
+
+        state["fired"] = fired
+        save_state(state)
+        first_run = False
+
+    mqtt.close()
+    log("已退出")
+
+if __name__ == '__main__':
+    main()
