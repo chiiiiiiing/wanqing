@@ -1,0 +1,5530 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/pdhbmi",
+    "id": "pdhbmi",
+    "slide": 1,
+    "layoutId": "ef6bfb6d-af52-4134-8c83-9b8f8d53893c",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "31633c60-21a8-4b44-a224-f3ee6c34a10e",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "PingFang SC"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "ef6bfb6d-af52-4134-8c83-9b8f8d53893c",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "31633c60-21a8-4b44-a224-f3ee6c34a10e",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "31633c60-21a8-4b44-a224-f3ee6c34a10e",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/e9gzihof",
+      "id": "1",
+      "name": "title-1",
+      "bbox": [
+        38,
+        23,
+        820,
+        46
+      ],
+      "geometry": "rect",
+      "text": "晚晴：一句话如何变成一次可执行提醒",
+      "textPreview": "晚晴：一句话如何变成一次可执行提醒",
+      "resolvedFontSize": 38,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 38,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "晚晴：一句话如何变成一次可执行提醒"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "晚晴：一句话如何变成一次可执行提醒",
+          "resolvedTextStyle": {
+            "fontSize": 38,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "晚晴：一句话如何变成一次可执行提醒",
+              "fontSize": 38,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1c7ytwn6",
+      "id": "2",
+      "name": "subtitle-2",
+      "bbox": [
+        40,
+        72,
+        800,
+        24
+      ],
+      "geometry": "rect",
+      "text": "ROROLEE-Basic｜实线＝代码可追踪主链路 · 虚线＝结构化提醒端到端待验证",
+      "textPreview": "ROROLEE-Basic｜实线＝代码可追踪主链路 · 虚线＝结构化提醒端到端待验证",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 16,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "ROROLEE-Basic｜实线＝代码可追踪主链路 · 虚线＝结构化提醒端到端待验证"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "ROROLEE-Basic｜实线＝代码可追踪主链路 · 虚线＝结构化提醒端到端待验证",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "ROROLEE-Basic｜实线＝代码可追踪主链路 · 虚线＝结构化提醒端到端待验证",
+              "fontSize": 16,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0byhkr6l",
+      "id": "3",
+      "name": "title-rule-3",
+      "bbox": [
+        40,
+        111,
+        1200,
+        1.5
+      ],
+      "geometry": "rect",
+      "fillColor": "#CBD5E1",
+      "lineColor": "#CBD5E1",
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/r65gn254",
+      "id": "4",
+      "name": "legend-blue-4",
+      "bbox": [
+        868,
+        35,
+        20,
+        14
+      ],
+      "geometry": "rect",
+      "fillColor": "#EFF6FF",
+      "lineColor": "#2563EB",
+      "lineWidth": 2
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/q5wfehoj",
+      "id": "5",
+      "name": "legend-blue-text-5",
+      "bbox": [
+        895,
+        30,
+        104,
+        24
+      ],
+      "geometry": "rect",
+      "text": "主办方提供",
+      "textPreview": "主办方提供",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#2563EB",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "主办方提供"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "主办方提供",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#2563EB",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "主办方提供",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#2563EB",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/d87ypcna",
+      "id": "6",
+      "name": "legend-green-6",
+      "bbox": [
+        1000,
+        35,
+        20,
+        14
+      ],
+      "geometry": "rect",
+      "fillColor": "#ECFDF5",
+      "lineColor": "#059669",
+      "lineWidth": 2
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/c7exg76p",
+      "id": "7",
+      "name": "legend-green-text-7",
+      "bbox": [
+        1027,
+        30,
+        92,
+        24
+      ],
+      "geometry": "rect",
+      "text": "团队配置",
+      "textPreview": "团队配置",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#059669",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "团队配置"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "团队配置",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#059669",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "团队配置",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#059669",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/b29gz658",
+      "id": "8",
+      "name": "legend-orange-8",
+      "bbox": [
+        1120,
+        35,
+        20,
+        14
+      ],
+      "geometry": "rect",
+      "fillColor": "#FFF7ED",
+      "lineColor": "#EA580C",
+      "lineWidth": 2
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/a10zq14n",
+      "id": "9",
+      "name": "legend-orange-text-9",
+      "bbox": [
+        1144,
+        30,
+        104,
+        24
+      ],
+      "geometry": "rect",
+      "text": "团队自主开发",
+      "textPreview": "团队自主开发",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#EA580C",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "团队自主开发"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "团队自主开发",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#EA580C",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "团队自主开发",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#EA580C",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wvu1gje5",
+      "id": "10",
+      "name": "stage-input-10",
+      "bbox": [
+        36,
+        148,
+        170,
+        286
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F8FAFC",
+      "lineColor": "#CBD5E1",
+      "lineWidth": 1.5
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xw3294vq",
+      "id": "11",
+      "name": "stage-device-11",
+      "bbox": [
+        218,
+        148,
+        315,
+        286
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F8FAFC",
+      "lineColor": "#CBD5E1",
+      "lineWidth": 1.5
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/atcje9wf",
+      "id": "12",
+      "name": "stage-connection-12",
+      "bbox": [
+        568,
+        148,
+        210,
+        286
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F8FAFC",
+      "lineColor": "#CBD5E1",
+      "lineWidth": 1.5
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vulk7ed0",
+      "id": "13",
+      "name": "stage-intelligence-13",
+      "bbox": [
+        813,
+        148,
+        431,
+        286
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F8FAFC",
+      "lineColor": "#CBD5E1",
+      "lineWidth": 1.5
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/87u1cze9",
+      "id": "14",
+      "name": "stage-output-14",
+      "bbox": [
+        36,
+        504,
+        497,
+        160
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFBEB",
+      "lineColor": "#A16207",
+      "lineWidth": 1.7
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9s3i54vu",
+      "id": "15",
+      "name": "stage-mapping-15",
+      "bbox": [
+        568,
+        504,
+        676,
+        160
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#CBD5E1",
+      "lineWidth": 1.5
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/m5sjapw3",
+      "id": "16",
+      "bbox": [
+        206,
+        291,
+        12,
+        0
+      ],
+      "geometry": "straightConnector1",
+      "lineColor": "#475569",
+      "lineWidth": 2.5
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/n6103udo",
+      "id": "17",
+      "bbox": [
+        533,
+        291,
+        35,
+        0
+      ],
+      "geometry": "straightConnector1",
+      "lineColor": "#475569",
+      "lineWidth": 2.5
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/03a18fex",
+      "id": "18",
+      "bbox": [
+        778,
+        291,
+        35,
+        0
+      ],
+      "geometry": "straightConnector1",
+      "lineColor": "#475569",
+      "lineWidth": 2.5
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/l4ji1kvi",
+      "id": "19",
+      "bbox": [
+        375.5,
+        434,
+        653,
+        0
+      ],
+      "horizontalFlip": true,
+      "geometry": "straightConnector1",
+      "lineColor": "#2563EB",
+      "lineWidth": 2.5
+    },
+    {
+      "order": 20,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/10by5gnm",
+      "id": "20",
+      "bbox": [
+        284.5,
+        434,
+        91,
+        70
+      ],
+      "horizontalFlip": true,
+      "geometry": "bentConnector4",
+      "lineColor": "#A16207",
+      "lineWidth": 2.5
+    },
+    {
+      "order": 21,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0z2hcb61",
+      "id": "21",
+      "name": "pending-path-h-16",
+      "bbox": [
+        520,
+        491,
+        520,
+        0.5
+      ],
+      "geometry": "straightConnector1",
+      "lineColor": "#EA580C",
+      "lineWidth": 2
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fytg365g",
+      "id": "22",
+      "name": "pending-path-v-17",
+      "bbox": [
+        520,
+        491,
+        0.5,
+        12
+      ],
+      "geometry": "straightConnector1",
+      "lineColor": "#EA580C",
+      "lineWidth": 2
+    },
+    {
+      "order": 23,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/exkza1ov",
+      "id": "23",
+      "name": "pending-path-arrow-18",
+      "bbox": [
+        512,
+        495,
+        16,
+        14
+      ],
+      "geometry": "downArrow",
+      "fillColor": "#EA580C",
+      "lineColor": "#EA580C",
+      "lineWidth": 0
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/dwby1gna",
+      "id": "24",
+      "name": "stage-title-01-19",
+      "bbox": [
+        45,
+        119,
+        160,
+        24
+      ],
+      "geometry": "rect",
+      "text": "01  真实输入",
+      "textPreview": "01  真实输入",
+      "resolvedFontSize": 19,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 19,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "01  真实输入"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "01  真实输入",
+          "resolvedTextStyle": {
+            "fontSize": 19,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "01  真实输入",
+              "fontSize": 19,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 25,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sv2h8b6p",
+      "id": "25",
+      "name": "stage-title-02-20",
+      "bbox": [
+        228,
+        119,
+        300,
+        24
+      ],
+      "geometry": "rect",
+      "text": "02  ESP32 设备 + 能力层",
+      "textPreview": "02  ESP32 设备 + 能力层",
+      "resolvedFontSize": 19,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 19,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "02  ESP32 设备 + 能力层"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "02  ESP32 设备 + 能力层",
+          "resolvedTextStyle": {
+            "fontSize": 19,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "02  ESP32 设备 + 能力层",
+              "fontSize": 19,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 26,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ru9gz65k",
+      "id": "26",
+      "name": "stage-title-03-21",
+      "bbox": [
+        578,
+        119,
+        195,
+        24
+      ],
+      "geometry": "rect",
+      "text": "03  连接方式",
+      "textPreview": "03  连接方式",
+      "resolvedFontSize": 19,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 19,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "03  连接方式"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "03  连接方式",
+          "resolvedTextStyle": {
+            "fontSize": 19,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "03  连接方式",
+              "fontSize": 19,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 27,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/qt0z61oz",
+      "id": "27",
+      "name": "stage-title-04-22",
+      "bbox": [
+        823,
+        119,
+        416,
+        24
+      ],
+      "geometry": "rect",
+      "text": "04  Agent / Tool 智能层",
+      "textPreview": "04  Agent / Tool 智能层",
+      "resolvedFontSize": 19,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 19,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "04  Agent / Tool 智能层"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "04  Agent / Tool 智能层",
+          "resolvedTextStyle": {
+            "fontSize": 19,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "04  Agent / Tool 智能层",
+              "fontSize": 19,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 28,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xsvid0nu",
+      "id": "28",
+      "name": "gpio-label-bg-23",
+      "bbox": [
+        198,
+        205,
+        44,
+        42
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 29,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/crmh4v69",
+      "id": "29",
+      "name": "gpio-label-24",
+      "bbox": [
+        199,
+        205,
+        42,
+        42
+      ],
+      "geometry": "rect",
+      "text": "GPIO /\nI²S",
+      "textPreview": "GPIO / | I²S",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "GPI"
+          },
+          {
+            "index": 2,
+            "text": "O /"
+          },
+          {
+            "index": 3,
+            "text": "I²S"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "GPIO /",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "GPIO /",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "I²S",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "I²S",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 30,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/alwnit0f",
+      "id": "30",
+      "name": "ble-label-bg-25",
+      "bbox": [
+        521,
+        205,
+        61,
+        44
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 31,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vm54ryh0",
+      "id": "31",
+      "name": "ble-label-26",
+      "bbox": [
+        522,
+        205,
+        59,
+        44
+      ],
+      "geometry": "rect",
+      "text": "0x40 ↑\nTTS/0x70 ↓",
+      "textPreview": "0x40 ↑ | TTS/0x70 ↓",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "0x40"
+          },
+          {
+            "index": 2,
+            "text": "↑"
+          },
+          {
+            "index": 3,
+            "text": "TTS/0"
+          },
+          {
+            "index": 4,
+            "text": "x70 ↓"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "0x40 ↑",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "0x40 ↑",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "TTS/0x70 ↓",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "TTS/0x70 ↓",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 32,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wne5k3il",
+      "id": "32",
+      "name": "http-label-bg-27",
+      "bbox": [
+        767,
+        205,
+        58,
+        44
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 33,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xon6t8zq",
+      "id": "33",
+      "name": "http-label-28",
+      "bbox": [
+        769,
+        205,
+        54,
+        44
+      ],
+      "geometry": "rect",
+      "text": "HTTPS\nNDJSON",
+      "textPreview": "HTTPS | NDJSON",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 4,
+        "lines": [
+          {
+            "index": 1,
+            "text": "HTTP"
+          },
+          {
+            "index": 2,
+            "text": "S"
+          },
+          {
+            "index": 3,
+            "text": "NDJS"
+          },
+          {
+            "index": 4,
+            "text": "ON"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "HTTPS",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "HTTPS",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "NDJSON",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "NDJSON",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 34,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/mxcnet03",
+      "id": "34",
+      "name": "return-label-bg-29",
+      "bbox": [
+        618,
+        447,
+        424,
+        30
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 35,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nyl4nyho",
+      "id": "35",
+      "name": "return-label-30",
+      "bbox": [
+        628,
+        448,
+        404,
+        28
+      ],
+      "geometry": "rect",
+      "text": "下行：Agent / 到点提醒 → App → BLE → ESP32",
+      "textPreview": "下行：Agent / 到点提醒 → App → BLE → ESP32",
+      "resolvedFontSize": 16,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 16,
+        "typeface": "PingFang SC",
+        "color": "#2563EB",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "下行：Agent / 到点提醒 → App → BLE → ESP32"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "下行：Agent / 到点提醒 → App → BLE → ESP32",
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "PingFang SC",
+            "color": "#2563EB",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "下行：Agent / 到点提醒 → App → BLE → ESP32",
+              "fontSize": 16,
+              "typeface": "PingFang SC",
+              "color": "#2563EB",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 36,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/8ze5g3i9",
+      "id": "36",
+      "name": "pending-label-bg-31",
+      "bbox": [
+        152,
+        474,
+        344,
+        26
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#FFFFFF",
+      "lineWidth": 0
+    },
+    {
+      "order": 37,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9knmp8zu",
+      "id": "37",
+      "name": "pending-label-32",
+      "bbox": [
+        158,
+        474,
+        332,
+        24
+      ],
+      "geometry": "rect",
+      "text": "虚线：0x70 reminder 专属 UI / 三连振（App 待验）",
+      "textPreview": "虚线：0x70 reminder 专属 UI / 三连振（App 待验）",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#EA580C",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "虚线：0x70 reminder 专属 UI / 三连振（App 待验）"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "虚线：0x70 reminder 专属 UI / 三连振（App 待验）",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#EA580C",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "虚线：0x70 reminder 专属 UI / 三连振（App 待验）",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#EA580C",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 38,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6tgnqx0n",
+      "id": "38",
+      "name": "input-body-33",
+      "bbox": [
+        50,
+        164,
+        142,
+        248
+      ],
+      "geometry": "rect",
+      "text": "BOOT（GPIO0）\n按住说话，松开结束\n\nES7210 双麦\n16 kHz PCM\n\n音量±（39 / 40）\nBQ27220 电量/充电",
+      "textPreview": "BOOT（GPIO0） | 按住说话，松开结束 |  | ES7210 双麦 | 16 kHz PCM |  | 音量±（39 / 40） | BQ27220 电量/充电",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 14,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 10,
+        "lines": [
+          {
+            "index": 1,
+            "text": "BOOT（GPIO0）"
+          },
+          {
+            "index": 2,
+            "text": "按住说话，松开结"
+          },
+          {
+            "index": 3,
+            "text": "束"
+          },
+          {
+            "index": 4,
+            "text": ""
+          },
+          {
+            "index": 5,
+            "text": "ES7210 双麦"
+          },
+          {
+            "index": 6,
+            "text": "16 kHz PCM"
+          },
+          {
+            "index": 7,
+            "text": ""
+          },
+          {
+            "index": 8,
+            "text": "音量±（39 / 40）"
+          },
+          {
+            "index": 9,
+            "text": "BQ27220"
+          },
+          {
+            "index": 10,
+            "text": "电量/充电"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "BOOT（GPIO0）",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "BOOT（GPIO0）",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "按住说话，松开结束",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "按住说话，松开结束",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "ES7210 双麦",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "ES7210 双麦",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "16 kHz PCM",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "16 kHz PCM",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 7,
+          "text": "音量±（39 / 40）",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "音量±（39 / 40）",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 8,
+          "text": "BQ27220 电量/充电",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "BQ27220 电量/充电",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 39,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/rupozih8",
+      "id": "39",
+      "name": "module-ROROLEE-Basic-34",
+      "bbox": [
+        230,
+        160,
+        291,
+        75
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EFF6FF",
+      "lineColor": "#2563EB",
+      "lineWidth": 2
+    },
+    {
+      "order": 40,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/rm5kfulo",
+      "id": "40",
+      "name": "module-title-ROROLEE-Basic-35",
+      "bbox": [
+        242,
+        167,
+        209,
+        24
+      ],
+      "geometry": "rect",
+      "text": "ROROLEE-Basic",
+      "textPreview": "ROROLEE-Basic",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 18,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "ROROLEE-Basic"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "ROROLEE-Basic",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "ROROLEE-Basic",
+              "fontSize": 18,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 41,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/qlwjmp43",
+      "id": "41",
+      "name": "badge-提供-36",
+      "bbox": [
+        457,
+        168,
+        54,
+        20
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#2563EB",
+      "lineColor": "#2563EB",
+      "lineWidth": 0
+    },
+    {
+      "order": 42,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/d8n2h43e",
+      "id": "42",
+      "name": "badge-text-提供-37",
+      "bbox": [
+        460,
+        168,
+        48,
+        20
+      ],
+      "geometry": "rect",
+      "text": "提供",
+      "textPreview": "提供",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "提供"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "提供",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "提供",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 43,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/c7e1ozmt",
+      "id": "43",
+      "name": "module-body-ROROLEE-Basic-38",
+      "bbox": [
+        242,
+        194,
+        267,
+        35
+      ],
+      "geometry": "rect",
+      "text": "ESP32-S3 · ES7210 / ES8311 · SH8501 · BQ27220 · 震动马达",
+      "textPreview": "ESP32-S3 · ES7210 / ES8311 · SH8501 · BQ27220 · 震动马达",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "ESP32-S3 · ES7210 / ES8311 ·"
+          },
+          {
+            "index": 2,
+            "text": "SH8501 · BQ27220 · 震动马达"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "ESP32-S3 · ES7210 / ES8311 · SH8501 · BQ27220 · 震动马达",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "ESP32-S3 · ES7210 / ES8311 · SH8501 · BQ27220 · 震动马达",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 44,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3il0balc",
+      "id": "44",
+      "name": "module-板级固件 / 0x70-39",
+      "bbox": [
+        230,
+        244,
+        291,
+        103
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFF7ED",
+      "lineColor": "#EA580C",
+      "lineWidth": 2
+    },
+    {
+      "order": 45,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2hcji54r",
+      "id": "45",
+      "name": "module-title-板级固件 / 0x70-40",
+      "bbox": [
+        242,
+        251,
+        209,
+        24
+      ],
+      "geometry": "rect",
+      "text": "板级固件 / 0x70",
+      "textPreview": "板级固件 / 0x70",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 18,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "板级固件 / 0x70"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "板级固件 / 0x70",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "板级固件 / 0x70",
+              "fontSize": 18,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 46,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/pkn2dk3i",
+      "id": "46",
+      "name": "badge-自研-41",
+      "bbox": [
+        457,
+        252,
+        54,
+        20
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EA580C",
+      "lineColor": "#EA580C",
+      "lineWidth": 0
+    },
+    {
+      "order": 47,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4ju1kfmx",
+      "id": "47",
+      "name": "badge-text-自研-42",
+      "bbox": [
+        460,
+        252,
+        48,
+        20
+      ],
+      "geometry": "rect",
+      "text": "自研",
+      "textPreview": "自研",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "自研"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "自研",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "自研",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 48,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nepknelg",
+      "id": "48",
+      "name": "module-body-板级固件 / 0x70-43",
+      "bbox": [
+        242,
+        278,
+        267,
+        63
+      ],
+      "geometry": "rect",
+      "text": "PTT 采集 / 音频队列 · 11 状态表情\n触觉模式 · 电量轮询 · JSON → Board 动作",
+      "textPreview": "PTT 采集 / 音频队列 · 11 状态表情 | 触觉模式 · 电量轮询 · JSON → Board 动作",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "PTT 采集 / 音频队列 · 11 状态表情"
+          },
+          {
+            "index": 2,
+            "text": "触觉模式 · 电量轮询 · JSON →"
+          },
+          {
+            "index": 3,
+            "text": "Board 动作"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "PTT 采集 / 音频队列 · 11 状态表情",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "PTT 采集 / 音频队列 · 11 状态表情",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "触觉模式 · 电量轮询 · JSON → Board 动作",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "触觉模式 · 电量轮询 · JSON → Board 动作",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 49,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/mdgju94b",
+      "id": "49",
+      "name": "module-agent_link SDK-44",
+      "bbox": [
+        230,
+        356,
+        291,
+        66
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EFF6FF",
+      "lineColor": "#2563EB",
+      "lineWidth": 2
+    },
+    {
+      "order": 50,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kjqhob2d",
+      "id": "50",
+      "name": "module-title-agent_link SDK-45",
+      "bbox": [
+        242,
+        363,
+        209,
+        24
+      ],
+      "geometry": "rect",
+      "text": "agent_link SDK",
+      "textPreview": "agent_link SDK",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 18,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "agent_link SDK"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "agent_link SDK",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "agent_link SDK",
+              "fontSize": 18,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 51,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5kzyhgjy",
+      "id": "51",
+      "name": "badge-提供-46",
+      "bbox": [
+        457,
+        364,
+        54,
+        20
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#2563EB",
+      "lineColor": "#2563EB",
+      "lineWidth": 0
+    },
+    {
+      "order": 52,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ix8zm1kn",
+      "id": "52",
+      "name": "badge-text-提供-47",
+      "bbox": [
+        460,
+        364,
+        48,
+        20
+      ],
+      "geometry": "rect",
+      "text": "提供",
+      "textPreview": "提供",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "提供"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "提供",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "提供",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 53,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jihgf618",
+      "id": "53",
+      "name": "module-body-agent_link SDK-48",
+      "bbox": [
+        242,
+        390,
+        267,
+        26
+      ],
+      "geometry": "rect",
+      "text": "push_voice ↑ · audio_out / custom ↓",
+      "textPreview": "push_voice ↑ · audio_out / custom ↓",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 14,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "push_voice ↑ · audio_out / custom"
+          },
+          {
+            "index": 2,
+            "text": "↓"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "push_voice ↑ · audio_out / custom ↓",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "push_voice ↑ · audio_out / custom ↓",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 54,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/snahsb2p",
+      "id": "54",
+      "name": "module-App + roro-49",
+      "bbox": [
+        580,
+        160,
+        186,
+        91
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EFF6FF",
+      "lineColor": "#2563EB",
+      "lineWidth": 2
+    },
+    {
+      "order": 55,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tojylgja",
+      "id": "55",
+      "name": "module-title-App + roro-50",
+      "bbox": [
+        592,
+        167,
+        110,
+        24
+      ],
+      "geometry": "rect",
+      "text": "App + roro",
+      "textPreview": "App + roro",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 18,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "App +"
+          },
+          {
+            "index": 2,
+            "text": "roro"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "App + roro",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "App + roro",
+              "fontSize": 18,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 56,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6lszqlkj",
+      "id": "56",
+      "name": "badge-提供-51",
+      "bbox": [
+        708,
+        168,
+        48,
+        20
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#2563EB",
+      "lineColor": "#2563EB",
+      "lineWidth": 0
+    },
+    {
+      "order": 57,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7m1gj614",
+      "id": "57",
+      "name": "badge-text-提供-52",
+      "bbox": [
+        711,
+        168,
+        42,
+        20
+      ],
+      "geometry": "rect",
+      "text": "提供",
+      "textPreview": "提供",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "提"
+          },
+          {
+            "index": 2,
+            "text": "供"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "提供",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "提供",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 58,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/grahwv2l",
+      "id": "58",
+      "name": "module-body-App + roro-53",
+      "bbox": [
+        592,
+        194,
+        162,
+        51
+      ],
+      "geometry": "rect",
+      "text": "BLE 网关 · ASR / TTS\nMQTT / 云中继",
+      "textPreview": "BLE 网关 · ASR / TTS | MQTT / 云中继",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "BLE 网关 · ASR /"
+          },
+          {
+            "index": 2,
+            "text": "TTS"
+          },
+          {
+            "index": 3,
+            "text": "MQTT / 云中继"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "BLE 网关 · ASR / TTS",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "BLE 网关 · ASR / TTS",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "MQTT / 云中继",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "MQTT / 云中继",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 59,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/hsjyp0j6",
+      "id": "59",
+      "name": "module-Shim + Bridge-54",
+      "bbox": [
+        580,
+        260,
+        186,
+        96
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFF7ED",
+      "lineColor": "#EA580C",
+      "lineWidth": 2
+    },
+    {
+      "order": 60,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/p8zy9gba",
+      "id": "60",
+      "name": "module-title-Shim + Bridge-55",
+      "bbox": [
+        592,
+        267,
+        110,
+        24
+      ],
+      "geometry": "rect",
+      "text": "Shim + Bridge",
+      "textPreview": "Shim + Bridge",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 18,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Shim +"
+          },
+          {
+            "index": 2,
+            "text": "Bridge"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Shim + Bridge",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Shim + Bridge",
+              "fontSize": 18,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 61,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/o76h0vup",
+      "id": "61",
+      "name": "badge-自研-56",
+      "bbox": [
+        708,
+        268,
+        48,
+        20
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EA580C",
+      "lineColor": "#EA580C",
+      "lineWidth": 0
+    },
+    {
+      "order": 62,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/36xg7qtk",
+      "id": "62",
+      "name": "badge-text-自研-57",
+      "bbox": [
+        711,
+        268,
+        42,
+        20
+      ],
+      "geometry": "rect",
+      "text": "自研",
+      "textPreview": "自研",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "自"
+          },
+          {
+            "index": 2,
+            "text": "研"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "自研",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "自研",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 63,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/25ofylcz",
+      "id": "63",
+      "name": "module-body-Shim + Bridge-58",
+      "bbox": [
+        592,
+        294,
+        162,
+        56
+      ],
+      "geometry": "rect",
+      "text": "PTY 兼容 · Session / Turn\nNDJSON → 回复",
+      "textPreview": "PTY 兼容 · Session / Turn | NDJSON → 回复",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "PTY 兼容 · Session"
+          },
+          {
+            "index": 2,
+            "text": "/ Turn"
+          },
+          {
+            "index": 3,
+            "text": "NDJSON → 回复"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "PTY 兼容 · Session / Turn",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "PTY 兼容 · Session / Turn",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "NDJSON → 回复",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "NDJSON → 回复",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 64,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/dczyd0bm",
+      "id": "64",
+      "name": "module-链路配置-59",
+      "bbox": [
+        580,
+        365,
+        186,
+        57
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#ECFDF5",
+      "lineColor": "#059669",
+      "lineWidth": 2
+    },
+    {
+      "order": 65,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cbqh4vu1",
+      "id": "65",
+      "name": "module-title-链路配置-60",
+      "bbox": [
+        592,
+        372,
+        110,
+        24
+      ],
+      "geometry": "rect",
+      "text": "链路配置",
+      "textPreview": "链路配置",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 18,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "链路配置"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "链路配置",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "链路配置",
+              "fontSize": 18,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 66,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/bahgbqtg",
+      "id": "66",
+      "name": "badge-配置-61",
+      "bbox": [
+        708,
+        373,
+        48,
+        20
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#059669",
+      "lineColor": "#059669",
+      "lineWidth": 0
+    },
+    {
+      "order": 67,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/q98z2lcv",
+      "id": "67",
+      "name": "badge-text-配置-62",
+      "bbox": [
+        711,
+        373,
+        42,
+        20
+      ],
+      "geometry": "rect",
+      "text": "配置",
+      "textPreview": "配置",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "配"
+          },
+          {
+            "index": 2,
+            "text": "置"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "配置",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "配置",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 68,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tgfy1wb2",
+      "id": "68",
+      "name": "module-body-链路配置-63",
+      "bbox": [
+        592,
+        399,
+        162,
+        17
+      ],
+      "geometry": "rect",
+      "text": "BLE v1 · Agent / MCP",
+      "textPreview": "BLE v1 · Agent / MCP",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 14,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "BLE v1 · Agent /"
+          },
+          {
+            "index": 2,
+            "text": "MCP"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "BLE v1 · Agent / MCP",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "BLE v1 · Agent / MCP",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 69,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sfmx8bux",
+      "id": "69",
+      "name": "module-TiDB Agent Stack · 晚晴 Agent-64",
+      "bbox": [
+        825,
+        160,
+        407,
+        103
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#ECFDF5",
+      "lineColor": "#059669",
+      "lineWidth": 2
+    },
+    {
+      "order": 70,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ilkv2xsf",
+      "id": "70",
+      "name": "module-title-TiDB Agent Stack · 晚晴 Agent-65",
+      "bbox": [
+        837,
+        167,
+        301,
+        24
+      ],
+      "geometry": "rect",
+      "text": "TiDB Agent Stack · 晚晴 Agent",
+      "textPreview": "TiDB Agent Stack · 晚晴 Agent",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 18,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "TiDB Agent Stack · 晚晴 Agent"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "TiDB Agent Stack · 晚晴 Agent",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "TiDB Agent Stack · 晚晴 Agent",
+              "fontSize": 18,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 71,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jmtwb290",
+      "id": "71",
+      "name": "badge-团队配置-66",
+      "bbox": [
+        1144,
+        168,
+        78,
+        20
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#059669",
+      "lineColor": "#059669",
+      "lineWidth": 0
+    },
+    {
+      "order": 72,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4n2d47al",
+      "id": "72",
+      "name": "badge-text-团队配置-67",
+      "bbox": [
+        1147,
+        168,
+        72,
+        20
+      ],
+      "geometry": "rect",
+      "text": "团队配置",
+      "textPreview": "团队配置",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "团队配置"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "团队配置",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "团队配置",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 73,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/58vedcr6",
+      "id": "73",
+      "name": "module-body-TiDB Agent Stack · 晚晴 Agent-68",
+      "bbox": [
+        837,
+        194,
+        383,
+        63
+      ],
+      "geometry": "rect",
+      "text": "qwen3.7-plus · Session 上下文 · Scheduler\nPrompt：适老语气 / 时间解析 / 最小追问\nSkill：主链路未单独启用（Prompt + MCP）",
+      "textPreview": "qwen3.7-plus · Session 上下文 · Scheduler | Prompt：适老语气 / 时间解析 / 最小追问 | Skill：主链路未单独启用（Prompt + MCP）",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "qwen3.7-plus · Session 上下文 · Scheduler"
+          },
+          {
+            "index": 2,
+            "text": "Prompt：适老语气 / 时间解析 / 最小追问"
+          },
+          {
+            "index": 3,
+            "text": "Skill：主链路未单独启用（Prompt + MCP）"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "qwen3.7-plus · Session 上下文 · Scheduler",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "qwen3.7-plus · Session 上下文 · Scheduler",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "Prompt：适老语气 / 时间解析 / 最小追问",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Prompt：适老语气 / 时间解析 / 最小追问",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "Skill：主链路未单独启用（Prompt + MCP）",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Skill：主链路未单独启用（Prompt + MCP）",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 74,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/694v6hsr",
+      "id": "74",
+      "name": "module-MCP · 5 Tools-69",
+      "bbox": [
+        825,
+        272,
+        236,
+        91
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFF7ED",
+      "lineColor": "#EA580C",
+      "lineWidth": 2
+    },
+    {
+      "order": 75,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/radwfm9c",
+      "id": "75",
+      "name": "module-title-MCP · 5 Tools-70",
+      "bbox": [
+        837,
+        279,
+        160,
+        24
+      ],
+      "geometry": "rect",
+      "text": "MCP · 5 Tools",
+      "textPreview": "MCP · 5 Tools",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 18,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "MCP · 5 Tools"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "MCP · 5 Tools",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "MCP · 5 Tools",
+              "fontSize": 18,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 76,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sbmd8rah",
+      "id": "76",
+      "name": "badge-自研-71",
+      "bbox": [
+        1003,
+        280,
+        48,
+        20
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EA580C",
+      "lineColor": "#EA580C",
+      "lineWidth": 0
+    },
+    {
+      "order": 77,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tcvehwr2",
+      "id": "77",
+      "name": "badge-text-自研-72",
+      "bbox": [
+        1006,
+        280,
+        42,
+        20
+      ],
+      "geometry": "rect",
+      "text": "自研",
+      "textPreview": "自研",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "自"
+          },
+          {
+            "index": 2,
+            "text": "研"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "自研",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "自研",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 78,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/md0vuds7",
+      "id": "78",
+      "name": "module-body-MCP · 5 Tools-73",
+      "bbox": [
+        837,
+        306,
+        212,
+        51
+      ],
+      "geometry": "rect",
+      "text": "create_task / note / query\ncomplete / delay",
+      "textPreview": "create_task / note / query | complete / delay",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "create_task / note / query"
+          },
+          {
+            "index": 2,
+            "text": "complete / delay"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "create_task / note / query",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "create_task / note / query",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "complete / delay",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "complete / delay",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 79,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ne9c3i9s",
+      "id": "79",
+      "name": "module-SQLite-74",
+      "bbox": [
+        1070,
+        272,
+        162,
+        91
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFF7ED",
+      "lineColor": "#EA580C",
+      "lineWidth": 2
+    },
+    {
+      "order": 80,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/r2hozil8",
+      "id": "80",
+      "name": "module-title-SQLite-75",
+      "bbox": [
+        1082,
+        279,
+        92,
+        24
+      ],
+      "geometry": "rect",
+      "text": "SQLite",
+      "textPreview": "SQLite",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 18,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "SQLite"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "SQLite",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "SQLite",
+              "fontSize": 18,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 81,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/q18n6d4n",
+      "id": "81",
+      "name": "badge-自研-76",
+      "bbox": [
+        1180,
+        280,
+        42,
+        20
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EA580C",
+      "lineColor": "#EA580C",
+      "lineWidth": 0
+    },
+    {
+      "order": 82,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/doz61s3e",
+      "id": "82",
+      "name": "badge-text-自研-77",
+      "bbox": [
+        1183,
+        280,
+        36,
+        20
+      ],
+      "geometry": "rect",
+      "text": "自研",
+      "textPreview": "自研",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "自"
+          },
+          {
+            "index": 2,
+            "text": "研"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "自研",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "自研",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 83,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cnq58nmt",
+      "id": "83",
+      "name": "module-body-SQLite-78",
+      "bbox": [
+        1082,
+        306,
+        138,
+        51
+      ],
+      "geometry": "rect",
+      "text": "任务 / 备忘\n状态持久化",
+      "textPreview": "任务 / 备忘 | 状态持久化",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "任务 / 备忘"
+          },
+          {
+            "index": 2,
+            "text": "状态持久化"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "任务 / 备忘",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "任务 / 备忘",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "状态持久化",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "状态持久化",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 84,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zqho3ilk",
+      "id": "84",
+      "name": "module-reminder-pusher：Scheduler → MQTT → App-79",
+      "bbox": [
+        825,
+        372,
+        407,
+        50
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFF7ED",
+      "lineColor": "#EA580C",
+      "lineWidth": 2
+    },
+    {
+      "order": 85,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ep8nad4z",
+      "id": "85",
+      "name": "module-title-reminder-pusher：Scheduler → MQTT → App-80",
+      "bbox": [
+        837,
+        379,
+        331,
+        24
+      ],
+      "geometry": "rect",
+      "text": "reminder-pusher：Scheduler → MQTT → App",
+      "textPreview": "reminder-pusher：Scheduler → MQTT → App",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 18,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "reminder-pusher：Scheduler →"
+          },
+          {
+            "index": 2,
+            "text": "MQTT → App"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "reminder-pusher：Scheduler → MQTT → App",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "reminder-pusher：Scheduler → MQTT → App",
+              "fontSize": 18,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 86,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1sj65s3a",
+      "id": "86",
+      "name": "badge-自研-81",
+      "bbox": [
+        1174,
+        380,
+        48,
+        20
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#EA580C",
+      "lineColor": "#EA580C",
+      "lineWidth": 0
+    },
+    {
+      "order": 87,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0rq5cnmp",
+      "id": "87",
+      "name": "badge-text-自研-82",
+      "bbox": [
+        1177,
+        380,
+        42,
+        20
+      ],
+      "geometry": "rect",
+      "text": "自研",
+      "textPreview": "自研",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 13,
+        "typeface": "PingFang SC",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "center",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "自"
+          },
+          {
+            "index": 2,
+            "text": "研"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "自研",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "typeface": "PingFang SC",
+            "color": "#FFFFFF",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "自研",
+              "fontSize": 13,
+              "typeface": "PingFang SC",
+              "color": "#FFFFFF",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 88,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vux4ry50",
+      "id": "88",
+      "name": "module-body-reminder-pusher：Scheduler → MQTT → App-83",
+      "bbox": [
+        837,
+        406,
+        383,
+        10
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      },
+      "lineWidth": 0
+    },
+    {
+      "order": 89,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/utonyt4f",
+      "id": "89",
+      "name": "output-title-84",
+      "bbox": [
+        50,
+        512,
+        460,
+        28
+      ],
+      "geometry": "rect",
+      "text": "05  实际输出（回到同一台 ROROLEE-Basic）",
+      "textPreview": "05  实际输出（回到同一台 ROROLEE-Basic）",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 20,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "05  实际输出（回到同一台 ROROLEE-Basic）"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "05  实际输出（回到同一台 ROROLEE-Basic）",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "05  实际输出（回到同一台 ROROLEE-Basic）",
+              "fontSize": 20,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 90,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kz2l8z2d",
+      "id": "90",
+      "name": "output-col-a-85",
+      "bbox": [
+        52,
+        550,
+        222,
+        82
+      ],
+      "geometry": "rect",
+      "text": "声音｜ES8311 播放 16 kHz PCM TTS\n\n屏幕｜SH8501 显示 11 状态表情",
+      "textPreview": "声音｜ES8311 播放 16 kHz PCM TTS |  | 屏幕｜SH8501 显示 11 状态表情",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 5,
+        "lines": [
+          {
+            "index": 1,
+            "text": "声音｜ES8311 播放 16 kHz"
+          },
+          {
+            "index": 2,
+            "text": "PCM TTS"
+          },
+          {
+            "index": 3,
+            "text": ""
+          },
+          {
+            "index": 4,
+            "text": "屏幕｜SH8501 显示 11"
+          },
+          {
+            "index": 5,
+            "text": "状态表情"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "声音｜ES8311 播放 16 kHz PCM TTS",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "声音｜ES8311 播放 16 kHz PCM TTS",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "屏幕｜SH8501 显示 11 状态表情",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "屏幕｜SH8501 显示 11 状态表情",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 91,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/l0b2143y",
+      "id": "91",
+      "name": "output-col-b-86",
+      "bbox": [
+        286,
+        550,
+        226,
+        82
+      ],
+      "geometry": "rect",
+      "text": "触觉｜连接 / 上传 / 错误 / 提醒模式\n\n后续｜SQLite 保存；Scheduler 到点触发",
+      "textPreview": "触觉｜连接 / 上传 / 错误 / 提醒模式 |  | 后续｜SQLite 保存；Scheduler 到点触发",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 1,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "alignment": "left",
+        "verticalAlignment": "top",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 5,
+        "lines": [
+          {
+            "index": 1,
+            "text": "触觉｜连接 / 上传 / 错误 /"
+          },
+          {
+            "index": 2,
+            "text": "提醒模式"
+          },
+          {
+            "index": 3,
+            "text": ""
+          },
+          {
+            "index": 4,
+            "text": "后续｜SQLite"
+          },
+          {
+            "index": 5,
+            "text": "保存；Scheduler 到点触发"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "触觉｜连接 / 上传 / 错误 / 提醒模式",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "触觉｜连接 / 上传 / 错误 / 提醒模式",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "后续｜SQLite 保存；Scheduler 到点触发",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "后续｜SQLite 保存；Scheduler 到点触发",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 92,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ydk36pk7",
+      "id": "92",
+      "name": "mapping-title-87",
+      "bbox": [
+        582,
+        512,
+        640,
+        28
+      ],
+      "geometry": "rect",
+      "text": "关键硬件能力映射：Agent / Tool → SDK → 设备动作",
+      "textPreview": "关键硬件能力映射：Agent / Tool → SDK → 设备动作",
+      "resolvedFontSize": 20,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 20,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "关键硬件能力映射：Agent / Tool → SDK → 设备动作"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "关键硬件能力映射：Agent / Tool → SDK → 设备动作",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "关键硬件能力映射：Agent / Tool → SDK → 设备动作",
+              "fontSize": 20,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 93,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jytkzuls",
+      "id": "93",
+      "name": "map-h1-88",
+      "bbox": [
+        582,
+        542,
+        149,
+        22
+      ],
+      "geometry": "rect",
+      "text": "Agent / Tool 决策",
+      "textPreview": "Agent / Tool 决策",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Agent / Tool 决策"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Agent / Tool 决策",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Agent / Tool 决策",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 94,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wb2l4f2h",
+      "id": "94",
+      "name": "map-h2-89",
+      "bbox": [
+        735,
+        542,
+        259,
+        22
+      ],
+      "geometry": "rect",
+      "text": "SDK / 链路",
+      "textPreview": "SDK / 链路",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "SDK / 链路"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "SDK / 链路",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "SDK / 链路",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 95,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xcb2xk3m",
+      "id": "95",
+      "name": "map-h3-90",
+      "bbox": [
+        1000,
+        542,
+        224,
+        22
+      ],
+      "geometry": "rect",
+      "text": "具体设备动作",
+      "textPreview": "具体设备动作",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "具体设备动作"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "具体设备动作",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "具体设备动作",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 96,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/a9032pkb",
+      "id": "96",
+      "name": "map-rule-1-91",
+      "bbox": [
+        582,
+        566,
+        642,
+        1
+      ],
+      "geometry": "rect",
+      "fillColor": "#CBD5E1",
+      "lineColor": "#CBD5E1",
+      "lineWidth": 0
+    },
+    {
+      "order": 97,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/batkvalw",
+      "id": "97",
+      "name": "map-r1c1-92",
+      "bbox": [
+        582,
+        568,
+        149,
+        28
+      ],
+      "geometry": "rect",
+      "text": "回答 / TTS",
+      "textPreview": "回答 / TTS",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "回答 / TTS"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "回答 / TTS",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "回答 / TTS",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 98,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/g7mlgj2l",
+      "id": "98",
+      "name": "map-r1c2-93",
+      "bbox": [
+        735,
+        568,
+        259,
+        28
+      ],
+      "geometry": "rect",
+      "text": "App → L2CAP → on_audio_out",
+      "textPreview": "App → L2CAP → on_audio_out",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 14,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "App → L2CAP → on_audio_out"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "App → L2CAP → on_audio_out",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "App → L2CAP → on_audio_out",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 99,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/h8vm9oj6",
+      "id": "99",
+      "name": "map-r1c3-94",
+      "bbox": [
+        1000,
+        568,
+        224,
+        28
+      ],
+      "geometry": "rect",
+      "text": "ES8311 播放 + Speaking 表情",
+      "textPreview": "ES8311 播放 + Speaking 表情",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 14,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "ES8311 播放 + Speaking 表情"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "ES8311 播放 + Speaking 表情",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "ES8311 播放 + Speaking 表情",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 100,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/61c7m98r",
+      "id": "100",
+      "name": "map-r2c1-95",
+      "bbox": [
+        582,
+        598,
+        149,
+        28
+      ],
+      "geometry": "rect",
+      "text": "Scheduler 到点",
+      "textPreview": "Scheduler 到点",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Scheduler 到点"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Scheduler 到点",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Scheduler 到点",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 101,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/72l8ve9w",
+      "id": "101",
+      "name": "map-r2c2-96",
+      "bbox": [
+        735,
+        598,
+        259,
+        28
+      ],
+      "geometry": "rect",
+      "text": "pusher → MQTT / App → BLE",
+      "textPreview": "pusher → MQTT / App → BLE",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 14,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "pusher → MQTT / App → BLE"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "pusher → MQTT / App → BLE",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "pusher → MQTT / App → BLE",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 102,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/s3epojqh",
+      "id": "102",
+      "name": "map-r2c3-97",
+      "bbox": [
+        1000,
+        598,
+        224,
+        28
+      ],
+      "geometry": "rect",
+      "text": "TTS；0x70 → Reminder + 振动*",
+      "textPreview": "TTS；0x70 → Reminder + 振动*",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 14,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "TTS；0x70 → Reminder +"
+          },
+          {
+            "index": 2,
+            "text": "振动*"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "TTS；0x70 → Reminder + 振动*",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "TTS；0x70 → Reminder + 振动*",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 103,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/t4nqx4r2",
+      "id": "103",
+      "name": "map-r3c1-98",
+      "bbox": [
+        582,
+        628,
+        149,
+        28
+      ],
+      "geometry": "rect",
+      "text": "调节音量",
+      "textPreview": "调节音量",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 15,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "bold": true,
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "调节音量"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "调节音量",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "bold": true,
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "调节音量",
+              "fontSize": 15,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "bold": true,
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 104,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/idc7ip8f",
+      "id": "104",
+      "name": "map-r3c2-99",
+      "bbox": [
+        735,
+        628,
+        259,
+        28
+      ],
+      "geometry": "rect",
+      "text": "0x70 on_custom",
+      "textPreview": "0x70 on_custom",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 14,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "0x70 on_custom"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "0x70 on_custom",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "0x70 on_custom",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 105,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jel8ru90",
+      "id": "105",
+      "name": "map-r3c3-100",
+      "bbox": [
+        1000,
+        628,
+        224,
+        28
+      ],
+      "geometry": "rect",
+      "text": "SetVolumePercent → ES8311",
+      "textPreview": "SetVolumePercent → ES8311",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 14,
+        "typeface": "PingFang SC",
+        "color": "#111827",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "SetVolumePercent → ES8311"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "SetVolumePercent → ES8311",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#111827",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "SetVolumePercent → ES8311",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#111827",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 106,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kfupkzql",
+      "id": "106",
+      "name": "caveat-101",
+      "bbox": [
+        40,
+        676,
+        1200,
+        24
+      ],
+      "geometry": "rect",
+      "text": "* 当前 AMOLED 输出为表情动画，ShowText 仅写日志；BOOT 语音上行已实现但真机全链路待验；结构化 reminder 的 App 转发待验，普通文本/TTS 为可靠兜底。",
+      "textPreview": "* 当前 AMOLED 输出为表情动画，ShowText 仅写日志；BOOT 语音上行已实现但真机全链路待验；结构化 reminder 的 App 转发待验，普通文本/TTS 为可靠兜底。",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 14,
+        "typeface": "PingFang SC",
+        "color": "#475569",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "* 当前 AMOLED 输出为表情动画，ShowText 仅写日志；BOOT 语音上行已实现但真机全链路待验；结构化 reminder 的 App 转发待验，普通文本/TTS 为可靠兜底。"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "* 当前 AMOLED 输出为表情动画，ShowText 仅写日志；BOOT 语音上行已实现但真机全链路待验；结构化 reminder 的 App 转发待验，普通文本/TTS 为可靠兜底。",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "typeface": "PingFang SC",
+            "color": "#475569",
+            "alignment": "left"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "* 当前 AMOLED 输出为表情动画，ShowText 仅写日志；BOOT 语音上行已实现但真机全链路待验；结构化 reminder 的 App 转发待验，普通文本/TTS 为可靠兜底。",
+              "fontSize": 14,
+              "typeface": "PingFang SC",
+              "color": "#475569",
+              "alignment": "left"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

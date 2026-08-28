@@ -1,0 +1,108 @@
+{"kind":"slide","id":"sl/pdhbmi","slide":1,"title":"晚晴：一句话如何变成一次可执行提醒","textShapes":61}
+{"kind":"textbox","id":"sh/e9gzihof","slide":1,"name":"title-1","text":"晚晴：一句话如何变成一次可执行提醒","textPreview":"晚晴：一句话如何变成一次可执行提醒","textChars":17,"textLines":1,"bbox":[38,23,820,46]}
+{"kind":"textbox","id":"sh/1c7ytwn6","slide":1,"name":"subtitle-2","text":"ROROLEE-Basic｜实线＝代码可追踪主链路 · 虚线＝结构化提醒端到端待验证","textPreview":"ROROLEE-Basic｜实线＝代码可追踪主链路 · 虚线＝结构化提醒端到端待验证","textChars":42,"textLines":1,"bbox":[40,72,800,24]}
+{"kind":"shape","id":"sh/0byhkr6l","slide":1,"name":"title-rule-3","bbox":[40,111,1200,1.5]}
+{"kind":"shape","id":"sh/r65gn254","slide":1,"name":"legend-blue-4","bbox":[868,35,20,14]}
+{"kind":"textbox","id":"sh/q5wfehoj","slide":1,"name":"legend-blue-text-5","text":"主办方提供","textPreview":"主办方提供","textChars":5,"textLines":1,"bbox":[895,30,104,24]}
+{"kind":"shape","id":"sh/d87ypcna","slide":1,"name":"legend-green-6","bbox":[1000,35,20,14]}
+{"kind":"textbox","id":"sh/c7exg76p","slide":1,"name":"legend-green-text-7","text":"团队配置","textPreview":"团队配置","textChars":4,"textLines":1,"bbox":[1027,30,92,24]}
+{"kind":"shape","id":"sh/b29gz658","slide":1,"name":"legend-orange-8","bbox":[1120,35,20,14]}
+{"kind":"textbox","id":"sh/a10zq14n","slide":1,"name":"legend-orange-text-9","text":"团队自主开发","textPreview":"团队自主开发","textChars":6,"textLines":1,"bbox":[1144,30,104,24]}
+{"kind":"shape","id":"sh/wvu1gje5","slide":1,"name":"stage-input-10","bbox":[36,148,170,286]}
+{"kind":"shape","id":"sh/xw3294vq","slide":1,"name":"stage-device-11","bbox":[218,148,315,286]}
+{"kind":"shape","id":"sh/atcje9wf","slide":1,"name":"stage-connection-12","bbox":[568,148,210,286]}
+{"kind":"shape","id":"sh/vulk7ed0","slide":1,"name":"stage-intelligence-13","bbox":[813,148,431,286]}
+{"kind":"shape","id":"sh/87u1cze9","slide":1,"name":"stage-output-14","bbox":[36,504,497,160]}
+{"kind":"shape","id":"sh/9s3i54vu","slide":1,"name":"stage-mapping-15","bbox":[568,504,676,160]}
+{"kind":"shape","id":"sh/m5sjapw3","slide":1,"bbox":[206,291,12,0]}
+{"kind":"shape","id":"sh/n6103udo","slide":1,"bbox":[533,291,35,0]}
+{"kind":"shape","id":"sh/03a18fex","slide":1,"bbox":[778,291,35,0]}
+{"kind":"shape","id":"sh/l4ji1kvi","slide":1,"bbox":[375.5,434,653,0]}
+{"kind":"shape","id":"sh/10by5gnm","slide":1,"bbox":[284.5,434,91,70]}
+{"kind":"shape","id":"sh/0z2hcb61","slide":1,"name":"pending-path-h-16","bbox":[520,491,520,0.5]}
+{"kind":"shape","id":"sh/fytg365g","slide":1,"name":"pending-path-v-17","bbox":[520,491,0.5,12]}
+{"kind":"shape","id":"sh/exkza1ov","slide":1,"name":"pending-path-arrow-18","bbox":[512,495,16,14]}
+{"kind":"textbox","id":"sh/dwby1gna","slide":1,"name":"stage-title-01-19","text":"01  真实输入","textPreview":"01  真实输入","textChars":8,"textLines":1,"bbox":[45,119,160,24]}
+{"kind":"textbox","id":"sh/sv2h8b6p","slide":1,"name":"stage-title-02-20","text":"02  ESP32 设备 + 能力层","textPreview":"02  ESP32 设备 + 能力层","textChars":18,"textLines":1,"bbox":[228,119,300,24]}
+{"kind":"textbox","id":"sh/ru9gz65k","slide":1,"name":"stage-title-03-21","text":"03  连接方式","textPreview":"03  连接方式","textChars":8,"textLines":1,"bbox":[578,119,195,24]}
+{"kind":"textbox","id":"sh/qt0z61oz","slide":1,"name":"stage-title-04-22","text":"04  Agent / Tool 智能层","textPreview":"04  Agent / Tool 智能层","textChars":20,"textLines":1,"bbox":[823,119,416,24]}
+{"kind":"shape","id":"sh/xsvid0nu","slide":1,"name":"gpio-label-bg-23","bbox":[198,205,44,42]}
+{"kind":"textbox","id":"sh/crmh4v69","slide":1,"name":"gpio-label-24","text":"GPIO /\nI²S","textPreview":"GPIO / | I²S","textChars":10,"textLines":2,"bbox":[199,205,42,42]}
+{"kind":"shape","id":"sh/alwnit0f","slide":1,"name":"ble-label-bg-25","bbox":[521,205,61,44]}
+{"kind":"textbox","id":"sh/vm54ryh0","slide":1,"name":"ble-label-26","text":"0x40 ↑\nTTS/0x70 ↓","textPreview":"0x40 ↑ | TTS/0x70 ↓","textChars":17,"textLines":2,"bbox":[522,205,59,44]}
+{"kind":"shape","id":"sh/wne5k3il","slide":1,"name":"http-label-bg-27","bbox":[767,205,58,44]}
+{"kind":"textbox","id":"sh/xon6t8zq","slide":1,"name":"http-label-28","text":"HTTPS\nNDJSON","textPreview":"HTTPS | NDJSON","textChars":12,"textLines":2,"bbox":[769,205,54,44]}
+{"kind":"shape","id":"sh/mxcnet03","slide":1,"name":"return-label-bg-29","bbox":[618,447,424,30]}
+{"kind":"textbox","id":"sh/nyl4nyho","slide":1,"name":"return-label-30","text":"下行：Agent / 到点提醒 → App → BLE → ESP32","textPreview":"下行：Agent / 到点提醒 → App → BLE → ESP32","textChars":35,"textLines":1,"bbox":[628,448,404,28]}
+{"kind":"shape","id":"sh/8ze5g3i9","slide":1,"name":"pending-label-bg-31","bbox":[152,474,344,26]}
+{"kind":"textbox","id":"sh/9knmp8zu","slide":1,"name":"pending-label-32","text":"虚线：0x70 reminder 专属 UI / 三连振（App 待验）","textPreview":"虚线：0x70 reminder 专属 UI / 三连振（App 待验）","textChars":36,"textLines":1,"bbox":[158,474,332,24]}
+{"kind":"textbox","id":"sh/6tgnqx0n","slide":1,"name":"input-body-33","text":"BOOT（GPIO0）\n按住说话，松开结束\n\nES7210 双麦\n16 kHz PCM\n\n音量±（39 / 40）\nBQ27220 电量/充电","textPreview":"BOOT（GPIO0） | 按住说话，松开结束 |  | ES7210 双麦 | 16 kHz PCM |  | 音量±（39 / 40） | BQ27220 电量/充电","textChars":71,"textLines":8,"bbox":[50,164,142,248]}
+{"kind":"shape","id":"sh/rupozih8","slide":1,"name":"module-ROROLEE-Basic-34","bbox":[230,160,291,75]}
+{"kind":"textbox","id":"sh/rm5kfulo","slide":1,"name":"module-title-ROROLEE-Basic-35","text":"ROROLEE-Basic","textPreview":"ROROLEE-Basic","textChars":13,"textLines":1,"bbox":[242,167,209,24]}
+{"kind":"shape","id":"sh/qlwjmp43","slide":1,"name":"badge-提供-36","bbox":[457,168,54,20]}
+{"kind":"textbox","id":"sh/d8n2h43e","slide":1,"name":"badge-text-提供-37","text":"提供","textPreview":"提供","textChars":2,"textLines":1,"bbox":[460,168,48,20]}
+{"kind":"textbox","id":"sh/c7e1ozmt","slide":1,"name":"module-body-ROROLEE-Basic-38","text":"ESP32-S3 · ES7210 / ES8311 · SH8501 · BQ27220 · 震动马达","textPreview":"ESP32-S3 · ES7210 / ES8311 · SH8501 · BQ27220 · 震动马达","textChars":52,"textLines":1,"bbox":[242,194,267,35]}
+{"kind":"shape","id":"sh/3il0balc","slide":1,"name":"module-板级固件 / 0x70-39","bbox":[230,244,291,103]}
+{"kind":"textbox","id":"sh/2hcji54r","slide":1,"name":"module-title-板级固件 / 0x70-40","text":"板级固件 / 0x70","textPreview":"板级固件 / 0x70","textChars":11,"textLines":1,"bbox":[242,251,209,24]}
+{"kind":"shape","id":"sh/pkn2dk3i","slide":1,"name":"badge-自研-41","bbox":[457,252,54,20]}
+{"kind":"textbox","id":"sh/4ju1kfmx","slide":1,"name":"badge-text-自研-42","text":"自研","textPreview":"自研","textChars":2,"textLines":1,"bbox":[460,252,48,20]}
+{"kind":"textbox","id":"sh/nepknelg","slide":1,"name":"module-body-板级固件 / 0x70-43","text":"PTT 采集 / 音频队列 · 11 状态表情\n触觉模式 · 电量轮询 · JSON → Board 动作","textPreview":"PTT 采集 / 音频队列 · 11 状态表情 | 触觉模式 · 电量轮询 · JSON → Board 动作","textChars":53,"textLines":2,"bbox":[242,278,267,63]}
+{"kind":"shape","id":"sh/mdgju94b","slide":1,"name":"module-agent_link SDK-44","bbox":[230,356,291,66]}
+{"kind":"textbox","id":"sh/kjqhob2d","slide":1,"name":"module-title-agent_link SDK-45","text":"agent_link SDK","textPreview":"agent_link SDK","textChars":14,"textLines":1,"bbox":[242,363,209,24]}
+{"kind":"shape","id":"sh/5kzyhgjy","slide":1,"name":"badge-提供-46","bbox":[457,364,54,20]}
+{"kind":"textbox","id":"sh/ix8zm1kn","slide":1,"name":"badge-text-提供-47","text":"提供","textPreview":"提供","textChars":2,"textLines":1,"bbox":[460,364,48,20]}
+{"kind":"textbox","id":"sh/jihgf618","slide":1,"name":"module-body-agent_link SDK-48","text":"push_voice ↑ · audio_out / custom ↓","textPreview":"push_voice ↑ · audio_out / custom ↓","textChars":35,"textLines":1,"bbox":[242,390,267,26]}
+{"kind":"shape","id":"sh/snahsb2p","slide":1,"name":"module-App + roro-49","bbox":[580,160,186,91]}
+{"kind":"textbox","id":"sh/tojylgja","slide":1,"name":"module-title-App + roro-50","text":"App + roro","textPreview":"App + roro","textChars":10,"textLines":1,"bbox":[592,167,110,24]}
+{"kind":"shape","id":"sh/6lszqlkj","slide":1,"name":"badge-提供-51","bbox":[708,168,48,20]}
+{"kind":"textbox","id":"sh/7m1gj614","slide":1,"name":"badge-text-提供-52","text":"提供","textPreview":"提供","textChars":2,"textLines":1,"bbox":[711,168,42,20]}
+{"kind":"textbox","id":"sh/grahwv2l","slide":1,"name":"module-body-App + roro-53","text":"BLE 网关 · ASR / TTS\nMQTT / 云中继","textPreview":"BLE 网关 · ASR / TTS | MQTT / 云中继","textChars":29,"textLines":2,"bbox":[592,194,162,51]}
+{"kind":"shape","id":"sh/hsjyp0j6","slide":1,"name":"module-Shim + Bridge-54","bbox":[580,260,186,96]}
+{"kind":"textbox","id":"sh/p8zy9gba","slide":1,"name":"module-title-Shim + Bridge-55","text":"Shim + Bridge","textPreview":"Shim + Bridge","textChars":13,"textLines":1,"bbox":[592,267,110,24]}
+{"kind":"shape","id":"sh/o76h0vup","slide":1,"name":"badge-自研-56","bbox":[708,268,48,20]}
+{"kind":"textbox","id":"sh/36xg7qtk","slide":1,"name":"badge-text-自研-57","text":"自研","textPreview":"自研","textChars":2,"textLines":1,"bbox":[711,268,42,20]}
+{"kind":"textbox","id":"sh/25ofylcz","slide":1,"name":"module-body-Shim + Bridge-58","text":"PTY 兼容 · Session / Turn\nNDJSON → 回复","textPreview":"PTY 兼容 · Session / Turn | NDJSON → 回复","textChars":35,"textLines":2,"bbox":[592,294,162,56]}
+{"kind":"shape","id":"sh/dczyd0bm","slide":1,"name":"module-链路配置-59","bbox":[580,365,186,57]}
+{"kind":"textbox","id":"sh/cbqh4vu1","slide":1,"name":"module-title-链路配置-60","text":"链路配置","textPreview":"链路配置","textChars":4,"textLines":1,"bbox":[592,372,110,24]}
+{"kind":"shape","id":"sh/bahgbqtg","slide":1,"name":"badge-配置-61","bbox":[708,373,48,20]}
+{"kind":"textbox","id":"sh/q98z2lcv","slide":1,"name":"badge-text-配置-62","text":"配置","textPreview":"配置","textChars":2,"textLines":1,"bbox":[711,373,42,20]}
+{"kind":"textbox","id":"sh/tgfy1wb2","slide":1,"name":"module-body-链路配置-63","text":"BLE v1 · Agent / MCP","textPreview":"BLE v1 · Agent / MCP","textChars":20,"textLines":1,"bbox":[592,399,162,17]}
+{"kind":"shape","id":"sh/sfmx8bux","slide":1,"name":"module-TiDB Agent Stack · 晚晴 Agent-64","bbox":[825,160,407,103]}
+{"kind":"textbox","id":"sh/ilkv2xsf","slide":1,"name":"module-title-TiDB Agent Stack · 晚晴 Agent-65","text":"TiDB Agent Stack · 晚晴 Agent","textPreview":"TiDB Agent Stack · 晚晴 Agent","textChars":27,"textLines":1,"bbox":[837,167,301,24]}
+{"kind":"shape","id":"sh/jmtwb290","slide":1,"name":"badge-团队配置-66","bbox":[1144,168,78,20]}
+{"kind":"textbox","id":"sh/4n2d47al","slide":1,"name":"badge-text-团队配置-67","text":"团队配置","textPreview":"团队配置","textChars":4,"textLines":1,"bbox":[1147,168,72,20]}
+{"kind":"textbox","id":"sh/58vedcr6","slide":1,"name":"module-body-TiDB Agent Stack · 晚晴 Agent-68","text":"qwen3.7-plus · Session 上下文 · Scheduler\nPrompt：适老语气 / 时间解析 / 最小追问\nSkill：主链路未单独启用（Prompt + MCP）","textPreview":"qwen3.7-plus · Session 上下文 · Scheduler | Prompt：适老语气 / 时间解析 / 最小追问 | Skill：主链路未单独启用（Prompt + MCP）","textChars":93,"textLines":3,"bbox":[837,194,383,63]}
+{"kind":"shape","id":"sh/694v6hsr","slide":1,"name":"module-MCP · 5 Tools-69","bbox":[825,272,236,91]}
+{"kind":"textbox","id":"sh/radwfm9c","slide":1,"name":"module-title-MCP · 5 Tools-70","text":"MCP · 5 Tools","textPreview":"MCP · 5 Tools","textChars":13,"textLines":1,"bbox":[837,279,160,24]}
+{"kind":"shape","id":"sh/sbmd8rah","slide":1,"name":"badge-自研-71","bbox":[1003,280,48,20]}
+{"kind":"textbox","id":"sh/tcvehwr2","slide":1,"name":"badge-text-自研-72","text":"自研","textPreview":"自研","textChars":2,"textLines":1,"bbox":[1006,280,42,20]}
+{"kind":"textbox","id":"sh/md0vuds7","slide":1,"name":"module-body-MCP · 5 Tools-73","text":"create_task / note / query\ncomplete / delay","textPreview":"create_task / note / query | complete / delay","textChars":43,"textLines":2,"bbox":[837,306,212,51]}
+{"kind":"shape","id":"sh/ne9c3i9s","slide":1,"name":"module-SQLite-74","bbox":[1070,272,162,91]}
+{"kind":"textbox","id":"sh/r2hozil8","slide":1,"name":"module-title-SQLite-75","text":"SQLite","textPreview":"SQLite","textChars":6,"textLines":1,"bbox":[1082,279,92,24]}
+{"kind":"shape","id":"sh/q18n6d4n","slide":1,"name":"badge-自研-76","bbox":[1180,280,42,20]}
+{"kind":"textbox","id":"sh/doz61s3e","slide":1,"name":"badge-text-自研-77","text":"自研","textPreview":"自研","textChars":2,"textLines":1,"bbox":[1183,280,36,20]}
+{"kind":"textbox","id":"sh/cnq58nmt","slide":1,"name":"module-body-SQLite-78","text":"任务 / 备忘\n状态持久化","textPreview":"任务 / 备忘 | 状态持久化","textChars":13,"textLines":2,"bbox":[1082,306,138,51]}
+{"kind":"shape","id":"sh/zqho3ilk","slide":1,"name":"module-reminder-pusher：Scheduler → MQTT → App-79","bbox":[825,372,407,50]}
+{"kind":"textbox","id":"sh/ep8nad4z","slide":1,"name":"module-title-reminder-pusher：Scheduler → MQTT → App-80","text":"reminder-pusher：Scheduler → MQTT → App","textPreview":"reminder-pusher：Scheduler → MQTT → App","textChars":38,"textLines":1,"bbox":[837,379,331,24]}
+{"kind":"shape","id":"sh/1sj65s3a","slide":1,"name":"badge-自研-81","bbox":[1174,380,48,20]}
+{"kind":"textbox","id":"sh/0rq5cnmp","slide":1,"name":"badge-text-自研-82","text":"自研","textPreview":"自研","textChars":2,"textLines":1,"bbox":[1177,380,42,20]}
+{"kind":"shape","id":"sh/vux4ry50","slide":1,"name":"module-body-reminder-pusher：Scheduler → MQTT → App-83","bbox":[837,406,383,10]}
+{"kind":"textbox","id":"sh/utonyt4f","slide":1,"name":"output-title-84","text":"05  实际输出（回到同一台 ROROLEE-Basic）","textPreview":"05  实际输出（回到同一台 ROROLEE-Basic）","textChars":29,"textLines":1,"bbox":[50,512,460,28]}
+{"kind":"textbox","id":"sh/kz2l8z2d","slide":1,"name":"output-col-a-85","text":"声音｜ES8311 播放 16 kHz PCM TTS\n\n屏幕｜SH8501 显示 11 状态表情","textPreview":"声音｜ES8311 播放 16 kHz PCM TTS |  | 屏幕｜SH8501 显示 11 状态表情","textChars":49,"textLines":3,"bbox":[52,550,222,82]}
+{"kind":"textbox","id":"sh/l0b2143y","slide":1,"name":"output-col-b-86","text":"触觉｜连接 / 上传 / 错误 / 提醒模式\n\n后续｜SQLite 保存；Scheduler 到点触发","textPreview":"触觉｜连接 / 上传 / 错误 / 提醒模式 |  | 后续｜SQLite 保存；Scheduler 到点触发","textChars":51,"textLines":3,"bbox":[286,550,226,82]}
+{"kind":"textbox","id":"sh/ydk36pk7","slide":1,"name":"mapping-title-87","text":"关键硬件能力映射：Agent / Tool → SDK → 设备动作","textPreview":"关键硬件能力映射：Agent / Tool → SDK → 设备动作","textChars":34,"textLines":1,"bbox":[582,512,640,28]}
+{"kind":"textbox","id":"sh/jytkzuls","slide":1,"name":"map-h1-88","text":"Agent / Tool 决策","textPreview":"Agent / Tool 决策","textChars":15,"textLines":1,"bbox":[582,542,149,22]}
+{"kind":"textbox","id":"sh/wb2l4f2h","slide":1,"name":"map-h2-89","text":"SDK / 链路","textPreview":"SDK / 链路","textChars":8,"textLines":1,"bbox":[735,542,259,22]}
+{"kind":"textbox","id":"sh/xcb2xk3m","slide":1,"name":"map-h3-90","text":"具体设备动作","textPreview":"具体设备动作","textChars":6,"textLines":1,"bbox":[1000,542,224,22]}
+{"kind":"shape","id":"sh/a9032pkb","slide":1,"name":"map-rule-1-91","bbox":[582,566,642,1]}
+{"kind":"textbox","id":"sh/batkvalw","slide":1,"name":"map-r1c1-92","text":"回答 / TTS","textPreview":"回答 / TTS","textChars":8,"textLines":1,"bbox":[582,568,149,28]}
+{"kind":"textbox","id":"sh/g7mlgj2l","slide":1,"name":"map-r1c2-93","text":"App → L2CAP → on_audio_out","textPreview":"App → L2CAP → on_audio_out","textChars":26,"textLines":1,"bbox":[735,568,259,28]}
+{"kind":"textbox","id":"sh/h8vm9oj6","slide":1,"name":"map-r1c3-94","text":"ES8311 播放 + Speaking 表情","textPreview":"ES8311 播放 + Speaking 表情","textChars":23,"textLines":1,"bbox":[1000,568,224,28]}
+{"kind":"textbox","id":"sh/61c7m98r","slide":1,"name":"map-r2c1-95","text":"Scheduler 到点","textPreview":"Scheduler 到点","textChars":12,"textLines":1,"bbox":[582,598,149,28]}
+{"kind":"textbox","id":"sh/72l8ve9w","slide":1,"name":"map-r2c2-96","text":"pusher → MQTT / App → BLE","textPreview":"pusher → MQTT / App → BLE","textChars":25,"textLines":1,"bbox":[735,598,259,28]}
+{"kind":"textbox","id":"sh/s3epojqh","slide":1,"name":"map-r2c3-97","text":"TTS；0x70 → Reminder + 振动*","textPreview":"TTS；0x70 → Reminder + 振动*","textChars":25,"textLines":1,"bbox":[1000,598,224,28]}
+{"kind":"textbox","id":"sh/t4nqx4r2","slide":1,"name":"map-r3c1-98","text":"调节音量","textPreview":"调节音量","textChars":4,"textLines":1,"bbox":[582,628,149,28]}
+{"kind":"textbox","id":"sh/idc7ip8f","slide":1,"name":"map-r3c2-99","text":"0x70 on_custom","textPreview":"0x70 on_custom","textChars":14,"textLines":1,"bbox":[735,628,259,28]}
+{"kind":"textbox","id":"sh/jel8ru90","slide":1,"name":"map-r3c3-100","text":"SetVolumePercent → ES8311","textPreview":"SetVolumePercent → ES8311","textChars":25,"textLines":1,"bbox":[1000,628,224,28]}
+{"kind":"textbox","id":"sh/kfupkzql","slide":1,"name":"caveat-101","text":"* 当前 AMOLED 输出为表情动画，ShowText 仅写日志；BOOT 语音上行已实现但真机全链路待验；结构化 reminder 的 App 转发待验，普通文本/TTS 为可靠兜底。","textPreview":"* 当前 AMOLED 输出为表情动画，ShowText 仅写日志；BOOT 语音上行已实现但真机全链路待验；结构化 reminder 的 App 转发待验，普通文本/TTS 为可靠兜底。","textChars":94,"textLines":1,"bbox":[40,676,1200,24]}
+{"kind":"notes","id":"nt/pdhbmi","slide":1,"text":"[Sources]\n- /Users/nibelung/Desktop/VentureD/Agent_link/boards/rorolee-basic/rorolee_basic.cc\n- /Users/nibelung/Desktop/VentureD/Agent_link/boards/rorolee-basic/config.h\n- /Users/nibelung/Desktop/VentureD/Agent_link/main/app_main.cpp\n- /Users/nibelung/Desktop/VentureD/Agent_link/boards/common/device_protocol.cc\n- /Users/nibelung/Desktop/VentureD/Agent_link/components/agent_link/README.md\n- /Users/nibelung/Desktop/VentureD/wanqing/bridge/claude-bridge\n- /Users/nibelung/Desktop/VentureD/wanqing/bridge/reminder-pusher\n- /Users/nibelung/Desktop/VentureD/wanqing/backend/mcp_server.py\n- /Users/nibelung/Desktop/VentureD/wanqing/backend/models/database.py\n- /Users/nibelung/Desktop/VentureD/wanqing/prompts/system_prompt.md\n- /Users/nibelung/Desktop/VentureD/wanqing/docs/ble_protocol_v1.md"}

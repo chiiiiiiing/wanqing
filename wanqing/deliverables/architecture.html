@@ -219,6 +219,14 @@
           </ul>
         </div>
       </div>
+      <div class="box cat-custom">
+        <h3>reminder-pusher 守护进程 <span class="tag tag-custom">自研 · launchd 托管</span></h3>
+        <ul>
+          <li>30s 轮询 Scheduler lastFiredAt → 检测准点触发</li>
+          <li>MQTT-over-WS 发布到 App 订阅的 chat 频道（自动学习）</li>
+          <li>双格式下发：assistant（TTS 直达）+ reminder（结构化）</li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -249,7 +257,7 @@
     </tr>
     <tr>
       <td>Scheduler 触发提醒</td>
-      <td>cmd 0x70 {"type":"reminder"}</td>
+      <td>reminder-pusher → MQTT chat/{ch}/out → App → 0x70</td>
       <td><b>SetUiState</b>(Reminder) + <b>PlayHapticPattern</b></td>
       <td>提醒表情 + 振动 + TTS</td>
     </tr>
@@ -274,7 +282,22 @@
   </table>
 </div>
 
-<!-- ═══ Legend ═══ -->
+<!-- ═══ Proactive reminder closed-loop data flow ═══ -->
+<div class="mapping" style="margin-top:14px;">
+  <h4>主动提醒闭环：无需用户语音输入，Scheduler 准点触发 → 设备播报（已实测 4s 内送达）</h4>
+  <table>
+    <tr><th style="width:21%;">① 触发源</th><th style="width:21%;">② 检测</th><th style="width:26%;">③ 下行通道</th><th style="width:15%;">④ 中继</th><th>⑤ 设备输出</th></tr>
+    <tr>
+      <td>Agent Stack Scheduler<br>cron/once 准点 fire<br>（cron 按 Asia/Shanghai）</td>
+      <td>reminder-pusher 守护进程<br>30s 轮询 lastFiredAt 变化<br>首启仅补推 1h 内</td>
+      <td>MQTT-over-WS broker:8083<br>announcement/106/{device}/<br>chat/{channel}/out<br>双格式：assistant + reminder</td>
+      <td>ROROLEE App<br>订阅 chat 频道<br>→ BLE 转发</td>
+      <td><b>TTS 播报</b> + 提醒表情 + 振动</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ═══ Legend ══ -->
 <div class="legend">
   <div class="item"><span class="swatch cat-organizer"></span>主办方提供（agent_link SDK · ROROLEE App · Agent Stack 平台）</div>
   <div class="item"><span class="swatch cat-config"></span>团队配置（BLE 协议 v1 · Agent Prompt · MCP 注册 · 模型选择）</div>

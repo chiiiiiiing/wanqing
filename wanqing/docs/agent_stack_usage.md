@@ -280,6 +280,7 @@ python tests/test_intent.py --start 1 --end 100   # 工具调用口径：校验�
 | `wanqing/deliverables/architecture.pdf` | 一页架构图（已脱敏） |
 | `wanqing/deliverables/agent_stack_trace.json` | MCP `tools/list` + `create_task` 脱敏 trace |
 | `wanqing/deliverables/agent_ndjson_trace.json` | Agent Stack 完整 NDJSON 流脱敏 trace |
+| `wanqing/deliverables/reminder_e2e_trace.json` | Scheduler 准点触发 → reminder-pusher → MQTT 推送闭环脱敏 trace |
 | `wanqing/tests/test_results_*.json` | 意图识别 62/64 通过原始结果 |
 | Agent Stack Console | Agent MEMORY.md / MCP 服务器列表截图需评委自行查看（已脱敏，无凭证） |
 
