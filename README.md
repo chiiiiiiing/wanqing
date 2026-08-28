@@ -246,6 +246,8 @@ curl -X POST "$BASE/api/mcp/servers/$SERVER_ID/activate" \
 
 `install.sh` 会渲染 `bridge/ai.rorolee.family-api.plist` 并注册 launchd，FastAPI :8100 常驻。访问 token 首次请求时自动生成于 `~/.rorolee/family.token`（0600），也可用环境变量 `FAMILY_TOKEN` 指定；无互动告警阈值 `FAMILY_ALERT_HOURS` 默认 24h。
 
+**家人留言入口（浏览器）**：`http://<主机>:8100/family/web?token=<token>` —— 移动端适配的家人门户，可留言下发到设备、查看日报/告警/留言已读状态（30s 自动刷新）。界面截图：[`wanqing/deliverables/family_web_screenshot.png`](wanqing/deliverables/family_web_screenshot.png)。链接即钥匙，勿外泄。
+
 ```bash
 TOK=$(cat ~/.rorolee/family.token)
 

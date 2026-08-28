@@ -19,6 +19,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(__file__)), ".."
 
 from fastapi import FastAPI, HTTPException, Query, Header
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 import uvicorn
 
@@ -415,6 +416,130 @@ def family_messages(
     require_family(x_family_token, token)
     msgs = query_family_messages(limit)
     return {"messages": msgs, "count": len(msgs)}
+
+
+FAMILY_WEB_HTML = """<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>晚晴 · 家人关注</title>
+<style>
+  :root { --orange:#ea580c; --green:#059669; --red:#dc2626; --bg:#faf7f2; }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; }
+  body { background:var(--bg); color:#1f2937; padding:16px; max-width:640px; margin:0 auto; }
+  h1 { font-size:20px; text-align:center; margin:8px 0 2px; }
+  .sub { text-align:center; color:#6b7280; font-size:12px; margin-bottom:14px; }
+  .card { background:#fff; border-radius:14px; padding:14px 16px; margin-bottom:12px; box-shadow:0 1px 4px rgba(0,0,0,.06); }
+  .card h2 { font-size:14px; color:#374151; margin-bottom:10px; }
+  .alert { border-left:4px solid var(--red); background:#fef2f2; }
+  .ok { border-left:4px solid var(--green); background:#f0fdf4; }
+  .alert .t, .ok .t { font-size:14px; font-weight:600; }
+  .row { display:flex; justify-content:space-between; font-size:13px; padding:4px 0; color:#4b5563; }
+  .row b { color:#111827; }
+  input,textarea,button { width:100%; border:1px solid #d1d5db; border-radius:10px; padding:10px; font-size:14px; margin-bottom:8px; }
+  button { background:var(--orange); color:#fff; border:none; font-weight:600; }
+  button:disabled { opacity:.6; }
+  .msg { border-bottom:1px solid #f3f4f6; padding:8px 0; font-size:13px; }
+  .msg .meta { color:#6b7280; font-size:11px; display:flex; justify-content:space-between; }
+  .badge { border-radius:8px; padding:1px 6px; font-size:10px; }
+  .unread { background:#fef3c7; color:#92400e; }
+  .read { background:#e5e7eb; color:#6b7280; }
+  .chip { display:inline-block; background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; border-radius:10px; padding:2px 8px; font-size:11px; margin:2px 4px 2px 0; }
+  #toast { position:fixed; left:50%; bottom:24px; transform:translateX(-50%); background:#111827; color:#fff; border-radius:10px; padding:8px 16px; font-size:13px; opacity:0; transition:opacity .3s; pointer-events:none; }
+</style>
+</head>
+<body>
+<h1>晚晴 · 家人关注</h1>
+<div class="sub">妈妈今天的状态，一目了然</div>
+
+<div class="card" id="alertCard"></div>
+
+<div class="card">
+  <h2>💌 给妈妈留言</h2>
+  <input id="sender" placeholder="你的名字（如：女儿）" value="女儿">
+  <textarea id="text" rows="3" placeholder="想对妈妈说的话…"></textarea>
+  <button id="send">发送留言到设备</button>
+</div>
+
+<div class="card">
+  <h2>📋 今日动态</h2>
+  <div id="today"></div>
+</div>
+
+<div class="card">
+  <h2>🗒️ 留言记录</h2>
+  <div id="msgs"></div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const tok = new URLSearchParams(location.search).get('token') || '';
+const H = {'X-Family-Token': tok, 'Content-Type':'application/json'};
+async function api(path, opt) {
+  const r = await fetch(path, Object.assign({headers:H}, opt));
+  if (r.status === 401) { toast('token 无效'); throw new Error('401'); }
+  return r.json();
+}
+function toast(t) { const el = document.getElementById('toast'); el.textContent = t; el.style.opacity = 1; setTimeout(()=>el.style.opacity=0, 2200); }
+function esc(s) { return (s||'').replace(/[<>&"]/g, c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c])); }
+
+async function refresh() {
+  const rep = await api('/family/report');
+  const e = rep.elder;
+  const ac = document.getElementById('alertCard');
+  if (e.no_interaction_alert) {
+    ac.className = 'card alert';
+    ac.innerHTML = '<div class="t">⚠️ 超过 ' + e.alert_threshold_hours + ' 小时没有互动</div>' +
+      '<div class="row"><span>最近互动</span><b>' + (e.hours_since_interaction!=null? e.hours_since_interaction+' 小时前':'未知') + '</b></div>' +
+      '<div class="row"><span>建议</span><b>打个电话问候一下</b></div>';
+  } else {
+    ac.className = 'card ok';
+    ac.innerHTML = '<div class="t">✅ 互动正常</div>' +
+      '<div class="row"><span>最近互动</span><b>' + (e.hours_since_interaction!=null? e.hours_since_interaction+' 小时前':'暂无记录') + '</b></div>' +
+      '<div class="row"><span>手机 App</span><b>' + (e.app_online? '在线':'离线') + '</b></div>';
+  }
+  const t = rep.today;
+  const pend = t.tasks_pending.map(x=>'<span class="chip">'+esc(x.title)+'</span>').join('') || '<span class="chip">暂无待办</span>';
+  const pushed = t.reminders_pushed.map(x=>'<div class="row"><span>⏰ '+esc(x.title)+'</span><b>'+x.time.slice(11)+'</b></div>').join('') || '<div class="row"><span>今日已推送提醒</span><b>0 条</b></div>';
+  document.getElementById('today').innerHTML =
+    '<div class="row"><span>待办事项</span></div><div style="margin-bottom:8px">'+pend+'</div>' +
+    '<div class="row"><span>今日已完成</span><b>'+t.tasks_completed.length+' 件</b></div>' + pushed;
+  document.getElementById('msgs').innerHTML = t.family_messages.map(m =>
+    '<div class="msg"><div class="meta"><span>'+esc(m.sender)+' · '+m.created_at.slice(5,16).replace('T',' ')+'</span>' +
+    '<span class="badge '+(m.read_at?'read':'unread')+'">'+(m.read_at?'已读':'未读')+'</span></div>' +
+    '<div>'+esc(m.text)+'</div></div>'
+  ).join('') || '<div class="row"><span>暂无留言</span></div>';
+}
+
+document.getElementById('send').onclick = async () => {
+  const sender = document.getElementById('sender').value.trim();
+  const text = document.getElementById('text').value.trim();
+  if (!sender || !text) return toast('请填写名字和留言');
+  const btn = document.getElementById('send'); btn.disabled = true;
+  try {
+    const r = await api('/family/message', {method:'POST', body: JSON.stringify({sender, text})});
+    toast(r.pushed ? '已发送，设备将播报' : '已保存（设备暂离线）');
+    document.getElementById('text').value = '';
+    refresh();
+  } catch(e) { toast('发送失败'); }
+  btn.disabled = false;
+};
+
+refresh();
+setInterval(refresh, 30000);
+</script>
+</body>
+</html>
+"""
+
+
+@app.get("/family/web", response_class=HTMLResponse)
+def family_web():
+    """家人关注网页入口：浏览器打开 /family/web?token=xxx 即可留言/看日报。
+    链接即钥匙（token 在 URL 中），勿外泄。"""
+    return FAMILY_WEB_HTML
 
 
 if __name__ == "__main__":

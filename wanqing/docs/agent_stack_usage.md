@@ -137,6 +137,7 @@ agent_link SDK（L2CAP TTS / GATT 事件 / GPIO）
 
 - **老人侧（Agent 能力）**：MCP 工具 `query_family_messages`——老人说“有留言吗/女儿说什么了”时，Agent 调工具念出留言并标记已读。
 - **家人侧（REST :8100，token 鉴权）**：
+  - `GET /family/web?token=…`：家人网页门户（留言表单 + 日报/告警 + 已读状态，30s 刷新）；
   - `GET /family/report`：今日任务/今日已推提醒/最近互动时间/超 24h 无互动告警/App 在线状态；
   - `POST /family/message`：留言落库 + MQTT 双格式下发（`assistant` 保 TTS 送达 + `family_message` 触发爱心表情/振动）；
   - `GET /family/messages`：留言列表与已读状态。
