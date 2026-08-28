@@ -1,19 +1,35 @@
 #!/usr/bin/env python3
 """
 晚晴 — 意图解析自动化测试
-通过 Agent Stack API 批量测试意图识别能力
+通过 Agent Stack API 批量测试意图识别能力。
+评测口径：校验 Agent 实际调用的工具（tool_calls）及参数，
+而非要求模型输出结构化意图标签（与线上对话式体验一致）。
+
+凭证从环境变量读取（参见 ../.env.example），禁止硬编码：
+  export AGENT_STACK_USER_API_KEY=...
 """
 
 import json
+import os
 import time
 from datetime import datetime
 from typing import Optional
 
-# Agent Stack API 配置
-BASE_URL = "https://ventured-agent-stack.pingcap.cn"
-PROJECT_ID = "proj_6c440f8173104d06b005d9c552bfe774"
-AGENT_ID = "agent_cc0aa5c6ff600adf4d6c31718e3fc9bb"
-API_KEY = "ag9_uak_b4033a4c104043f7befd33a9aa47afcc_Uf80W8EBjFdAqD2YLeGgADEYOXgF37mKvIaVJS4eZ3g"
+# Agent Stack API 配置（凭证一律走环境变量）
+BASE_URL = os.environ.get("AGENT_STACK_BASE_URL", "https://ventured-agent-stack.pingcap.cn")
+PROJECT_ID = os.environ.get("AGENT_STACK_PROJECT_ID", "")
+AGENT_ID = os.environ.get("AGENT_STACK_AGENT_ID", "")
+API_KEY = os.environ.get("AGENT_STACK_USER_API_KEY", "")
+
+# 意图 → 期望工具名映射（评测口径：看真实工具调用，不看意图标签）
+INTENT_TOOL_MAP = {
+    "CREATE_TASK": "create_task",
+    "CREATE_NOTE": "create_note",
+    "QUERY_TASK": "query_tasks",
+    "COMPLETE_TASK": "complete_task",
+    "DELAY_TASK": "delay_task",
+    "GENERAL_QA": None,  # 无工具调用，直接回复即算正确
+}
 
 def parse_test_cases(file_path: str) -> list:
     """解析测试用例文件"""
@@ -116,6 +132,31 @@ def create_session() -> str:
             pass
     return ''
 
+def _check_params(expected_params: str, actual: dict):
+    """校验工具参数是否包含期望的关键词（宽松匹配）。
+    期望格式如: title=买菜, due_time=明天15:00, category=生活
+    目前仅对 title=/content= 关键词做子串校验，时间/分类记录为提示不判错。
+    """
+    if not expected_params:
+        return True, ""
+    for kv in expected_params.split(','):
+        kv = kv.strip()
+        if '=' not in kv:
+            continue
+        key, val = kv.split('=', 1)
+        key, val = key.strip(), val.strip()
+        if key in ('title', 'content', 'task_ref'):
+            hay = ' '.join(str(v) for v in actual.values())
+            # 期望值取核心名词：去掉 "明天/后天/今天" 等时间前缀后做子串匹配
+            core = val
+            for prefix in ('明天', '后天', '今天', '本周', '下周'):
+                core = core.replace(prefix, '')
+            core = core.strip()
+            if core and core not in hay:
+                return False, f"参数 {key} 未包含 '{val}'（实际: {hay[:60]}）"
+    return True, f" | 参数: {json.dumps(actual, ensure_ascii=False)[:80]}"
+
+
 def run_tests(test_file: str, start: int = 1, end: int = 100, delay: float = 1.0):
     """运行测试"""
     print(f"=" * 60)
@@ -165,26 +206,32 @@ def run_tests(test_file: str, start: int = 1, end: int = 100, delay: float = 1.0
             if response['error']:
                 print(f"     ❌ 错误: {response['error']}")
                 results['errors'] += 1
-            elif response['tool_calls']:
-                # 提取意图
-                tool_names = [tc['tool'] for tc in response['tool_calls']]
-                detected = ', '.join(tool_names)
-                
-                # 简单匹配
-                if expected in detected or detected in expected:
-                    print(f"     ✅ 检测: {detected}")
-                    results['correct'] += 1
-                else:
-                    print(f"     ⚠️  检测: {detected} (期望: {expected})")
-                    results['incorrect'] += 1
             else:
-                # 没有工具调用，可能是 GENERAL_QA
-                reply_preview = response['reply'][:50] + "..." if len(response['reply']) > 50 else response['reply']
-                if expected == "GENERAL_QA":
-                    print(f"     ✅ 回复: {reply_preview}")
-                    results['correct'] += 1
+                expected_tool = INTENT_TOOL_MAP.get(expected)
+                detected_tools = [tc['tool'] for tc in response['tool_calls'] if tc.get('tool')]
+
+                if expected_tool is None:
+                    # GENERAL_QA：不产生工具调用，直接回复即算正确
+                    reply_preview = response['reply'][:50] + "..." if len(response['reply']) > 50 else response['reply']
+                    if not detected_tools and response['reply']:
+                        print(f"     ✅ 回复: {reply_preview}")
+                        results['correct'] += 1
+                    else:
+                        print(f"     ⚠️  期望直接回复，实际工具调用: {detected_tools or '(空回复)'}")
+                        results['incorrect'] += 1
+                elif expected_tool in detected_tools:
+                    # 工具命中，再校验关键参数（期望中的 title=/content= 关键词）
+                    tc = next(t for t in response['tool_calls'] if t.get('tool') == expected_tool)
+                    param_ok, param_note = _check_params(case['expected_params'], tc.get('params', {}))
+                    if param_ok:
+                        print(f"     ✅ 工具: {expected_tool}{param_note}")
+                        results['correct'] += 1
+                    else:
+                        print(f"     ⚠️  工具正确但参数不符: {param_note}")
+                        results['incorrect'] += 1
                 else:
-                    print(f"     ⚠️  回复: {reply_preview} (期望: {expected})")
+                    reply_preview = response['reply'][:50] if response['reply'] else '(无回复)'
+                    print(f"     ⚠️  期望工具 {expected_tool}，实际: {detected_tools or '无调用'} | {reply_preview}")
                     results['incorrect'] += 1
                     
         except Exception as e:
@@ -225,5 +272,13 @@ if __name__ == "__main__":
     parser.add_argument('--file', default='intent_test_cases.txt', help='测试用例文件')
     
     args = parser.parse_args()
-    
+
+    missing = [k for k, v in {
+        "AGENT_STACK_USER_API_KEY": API_KEY,
+        "AGENT_STACK_PROJECT_ID": PROJECT_ID,
+        "AGENT_STACK_AGENT_ID": AGENT_ID,
+    }.items() if not v]
+    if missing:
+        raise SystemExit(f"缺少环境变量: {', '.join(missing)}（参见 ../.env.example）")
+
     run_tests(args.file, args.start, args.end, args.delay)

@@ -19,12 +19,15 @@ import argparse
 import requests
 from datetime import datetime, timezone, timedelta
 
-# Config
-BASE_URL = "https://ventured-agent-stack.pingcap.cn"
-API_KEY = os.environ.get("AGENT_STACK_KEY", "ag9_uak_b4033a4c104043f7befd33a9aa47afcc_Uf80W8EBjFdAqD2YLeGgADEYOXgF37mKvIaVJS4eZ3g")
-PROJECT_ID = "proj_6c440f8173104d06b005d9c552bfe774"
-AGENT_ID = "agent_cc0aa5c6ff600adf4d6c31718e3fc9bb"
+# Config（凭证一律走环境变量，参见 ../.env.example）
+BASE_URL = os.environ.get("AGENT_STACK_BASE_URL", "https://ventured-agent-stack.pingcap.cn")
+API_KEY = os.environ.get("AGENT_STACK_USER_API_KEY", "")
+PROJECT_ID = os.environ.get("AGENT_STACK_PROJECT_ID", "")
+AGENT_ID = os.environ.get("AGENT_STACK_AGENT_ID", "")
 MCP_URL = os.environ.get("MCP_URL", "http://localhost:8200/mcp")
+
+if not API_KEY:
+    raise SystemExit("缺少环境变量 AGENT_STACK_USER_API_KEY（参见 ../.env.example）")
 
 CST = timezone(timedelta(hours=8))
 HEADERS = {

@@ -270,9 +270,13 @@ curl -X POST "$BASE/api/mcp/servers/$SERVER_ID/activate" \
 
 ```bash
 cd wanqing && source .venv/bin/activate
-python tests/demo_e2e.py --skip-agent --skip-scheduler   # 后端 CRUD + 协议
-python tests/run_intent_tests.py                          # 100 条意图用例
+export $(grep -v '^#' .env.local | xargs)   # 或手动 export AGENT_STACK_* 变量（参见 .env.example）
+python tests/demo_e2e.py --skip-agent --skip-scheduler   # 后端 CRUD + MCP 协议
+python tests/test_intent.py --start 1 --end 100          # 100 条意图用例（工具调用口径）
 ```
+
+> 评测口径说明：`test_intent.py` 校验 Agent 实际发起的工具调用（tool_calls）与关键参数，
+> 而非要求模型输出结构化意图标签——与线上对话式体验一致。凭证一律读环境变量，仓库内无硬编码。
 
 意图测试结果：**62/64 通过（96.9%）**，明细见 [`wanqing/tests/test_results_*.json`](wanqing/tests/)。
 

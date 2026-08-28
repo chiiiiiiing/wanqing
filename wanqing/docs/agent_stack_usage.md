@@ -215,7 +215,8 @@ Agent Stack 返回的 NDJSON 事件流：
 
 ```bash
 cd wanqing && source .venv/bin/activate
-python tests/run_intent_tests.py
+export AGENT_STACK_USER_API_KEY=...  AGENT_STACK_PROJECT_ID=...  AGENT_STACK_AGENT_ID=...   # 参见 ../.env.example，仓库内无硬编码凭证
+python tests/test_intent.py --start 1 --end 100   # 工具调用口径：校验实际 tool_calls + 参数
 ```
 
 结果：**62/64 通过，96.9%**
