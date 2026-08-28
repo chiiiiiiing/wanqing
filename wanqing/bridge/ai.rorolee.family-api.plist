@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  family-api launchd 配置模板（家人关注 REST :8100）
+  部署：install.sh 用 sed 替换 __PYTHON__ / __REPO__ / __HOME__ 后
+  写入 ~/Library/LaunchAgents/ai.rorolee.family-api.plist 并 launchctl load。
+  日志：~/.roro/family-api.log
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>ai.rorolee.family-api</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>__PYTHON__</string>
+        <string>__REPO__/backend/api/server.py</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>__REPO__/backend</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>__HOME__/.roro/family-api.log</string>
+    <key>StandardErrorPath</key>
+    <string>__HOME__/.roro/family-api.log</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>HOME</key>
+        <string>__HOME__</string>
+        <key>PATH</key>
+        <string>__HOME__/.rorolee/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+</dict>
+</plist>

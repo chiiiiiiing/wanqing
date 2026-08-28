@@ -75,10 +75,20 @@ def init_db():
                 created_at TEXT NOT NULL DEFAULT (datetime('now'))
             );
 
+            CREATE TABLE IF NOT EXISTS family_messages (
+                id TEXT PRIMARY KEY,
+                sender TEXT NOT NULL,
+                text TEXT NOT NULL,
+                status TEXT NOT NULL DEFAULT 'pushed',
+                created_at TEXT NOT NULL,
+                read_at TEXT
+            );
+
             CREATE INDEX IF NOT EXISTS idx_tasks_user_status ON tasks(user_id, status);
             CREATE INDEX IF NOT EXISTS idx_tasks_due_time ON tasks(due_time);
             CREATE INDEX IF NOT EXISTS idx_notes_user ON notes(user_id);
             CREATE INDEX IF NOT EXISTS idx_reminders_task ON reminders(task_id);
+            CREATE INDEX IF NOT EXISTS idx_family_messages_created ON family_messages(created_at);
         """)
 
 
@@ -228,6 +238,44 @@ def get_pending_reminders(until: Optional[str] = None) -> List[dict]:
             (until,)
         ).fetchall()
         return [dict(r) for r in rows]
+
+
+# === Family Message Operations ===
+
+def create_family_message(sender: str, text: str) -> dict:
+    msg_id = generate_id("fam")
+    now = datetime.now(CST).isoformat()
+    with db() as conn:
+        conn.execute(
+            "INSERT INTO family_messages (id, sender, text, status, created_at) VALUES (?, ?, ?, 'pushed', ?)",
+            (msg_id, sender, text, now)
+        )
+    return get_family_message(msg_id)
+
+
+def get_family_message(msg_id: str) -> Optional[dict]:
+    with db() as conn:
+        row = conn.execute("SELECT * FROM family_messages WHERE id = ?", (msg_id,)).fetchone()
+        return dict(row) if row else None
+
+
+def query_family_messages(limit: int = 10, unread_only: bool = False) -> List[dict]:
+    with db() as conn:
+        sql = "SELECT * FROM family_messages"
+        if unread_only:
+            sql += " WHERE read_at IS NULL"
+        sql += " ORDER BY created_at DESC LIMIT ?"
+        rows = conn.execute(sql, (limit,)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def mark_family_messages_read() -> int:
+    now = datetime.now(CST).isoformat()
+    with db() as conn:
+        cur = conn.execute(
+            "UPDATE family_messages SET read_at = ? WHERE read_at IS NULL", (now,)
+        )
+        return cur.rowcount
 
 
 if __name__ == "__main__":

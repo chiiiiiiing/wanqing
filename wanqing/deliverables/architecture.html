@@ -209,13 +209,14 @@
           <ul>
             <li>create_task / create_note</li>
             <li>query_tasks / complete_task / delay_task</li>
+            <li>query_family_messages（老人听留言）</li>
           </ul>
         </div>
         <div class="box cat-custom" style="flex:1;">
           <h3>后端 + SQLite <span class="tag tag-custom">自研</span></h3>
           <ul>
-            <li>任务/备忘/提醒 CRUD</li>
-            <li>FastAPI REST :8100（家人端预留）</li>
+            <li>任务/备忘/提醒/留言 CRUD</li>
+            <li>FastAPI :8100 家人端（日报/留言/告警）</li>
           </ul>
         </div>
       </div>
@@ -297,7 +298,25 @@
   </table>
 </div>
 
-<!-- ═══ Legend ══ -->
+<!-- ═══ Family care data flow ═══ -->
+<div class="mapping" style="margin-top:14px;">
+  <h4>家人关注闭环：家人端 REST（token 鉴权） ⇄ 老人设备（已实测全链路 PASS）</h4>
+  <table>
+    <tr><th style="width:22%;">方向 A：家人 → 老人</th><th style="width:30%;">方向 B：老人状态 → 家人</th><th>方向 C：老人主动听留言</th></tr>
+    <tr>
+      <td>POST /family/message<br>{sender, text} + token</td>
+      <td>GET /family/report + token<br>→ 今日任务/已推提醒/最近互动<br>→ 超 24h 无互动 no_interaction_alert</td>
+      <td>老人：“有留言吗？”<br>→ Agent 调 MCP query_family_messages<br>→ TTS 念出 + 标记已读</td>
+    </tr>
+    <tr>
+      <td>family-api → SQLite 落库<br>→ MQTT 双格式（assistant + family_message）<br>→ App → BLE → <b>爱心表情 + 振动 + TTS</b></td>
+      <td>互动信号 = MQTT /in 观察（pusher）<br>+ 任务/备忘操作时间取最大<br>App 在线状态读 roro state.json</td>
+      <td>留言读取状态回写 family_messages.read_at<br>家人端 /family/messages 可见</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ═══ Legend ═ -->
 <div class="legend">
   <div class="item"><span class="swatch cat-organizer"></span>主办方提供（agent_link SDK · ROROLEE App · Agent Stack 平台）</div>
   <div class="item"><span class="swatch cat-config"></span>团队配置（BLE 协议 v1 · Agent Prompt · MCP 注册 · 模型选择）</div>

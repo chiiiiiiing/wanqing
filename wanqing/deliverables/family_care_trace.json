@@ -1,0 +1,65 @@
+{
+  "trace": "family_care_e2e",
+  "generated_at": "2026-08-28T12:12:00+08:00",
+  "description": "家人关注 MVP 端到端验证：家人日报 / 无互动告警 / 家人留言下发 / 老人侧 MCP 查询留言。凭证（family token）已脱敏。",
+  "service": {
+    "endpoint": "http://localhost:8100/family/*",
+    "auth": "X-Family-Token（~/.rorolee/family.token，0600，首次请求自动生成）",
+    "managed_by": "launchd ai.rorolee.family-api（KeepAlive + RunAtLoad）"
+  },
+  "steps": [
+    {
+      "step": 1,
+      "name": "家人日报 + 无互动告警",
+      "request": "GET /family/report  (X-Family-Token: ***)",
+      "response": {
+        "elder": {
+          "last_interaction_at": "2026-08-28T09:13:07+08:00",
+          "hours_since_interaction": 2.9,
+          "no_interaction_alert": false,
+          "alert_threshold_hours": 24.0,
+          "app_online": false,
+          "device_channel": "claude-nibelung-****"
+        },
+        "today": {
+          "tasks_pending_count": 4,
+          "tasks_completed_count": 3,
+          "reminders_pushed": [
+            {"time": "2026-08-28 11:46:30", "title": "闭环验证2：吃降压药", "text": "该吃降压药啦，吃完记得喝口水～"}
+          ]
+        }
+      },
+      "verdict": "PASS：互动时间/告警阈值/今日任务/今日已推送提醒 全部正确聚合"
+    },
+    {
+      "step": 2,
+      "name": "家人留言下发到设备",
+      "request": "POST /family/message  {\"sender\":\"女儿\",\"text\":\"妈，我周末回来陪你吃饭，记得买条鱼～\"}",
+      "response": {"success": true, "message_id": "fam_daa5af8e76cd", "pushed": true},
+      "mqtt_publish": [
+        "announcement/106/d-c0065571f81bbe36/chat/{channel}/out  {\"type\":\"assistant\",\"text\":\"💌 女儿的留言：…\"}",
+        "同 topic  {\"type\":\"family_message\",\"sender\":\"女儿\",\"text\":\"…\"}"
+      ],
+      "verdict": "PASS：落库 + MQTT 双格式推送成功（App 在线时设备 TTS 播报 + 爱心表情 + 振动）"
+    },
+    {
+      "step": 3,
+      "name": "老人侧 Agent 查询留言（MCP 工具）",
+      "request": "MCP tools/call query_family_messages(limit=3)",
+      "response": "家人的留言：\n女儿（8月28日 12:09）：妈，我周末回来陪你吃饭，记得买条鱼～",
+      "verdict": "PASS：工具返回可读文本并自动标记已读"
+    },
+    {
+      "step": 4,
+      "name": "鉴权负向验证",
+      "request": "GET /family/report（无 token）",
+      "response": "HTTP 401 invalid family token",
+      "verdict": "PASS"
+    }
+  ],
+  "notes": [
+    "无互动告警阈值 FAMILY_ALERT_HOURS 默认 24h，可通过环境变量调整；告警体现在 report.elder.no_interaction_alert。",
+    "互动信号来源：reminder-pusher 观察 MQTT /in（老人语音上行）+ 任务/备忘操作时间，取最大值。",
+    "App 当前离线（app_online=false），MQTT 消息已到 broker，待 App 上线后设备端真机复现 TTS。"
+  ]
+}

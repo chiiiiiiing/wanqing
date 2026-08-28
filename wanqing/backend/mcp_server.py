@@ -9,6 +9,7 @@ Tools:
   - query_tasks: Query task list
   - complete_task: Mark a task as done
   - delay_task: Postpone a task
+  - query_family_messages: Read family messages aloud to the elder
 """
 import sys
 import os
@@ -32,6 +33,8 @@ from models.database import (
     create_reminder as db_create_reminder,
     get_pending_reminders as db_get_pending_reminders,
     fire_reminder as db_fire_reminder,
+    query_family_messages as db_query_family_messages,
+    mark_family_messages_read as db_mark_family_read,
 )
 
 CST = timezone(timedelta(hours=8))
@@ -223,6 +226,28 @@ def delay_task(title_keyword: str, minutes: int = 30, new_due_time: str = "") ->
         )
     except Exception as e:
         return f"❌ 延期任务失败：{e}"
+
+
+@mcp.tool()
+def query_family_messages(limit: int = 5) -> str:
+    """查询家人给老人的留言。
+    当老人说"有留言吗"、"女儿说什么了"、"家人消息"时调用。
+
+    Args:
+        limit: 返回的留言条数，默认5
+    """
+    try:
+        msgs = db_query_family_messages(limit)
+        if not msgs:
+            return "目前没有家人留言。想他们了可以说“给女儿带个话”。"
+        db_mark_family_read()
+        lines = []
+        for m in msgs:
+            when = format_time(m.get("created_at"))
+            lines.append(f"{m['sender']}（{when}）：{m['text']}")
+        return "家人的留言：\n" + "\n".join(lines)
+    except Exception as e:
+        return f"❌ 查询留言失败：{e}"
 
 
 # ── Entry Point ──────────────────────────────────────────────

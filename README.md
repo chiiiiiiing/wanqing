@@ -8,7 +8,7 @@
 
 | 交付物 | 文件位置 |
 |--------|----------|
-| **四、一页架构图** | [`wanqing/deliverables/architecture.pdf`](wanqing/deliverables/architecture.pdf)（附 PNG、HTML 源） |
+| **四、一页架构图** | [`wanqing/deliverables/architecture_verified.pdf`](wanqing/deliverables/architecture_verified.pdf)（附可编辑 PPTX 与高清 PNG） |
 | **五、代码与运行说明** | 本 README.md |
 | **六、Agent Stack 使用说明** | [`wanqing/docs/agent_stack_usage.md`](wanqing/docs/agent_stack_usage.md) |
 
@@ -39,7 +39,7 @@
                                                      └─────────────────┘
 ```
 
-**一页架构图**：[`wanqing/deliverables/architecture.pdf`](wanqing/deliverables/architecture.pdf)（同目录提供 PNG/HTML 源文件）
+**一页架构图**：[`wanqing/deliverables/architecture_verified.pdf`](wanqing/deliverables/architecture_verified.pdf)（同目录提供可编辑 PPTX 与高清 PNG）
 
 **Agent Stack 使用说明**：[`wanqing/docs/agent_stack_usage.md`](wanqing/docs/agent_stack_usage.md)
 
@@ -117,13 +117,14 @@ VentureD/
 │   ├── backend/
 │   │   ├── mcp_server.py           ←   MCP Server :8200，5 个工具
 │   │   ├── models/database.py      ←   SQLite 数据层（任务/备忘/提醒）
-│   │   └── api/server.py           ←   FastAPI REST :8100
+│   │   └── api/server.py           ←   FastAPI REST :8100（家人端：日报/留言/告警）
 │   ├── bridge/
 │   │   ├── claude-bridge           ←   ★ roro ↔ Agent Stack 协议桥（Python, stdlib only）
 │   │   ├── claude-shim             ←   PATH shim：重启 daemon + 注入 bridge
 │   │   ├── reminder-pusher         ←   ★ 主动提醒守护进程：Scheduler 触发 → MQTT 推送（launchd 托管）
 │   │   ├── ai.rorolee.reminder-pusher.plist ← launchd 配置（入库版）
-│   │   └── install.sh              ←   一键部署到 ~/.rorolee/bin/（含 pusher 注册）
+│   │   ├── ai.rorolee.family-api.plist ← 家人端 REST 服务 launchd 模板（install.sh 渲染）
+│   │   └── install.sh              ←   一键部署到 ~/.rorolee/bin/（含 pusher/family-api 注册）
 │   ├── tools/wanqing-tools/        ←   Custom Tool 包（manifest.json + index.mjs，备选方案）
 │   ├── docs/
 │   │   ├── ble_protocol_v1.md      ←   BLE 应用层协议 v1.0（0x70/0x64 全量定义）
@@ -194,8 +195,8 @@ ssh -T -o StrictHostKeyChecking=no -R 80:localhost:8200 serveo.net
 
 # ③ 在 Agent Stack 注册 MCP（一次性，见 §7.2 的 curl 命令）
 
-# ④ 部署桥接 + 提醒守护进程（自动重启 roro daemon 并连接 Agent Stack）
-bash bridge/install.sh   # 安装 claude-bridge/reminder-pusher，注册 launchd 自启
+# ④ 部署桥接 + 提醒守护进程 + 家人端服务（自动重启 roro daemon 并连接 Agent Stack）
+bash bridge/install.sh   # 安装 claude-bridge/reminder-pusher，注册 launchd 自启（含 family-api :8100）
 claude
 # 输出 [bridge] TiDB Agent Stack — session xxxx 即就绪
 # reminder-pusher 由 launchd 托管：开机自启、崩溃自重启，日志 ~/.roro/reminder-pusher.log
@@ -240,6 +241,26 @@ curl -X POST "$BASE/api/mcp/servers/$SERVER_ID/activate" \
 
 `wanqing/tools/wanqing-tools/` 提供等价的 Custom Tool 包（`manifest.json` + `index.mjs`，经 `BACKEND_URL` 凭证调用 REST API）。当前作品走 MCP 方案；Custom Tool 保留作为 Agent Stack 功能验证与降级路径。
 
+### 7.4 家人端（家人关注 MVP）
+
+`install.sh` 会渲染 `bridge/ai.rorolee.family-api.plist` 并注册 launchd，FastAPI :8100 常驻。访问 token 首次请求时自动生成于 `~/.rorolee/family.token`（0600），也可用环境变量 `FAMILY_TOKEN` 指定；无互动告警阈值 `FAMILY_ALERT_HOURS` 默认 24h。
+
+```bash
+TOK=$(cat ~/.rorolee/family.token)
+
+# 家人日报：今日任务/已推提醒/最近互动/无互动告警/App 在线状态
+curl -s -H "X-Family-Token: $TOK" localhost:8100/family/report
+
+# 家人留言 → 设备 TTS 播报 + 爱心表情 + 振动（MQTT 双格式下发）
+curl -s -X POST -H "X-Family-Token: $TOK" -H "Content-Type: application/json" \
+  -d '{"sender":"女儿","text":"妈，我周末回来陪你吃饭"}' localhost:8100/family/message
+
+# 留言列表（含已读状态）
+curl -s -H "X-Family-Token: $TOK" localhost:8100/family/messages
+```
+
+老人侧闭环：老人说“有留言吗？”→ Agent 调 MCP `query_family_messages` → TTS 念出并标记已读。验证 trace：[`wanqing/deliverables/family_care_trace.json`](wanqing/deliverables/family_care_trace.json)。
+
 ---
 
 ## 8. 最短验证路径（一条完整闭环）
@@ -266,7 +287,7 @@ curl -X POST "$BASE/api/mcp/servers/$SERVER_ID/activate" \
 | TTS 下行播放 | 已实现，真机验证通过 | 16kHz PCM L2CAP 流 + 静音尾判停 |
 | 唤醒词"小晚晴" | 协议已定义（0x64 wakeup 事件） | 板端依赖乐鑫唤醒词方案，未集成 |
 | 摄像头 / SD 卡录音 | 未启用 | 引脚与驱动预留，非 MVP 范围 |
-| 家人消息（family_message） | 协议+板端动作已完成 | 家人侧 App UI 未开发（REST :8100 已预留） |
+| 家人消息（family_message） | **家人关注 MVP 已实现** | 家人端 REST :8100（日报/留言/告警，§7.4）；设备端 TTS 待 App 上线真机复现 |
 | serveo 隧道稳定性 | 可用但偶发过期 | 生产建议换 cloudflared / 自建 frp |
 | 意图识别 | 96.9%（62/64） | 2 个失败用例为无上下文指代（"好了好了做完了"），多轮 Session 下可解 |
 | SQLite 单用户 | 当前 `default_user` | 多用户需 App 传 device_id（后端已支持 user_id 字段） |

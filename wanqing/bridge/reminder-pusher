@@ -11,24 +11,25 @@ Agent Stack Scheduler 到点触发后，提醒只停留在云端 session 里。
      App 收到后经 BLE 下发给设备（TTS + 提醒 UI + 振动）。
 
 同时订阅 chat/# 通配符，记录 App 最近使用的 channel，
-保证主动推送落在 App 正在监听的 channel 上。
+保证主动推送落在 App 正在监听的 channel 上；
+并记录老人最近互动时间（/in 流量）供家人关注服务使用。
 
-零第三方依赖（复用 bridge-mqtt-responder 的 MQTT-over-WebSocket 实现）。
+零第三方依赖（MQTT-over-WebSocket 实现见同目录 mqttws.py）。
 日志: ~/.roro/reminder-pusher.log（launchd 重定向）
 状态: ~/.roro/reminder-pusher-state.json
 """
 
-import base64
 import json
 import os
 import signal
-import socket
-import struct
 import sys
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from mqttws import MQTTWebSocket
 
 # ── Config ───────────────────────────────────────────────────────
 RORO_HOME = os.path.expanduser("~/.rorolee")
@@ -154,155 +155,6 @@ def extract_reminder_text(sched):
     text = " ".join(lines) or title
     return title, text
 
-# ── MQTT over WebSocket（与 bridge-mqtt-responder 同款） ─────────
-class MQTTWebSocket:
-    def __init__(self, broker, port):
-        self.broker = broker
-        self.port = port
-        self.sock = None
-        self._msg_id = 0
-
-    def connect(self):
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.settimeout(15)
-        self.sock.connect((self.broker, self.port))
-        key = base64.b64encode(os.urandom(16)).decode()
-        req = (
-            f'GET /mqtt HTTP/1.1\r\n'
-            f'Host: {self.broker}:{self.port}\r\n'
-            f'Upgrade: websocket\r\n'
-            f'Connection: Upgrade\r\n'
-            f'Sec-WebSocket-Key: {key}\r\n'
-            f'Sec-WebSocket-Version: 13\r\n'
-            f'Sec-WebSocket-Protocol: mqtt\r\n'
-            f'\r\n'
-        )
-        self.sock.send(req.encode())
-        resp = self.sock.recv(4096).decode()
-        if '101' not in resp:
-            raise Exception('WebSocket upgrade failed')
-        self._ws_send(self._mqtt_connect(f'reminder-pusher-{os.getpid()}'))
-        data = self._ws_recv()
-        if not data or data[0] != 0x20 or data[3] != 0:
-            raise Exception(f'MQTT CONNACK failed: {data!r}')
-
-    def subscribe(self, topic, qos=0):
-        self._msg_id += 1
-        self._ws_send(self._mqtt_subscribe(topic, qos, self._msg_id))
-        self._ws_recv()
-
-    def publish(self, topic, message, qos=0):
-        self._ws_send(self._mqtt_publish(topic, message, qos))
-
-    def recv_message(self, timeout=1):
-        """接收 PUBLISH。返回 (topic, payload) 或 None。"""
-        self.sock.settimeout(timeout)
-        try:
-            data = self._ws_recv()
-            if data and (data[0] & 0xF0) == 0x30:
-                qos = (data[0] >> 1) & 0x03
-                topic_len = struct.unpack('>H', data[2:4])[0]
-                topic = data[4:4+topic_len].decode('utf-8', errors='replace')
-                offset = 4 + topic_len
-                if qos > 0:
-                    offset += 2
-                payload = data[offset:].decode('utf-8', errors='replace')
-                return topic, payload
-            return None
-        except socket.timeout:
-            return None
-        except Exception:
-            return None
-
-    def _ws_send(self, data):
-        frame = bytearray([0x82])
-        mask_key = os.urandom(4)
-        length = len(data)
-        if length < 126:
-            frame.append(0x80 | length)
-        elif length < 65536:
-            frame.append(0x80 | 126)
-            frame.extend(struct.pack('>H', length))
-        else:
-            frame.append(0x80 | 127)
-            frame.extend(struct.pack('>Q', length))
-        frame.extend(mask_key)
-        masked = bytes(b ^ mask_key[i % 4] for i, b in enumerate(data))
-        frame.extend(masked)
-        self.sock.send(frame)
-
-    def _ws_recv(self):
-        header = self.sock.recv(2)
-        if len(header) < 2:
-            return None
-        masked = (header[1] & 0x80) != 0
-        length = header[1] & 0x7F
-        if length == 126:
-            length = struct.unpack('>H', self.sock.recv(2))[0]
-        elif length == 127:
-            length = struct.unpack('>Q', self.sock.recv(8))[0]
-        if masked:
-            mask = self.sock.recv(4)
-        data = b''
-        while len(data) < length:
-            chunk = self.sock.recv(min(length - len(data), 65536))
-            if not chunk:
-                break
-            data += chunk
-        if masked:
-            data = bytes(b ^ mask[i % 4] for i, b in enumerate(data))
-        return data
-
-    def _mqtt_connect(self, client_id):
-        cid = client_id.encode()
-        variable = b'\x00\x04MQTT\x04\x02\x00\x3c'
-        payload = struct.pack('>H', len(cid)) + cid
-        remaining = variable + payload
-        header = bytearray([0x10])
-        l = len(remaining)
-        while l > 0:
-            byte = l % 128; l //= 128
-            if l > 0: byte |= 0x80
-            header.append(byte)
-        return bytes(header) + remaining
-
-    def _mqtt_subscribe(self, topic, qos, msg_id):
-        variable = struct.pack('>H', msg_id)
-        t = topic.encode()
-        payload = struct.pack('>H', len(t)) + t + bytes([qos])
-        remaining = variable + payload
-        header = bytearray([0x82])
-        l = len(remaining)
-        while l > 0:
-            byte = l % 128; l //= 128
-            if l > 0: byte |= 0x80
-            header.append(byte)
-        return bytes(header) + remaining
-
-    def _mqtt_publish(self, topic, message, qos):
-        t = topic.encode()
-        variable = struct.pack('>H', len(t)) + t
-        if qos > 0:
-            self._msg_id += 1
-            variable += struct.pack('>H', self._msg_id)
-        payload = message.encode('utf-8')
-        remaining = variable + payload
-        header_byte = 0x30 | (qos << 1)
-        header = bytearray([header_byte])
-        l = len(remaining)
-        while l > 0:
-            byte = l % 128; l //= 128
-            if l > 0: byte |= 0x80
-            header.append(byte)
-        return bytes(header) + remaining
-
-    def close(self):
-        if self.sock:
-            try:
-                self.sock.close()
-            except Exception:
-                pass
-
 # ── 推送 ─────────────────────────────────────────────────────────
 def push_reminder(mqtt, state, sched):
     title, text = extract_reminder_text(sched)
@@ -328,6 +180,7 @@ def push_reminder(mqtt, state, sched):
     }, ensure_ascii=False))
 
     log(f"已推送提醒 [{channel}] {title}: {text[:50]}")
+    state["last_push_at"] = time.strftime("%Y-%m-%dT%H:%M:%S+08:00")
 
 # ── Main loop ────────────────────────────────────────────────────
 def main():
@@ -339,7 +192,7 @@ def main():
         state["booted"] = True
 
     mqtt = MQTTWebSocket(MQTT_BROKER, MQTT_PORT)
-    mqtt.connect()
+    mqtt.connect(client_id=f'reminder-pusher-{os.getpid()}')
     watch_topic = f'announcement/{USER_ID}/{DEVICE_ID}/chat/#'
     mqtt.subscribe(watch_topic, qos=0)
     log(f"已启动。MQTT 连接成功，订阅 {watch_topic}")
@@ -357,10 +210,18 @@ def main():
             # announcement/106/{device}/chat/{channel}/(in|out)
             if len(parts) >= 6 and parts[3] == 'chat' and parts[5] in ('in', 'out'):
                 ch = parts[4]
+                changed = False
                 if state.get("last_channel") != ch:
                     state["last_channel"] = ch
-                    save_state(state)
+                    changed = True
                     log(f"观察到 App channel: {ch}（来自 {parts[5]} 流量）")
+                # /in = 老人语音上行，即真实互动；记录供家人关注服务使用
+                if parts[5] == 'in':
+                    state["last_interaction_at"] = time.strftime(
+                        "%Y-%m-%dT%H:%M:%S+08:00")
+                    changed = True
+                if changed:
+                    save_state(state)
 
         # ── 定时轮询 schedulers ──
         now = time.time()

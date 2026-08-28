@@ -66,6 +66,7 @@ MCP Server 地址：`http://localhost:8200/mcp`（经 serveo 公网暴露后注�
 | `query_tasks` | 查询待办/已完成任务 | `date`(YYYY-MM-DD，可选), `status`(pending/completed/cancelled) | 任务列表文本 |
 | `complete_task` | 标记任务完成 | `title_keyword`(模糊匹配), `task_id`(精确 ID，可选) | 完成确认 |
 | `delay_task` | 推迟任务 | `title_keyword`, `minutes`(默认 30), `new_due_time`(可选) | 推迟确认 |
+| `query_family_messages` | 老人听家人留言 | `limit`(默认 5) | 留言列表文本，并自动标记已读 |
 
 ### 3.2 自定义 Custom Tool（备用方案）
 
@@ -131,6 +132,16 @@ agent_link SDK（L2CAP TTS / GATT 事件 / GPIO）
 - **推送格式**：同时发送两条——`{"type":"assistant","text":...}`（App 现有解析路径，保证送达+TTS）与协议 v1 的结构化 `{"type":"reminder",...}`（App 支持后可触发专属提醒 UI）。
 - **用户感知**：设备 TTS 播报提醒内容；老人按 BOOT 键或说"好了"即可调用 `complete_task` 关闭提醒。
 - **验证记录**（2026-08-28）：创建 2 分钟后触发的测试提醒，Scheduler 准点触发，pusher 4 秒内完成 MQTT 推送，channel 与文案均正确，见 [`../deliverables/reminder_e2e_trace.json`](../deliverables/reminder_e2e_trace.json)。
+
+### 5.3 家人关注（family care MVP）
+
+- **老人侧（Agent 能力）**：MCP 工具 `query_family_messages`——老人说“有留言吗/女儿说什么了”时，Agent 调工具念出留言并标记已读。
+- **家人侧（REST :8100，token 鉴权）**：
+  - `GET /family/report`：今日任务/今日已推提醒/最近互动时间/超 24h 无互动告警/App 在线状态；
+  - `POST /family/message`：留言落库 + MQTT 双格式下发（`assistant` 保 TTS 送达 + `family_message` 触发爱心表情/振动）；
+  - `GET /family/messages`：留言列表与已读状态。
+- **互动信号**：reminder-pusher 观察 MQTT `/in`（老人语音上行）记录 `last_interaction_at`，与任务/备忘操作时间取最大。
+- **验证记录**（2026-08-28）：四步全链路 PASS，见 [`../deliverables/family_care_trace.json`](../deliverables/family_care_trace.json)。
 
 ---
 
@@ -277,10 +288,11 @@ python tests/test_intent.py --start 1 --end 100   # 工具调用口径：校验�
 
 | 文件 | 说明 |
 |------|------|
-| `wanqing/deliverables/architecture.pdf` | 一页架构图（已脱敏） |
+| `wanqing/deliverables/architecture_verified.pdf` | 经代码核验的一页架构图（附 PPTX / PNG） |
 | `wanqing/deliverables/agent_stack_trace.json` | MCP `tools/list` + `create_task` 脱敏 trace |
 | `wanqing/deliverables/agent_ndjson_trace.json` | Agent Stack 完整 NDJSON 流脱敏 trace |
 | `wanqing/deliverables/reminder_e2e_trace.json` | Scheduler 准点触发 → reminder-pusher → MQTT 推送闭环脱敏 trace |
+| `wanqing/deliverables/family_care_trace.json` | 家人关注四步闭环（日报/告警/留言下发/老人听留言）脱敏 trace |
 | `wanqing/tests/test_results_*.json` | 意图识别 62/64 通过原始结果 |
 | Agent Stack Console | Agent MEMORY.md / MCP 服务器列表截图需评委自行查看（已脱敏，无凭证） |
 

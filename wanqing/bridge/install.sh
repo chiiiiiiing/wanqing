@@ -37,7 +37,8 @@ echo "[install] 已安装 claude shim -> $RORO_BIN_DIR/claude"
 
 # 3) reminder-pusher（定时提醒闭环：Scheduler 触发 → MQTT 推送到 App）
 install -m 0755 "$REPO_DIR/bridge/reminder-pusher" "$RORO_BIN_DIR/reminder-pusher"
-echo "[install] 已安装 reminder-pusher -> $RORO_BIN_DIR/reminder-pusher"
+install -m 0644 "$REPO_DIR/bridge/mqttws.py" "$RORO_BIN_DIR/mqttws.py"
+echo "[install] 已安装 reminder-pusher + mqttws -> $RORO_BIN_DIR/"
 
 # 4) reminder-pusher launchd 自启（开机启动 + 崩溃自拉起）
 PLIST_SRC="$REPO_DIR/bridge/ai.rorolee.reminder-pusher.plist"
@@ -49,7 +50,21 @@ if [ -f "$PLIST_SRC" ]; then
     echo "[install] reminder-pusher 已注册 launchd 自启"
 fi
 
-# 5) 配置检查
+# 5) family-api（家人关注 REST :8100，launchd 托管）
+FAM_PLIST_SRC="$REPO_DIR/bridge/ai.rorolee.family-api.plist"
+FAM_PLIST_DST="$HOME/Library/LaunchAgents/ai.rorolee.family-api.plist"
+VENV_PY="$REPO_DIR/.venv/bin/python3"
+if [ -f "$FAM_PLIST_SRC" ] && [ -x "$VENV_PY" ]; then
+  launchctl unload "$FAM_PLIST_DST" 2>/dev/null || true
+  sed -e "s|__PYTHON__|$VENV_PY|" -e "s|__REPO__|$REPO_DIR|" -e "s|__HOME__|$HOME|" \
+      "$FAM_PLIST_SRC" > "$FAM_PLIST_DST"
+  launchctl load "$FAM_PLIST_DST"
+  echo "[install] family-api 已注册 launchd 自启（端口 8100）"
+else
+  echo "[install] 跳过 family-api：缺少 venv python（${VENV_PY}）"
+fi
+
+# 6) 配置检查
 if [ ! -f "$HOME/.rorolee/bridge.env" ]; then
     echo "[install] 警告：缺少 ~/.rorolee/bridge.env"
     echo "          请复制 wanqing/.env.example 并填入 Agent Stack 凭证："
